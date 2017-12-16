@@ -1,0 +1,7 @@
+F_ADDER(a1,b1,c0,d0,d01,c1,f0,s1)
+SWAP_GATE(d01,c1,c11,d02)
+SWAP_GATE(d1,c11,c12,d11)
+F_ADDER(a2,b2,c12,d11,d12,c2,f1,s2)
+SWAP_GATE(d12,c2,c21,d13)
+SWAP_GATE(d2,c21,c22,d21)	 
+F_ADDER(a3,b3,c22,d21,d22,c3,f2,s3)	 

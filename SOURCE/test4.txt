@@ -1,0 +1,8 @@
+SWAP_GATE(a0,b0,b1,a1,ten,LH,LV,m_modes_pro)
+FREDKIN1_GATE(a1,e0,i0,a2,e1,i01,ten,LH,LV,m_modes_pro) 
+SWAP_GATE(b1,a2,a3,b2,ten,LH,LV,m_modes_pro)
+SWAP_GATE(i01,i1,i11,i02,ten,LH,LV,m_modes_pro)
+FREDKIN1_GATE(b2,e1,i11,b3,e2,i12,ten,LH,LV,m_modes_pro)
+SWAP_GATE(b3,e2,o0,b4,ten,LH,LV,m_modes_pro)
+SWAP_GATE(b4,i12,o2,b5,ten,LH,LV,m_modes_pro)
+FREDKIN1_GATE(b5,i02,i2,b6,o1,o3,ten,LH,LV,m_modes_pro)

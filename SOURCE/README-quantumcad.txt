@@ -1,0 +1,191 @@
+----------------------------------------------------------------------
+===============================================================================
+               Formal development of the paper
+      ''Towards the Design Automation of Quantum Circuits''
+===============================================================================
+
+===================
+CONTACT INFORMATION
+===================
+
+> Sidi Mohamed BEILLAHI
+
+  EMAIL: 
+
+  beillahi@encs.concordia.ca
+
+
+> Mohamed Yousri Mahmoud
+
+  EMAIL:
+
+  myousri@uottawa.ca  
+
+
+=====================
+DESCRIPTION of FILES  
+=====================
+  
+
+
+---------------
+qm.ml : 
+--------------------
+Contains the proof that fock states are eigen vectors.
+
+------------------------
+square_integrable.ml :
+---------------
+Contains the proof that square integrable is a functional space. 
+
+--------------------
+single_mode.ml :
+------------------------
+Contains the formalization of quantum signle mode.
+
+-----------  
+multi_mode.ml :
+------------
+Contains the formalization of quantum multi-modes and 
+the formalization of phase shifter and beam splitter. 
+
+-----------  
+tensor_product.ml :
+------------
+Contains the proof of tensor product properties. 
+
+-----------  
+tensor_product_projection.ml :
+------------
+Contains the formalization of projection and tensor product projection
+and the proof of their properties. 
+
+----------------
+tactics_1.ml :
+----------------
+Contains the definition of the ocaml function that extracts the circuit 
+matrix and  the lemmas used to construct the final tactic.
+
+
+
+------------------------
+NS_gate_0_proj.ml :
+------------
+Contains the verification of projecting the outputs for a vacuum state
+feds to NS gate. 
+
+-----------  
+NS_gate_1_proj.ml :
+------------
+Contains the verification of projecting the outputs for a 1-qubit fock state
+feds to NS gate. 
+
+-----------  
+NS_gate_2_proj.ml :
+------------
+Contains the verification of projecting the outputs for a 2-qubits fock state
+feds to NS gate. 
+
+
+------------------------
+CZ_GATE.ml :
+------------------------
+Contains the verification of projecting the outputs for all possible inputs for
+CZ gate.
+
+----------------
+HADAMARD_GATE.ml :
+----------------
+Contains the verification of the outputs for all possible inputs for
+the Hadamard gate.
+
+------------------------
+FLIP_GATE.ml :
+---------------
+Contains the verification of the outputs for all possible inputs for
+the Flip gate.
+
+--------------------
+CNOT_GATE.ml :
+------------------------
+Contains the verification of the outputs for all possible inputs for
+the two version of the CNOT gate.
+
+----------------
+SWAP_GATE.ml :
+----------------
+Contains the verification of the outputs for all possible inputs for
+the SWAP gate.
+
+------------------------
+TS_GATE.ml :
+------------------------
+Contains the verification of the outputs for all possible inputs for
+the Toffoli Sign gate.
+
+----------------
+TOFFOLI_GATE.ml :
+----------------
+Contains the verification of the outputs for all possible inputs for
+the two version of the Toffoli gate.
+
+------------------------
+FREDKIN_GATE.ml :
+---------------
+Contains the verification of the outputs for all possible inputs for
+the two version of the Fredkin gate.
+ 
+--------------------
+tactics_2.ml :
+------------------------
+Contains the definition of the sub tactic and the main tactic of the 
+decision procedure.
+
+----------------
+FULL_ADDER.ml :
+----------------
+Contains the verification of the operations for quantum full adder.
+
+
+----------------
+APPLICATIONS.ml :
+----------------
+Contains the verification of the operations for all the seven remaining
+quantum applications that were taken from the online library.
+
+
+==================
+How to Load Files
+==================
+ 
+NOTE:  Tested with the latest svn version of HOL Light.
+
+------
+STEPS
+------
+
+  1. Go to the HOL Light directory
+
+  2. Launch ocaml
+
+  3. Type in:
+
+    > #use "hol.ml";;
+      
+
+  4. Copy the contents of  tcadcode.zip to HOL Light top directory.
+
+
+  5. And finally load the top file:
+
+    > needs "APPLICATIONS.ml";;
+ 	or just
+    > needs "tactics_2.ml";;
+    
+    (This will also load all the intermediate files including 
+	the gates library and the decision procedure)
+
+
+
+
+

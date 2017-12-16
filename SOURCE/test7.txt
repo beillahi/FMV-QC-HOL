@@ -1,0 +1,6 @@
+SWAP_GATE(b0,c0,c1,b1,ten,LH,LV,m_modes_pro)
+CNOT2_GATE(a0,c1,a1,c2,ten,LH,LV,m_modes_pro)
+CNOT2_GATE(c2,b1,c3,b2,ten,LH,LV,m_modes_pro)
+SWAP_GATE(c3,b2,b3,c4,ten,LH,LV,m_modes_pro)
+TOFFOLI3_GATE(a1,b3,c4,a2,b4,c5,ten,LH,LV,m_modes_pro)
+CNOT1_GATE(a2,b4,a3,b5,ten,LH,LV,m_modes_pro) 

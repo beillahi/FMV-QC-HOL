@@ -1,0 +1,1169 @@
+
+(concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("t",(List.nth ["b0"; "ad3"; "c0"; "b2"] 0)) 
+ (SPEC_V("c",(List.nth ["b0"; "ad3"; "c0"; "b2"] 1)) (SPEC_V ("t1",(List.nth ["b0"; "ad3"; "c0"; "b2"] 2)) (SPEC_V("c1",(List.nth ["b0"; "ad3"; "c0"; "b2"] 3)) V2_11)))))))
+ 
+ let quantum_sub_tac12 l m new_circuits =   
+    let ll = main_tab_gates l m in
+    let len = List.length ll in
+    ASM_SIMP_TAC ([(main_comp_inputs ll m);tensor_nmlem1] @ 
+    (one_less m)) THEN CONV_TAC NUM_REDUCE_CONV THEN
+    ONCE_SIMP_TAC (rewrite_l ll) THEN
+    rewrite_decompose_tac  m ll 0 0 THEN
+    rew_condition_tac  m ll  0 THEN
+    ASM_SIMP_TAC (map GSYM (rewrite_l ll)) THEN
+    STRIP_TAC
+	
+SIMP_TAC[GSYM CFUN_ADD_RDISTRIB;GSYM CFUN_SUB_RDISTRIB;CFUN_ADD_LID;
+CFUN_ADD_RID;CFUN_SUB_LDISTRIB;CFUN_SUB_NEG;GSYM CFUN_SMUL_LNEG;
+CFUN_ADD_LDISTRIB;CFUN_SMUL_DISTRIB;
+CFUN_ADD_AC;CFUN_SUB_AC;REAL_ADD_AC]
+	
+	(String.concat "" ( ["! (f0:A^N->complex). a0 * ( ("] @ (rewr_sing_orig 3 0) @ 
+        [")) = a0 * ("] @ (rewr_conc_orig 3 0)  @ [")"]))
+		
+(rewrite_gates_tac [["1"; "V2_GATE"; "2"; "b0"; "ad3"; "c0"; "b2"]] 0 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)]) THEN
+    SIMP_TAC[CFUN_ADD_THM;CFUN_SUB_THM;COMPLEX_ADD_RDISTRIB;
+    COMPLEX_ADD_LDISTRIB;
+    COMPLEX_SUB_RDISTRIB;COMPLEX_SUB_LDISTRIB] THEN
+    SIMP_TAC [GSYM COMPLEX_MUL_ASSOC] THEN
+ let quantum_sub_tac22 l m new_circuits =   
+    let ll = main_tab_gates  [["1"; "V2_GATE"; "2"; "b0"; "ad3"; "c0"; "b2"]] 4 in
+    let len = List.length ll in
+    SIMP_TAC ((GSYM CX_MUL) :: (rewr_dev 3 0)) THEN
+    SIMP_TAC [CFUN_ARITH `!f1:A^N->complex. (\y. a * f1 y) =
+    a % (\y. f1 y)  `;CFUN_ADD_LEMBDA;CFUN_SUB_LEMBDA] THEN
+    (if len = 1 then ALL_TAC else
+    IMP_REWRITE_TAC[GSYM (main_comp_inputs ll m);
+    REWRITE_RULE[FUN_EQ_THM] tensor_mnlem;ARITH]) THEN 
+    ONCE_SIMP_TAC (rewrite_l [m]) THEN 
+    rewrite_recompose_tac  m ll 0 0 THEN
+    SIMP_TAC[condition_recompose m ll] THEN
+    ASM_SIMP_TAC (map GSYM (rewrite_l [m])) ;;
+
+	(tab_red 0 ["1"; "V2_GATE"; "2"; "b0"; "ad3"; "c0"; "b2"]
+REPEAT GEN_TAC THEN integer_equiv 4 THEN 
+quantum_sub_tac [["0"; "SWAP_GATE"; "2"; "ad1"; "ad2"; "b1"; "b0"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac [["1"; "V2_GATE"; "2"; "b0"; "ad3"; "c0"; "b2"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac [["0"; "V_GATE"; "2"; "b1"; "c0"; "c1"; "d0"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac [["1"; "SWAP_GATE"; "2"; "d0"; "b2"; "c2"; "e0"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac [["0"; "CNOT1_GATE"; "2"; "c1"; "c2"; "d1"; "d2"];
+    ["2"; "V2_GATE"; "2"; "e0"; "ad4"; "f0"; "b3"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+  quantum_sub_tac [["1"; "SWAP_GATE"; "2"; "d2"; "f0"; "g0"; "e2"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+  quantum_sub_tac [["0"; "SWAP_GATE"; "2"; "d1"; "g0"; "h0"; "e1"];
+    ["2"; "SWAP_GATE"; "2"; "e2"; "b3"; "c3"; "f2"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac [["1"; "SWAP_GATE"; "2"; "e1"; "c3"; "d3"; "f1"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac [["1"; "CNOT1_GATE"; "2"; "d3"; "f1"; "e3"; "g1"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+  quantum_sub_tac  [["0"; "V2_STAR_GATE"; "2"; "h0"; "e3"; "ad5"; "f3"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+  quantum_sub_tac [["1"; "SWAP_GATE"; "2"; "f3"; "g1"; "ad6"; "h3"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+  quantum_sub_tac [["2"; "SWAP_GATE"; "2"; "h3"; "f2"; "ad7"; "ad8"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] 
+
+  
+REPEAT GEN_TAC THEN integer_equiv 6 THEN  
+ quantum_sub_tac [["0"; "SWAP_GATE"; "2"; "a0"; "b0"; "b1"; "a1"; "ten"; "LH"; "LV"; "pro"]] 6 []
+    quantum_sub_tac [["1"; "FREDKIN1_GATE"; "3"; "a1"; "e0"; "i0"; "a2"; "e1"; "i01"; "ten";
+     "LH"; "LV"; "pro"]] 6 []
+    quantum_sub_tac12 [["0"; "SWAP_GATE"; "2"; "b1"; "a2"; "a3"; "b2"; "ten"; "LH"; "LV"; "pro"];
+    ["3"; "SWAP_GATE"; "2"; "i01"; "i1"; "i11"; "i02"; "ten"; "LH"; "LV";
+     "pro"]] 6 []
+    quantum_sub_tac [["1"; "FREDKIN1_GATE"; "3"; "b2"; "e1"; "i11"; "b3"; "e2"; "i12"; "ten";
+     "LH"; "LV"; "pro"]] 6 []
+    quantum_sub_tac [["1"; "SWAP_GATE"; "2"; "b3"; "e2"; "o0"; "b4"; "ten"; "LH"; "LV"; "pro"]];
+   [["2"; "SWAP_GATE"; "2"; "b4"; "i12"; "o2"; "b5"; "ten"; "LH"; "LV";
+     "pro"]] 6 []
+    quantum_sub_tac [["3"; "FREDKIN1_GATE"; "3"; "b5"; "i02"; "i2"; "b6"; "o1"; "o3"; "ten";
+     "LH"; "LV"; "pro"]]]  6 []
+	 
+SIMP_TAC((pisum2 4 2) @ (pisum 4 1) @ [CEXP_NEG_RMUL;CEXP_NEG_LMUL;GSYM CEXP_ADD;
+COMPLEX_MUL_AC;GSYM CX_ADD;GSYM CX_MUL;
+COMPLEX_ADD_LINV;COMPLEX_ADD_RINV;COMPLEX_SUB_REFL;COMPLEX_MUL_LNEG;
+COMPLEX_SUB_LDISTRIB;COMPLEX_SUB_RDISTRIB;
+COMPLEX_ADD_LDISTRIB;COMPLEX_ADD_RDISTRIB;
+GSYM COMPLEX_NEG_ADD;COMPLEX_NEG_NEG;
+COMPLEX_MUL_RNEG;MESON[CX_MUL; COMPLEX_MUL_ASSOC] 
+` Cx((y1:real)) * Cx(y2) * (x2: complex) = Cx(y1 * y2) * x2`;
+GSYM CX_SUB]) THEN
+SIMP_TAC[REAL_FIELD `
+(&6 * pi / & 4) =  &3 * pi / &2 /\ 
+(&2 * pi / & 4) =  pi / &2 /\ (&4 * pi / & 4) =  pi` ] THEN 
+SIMP_TAC[CEXP_II_PI2_CNJ;CEXP_II_PI2;CEXP_II_PI_CNJ;CEXP_II_PI;COMPLEX_FIELD `x * ii = ii * x`]
+
+ REAL_RAT_REDUCE_CONV
+ 
+let rec pisum_term n i =  if (i < n) then ("x + "::(pisum_term n (i+1)))
+                      else " x = Cx(&"::(string_of_int (n+1))::[") * x"];;
+
+
+SIMP_CONV[REAL_FIELD ` &(k+1) *y = y + &k * y`;CX_MUL;COMPLEX_ACC] (parse_term (String.concat "" ("Cx(y) * x + Cx(&("::(string_of_int (3))::") * y) * x = Cx(&("::(string_of_int (3+1))::[") * y) * x"])))
+		  
+[(COMPLEX_FIELD (parse_term (String.concat "" ( ["x"] @ (rewr_sing_orig m 0) @ 
+        [")) = a0 * ("] @ (rewr_conc_orig m 0)  @ [")"]))))];;
+
+let rec quantum_tac L m i new_circuits =
+    let len = List.length L in
+    if (i < len)  then 
+      if (i=0) then
+          REPEAT GEN_TAC THEN integer_equiv 4 THEN
+          (quantum_sub_tac (List.nth L i) 4 new_circuits) THEN 
+          (quantum_tac L m (i+1) new_circuits)
+       else
+       (quantum_sub_tac (List.nth L i) m new_circuits) 
+       THEN (quantum_tac L m (i+1) new_circuits)
+    else 
+SIMP_TAC[GSYM CEXP_ADD;
+GSYM CFUN_ADD_RDISTRIB;GSYM CFUN_SUB_RDISTRIB;CFUN_ADD_LID;
+CFUN_ADD_RID;CFUN_SUB_LDISTRIB;CFUN_SUB_NEG;GSYM CFUN_SMUL_LNEG;
+CFUN_ADD_LDISTRIB;CFUN_SMUL_DISTRIB;GSYM COMPLEX_MUL_ASSOC;
+COMPLEX_MUL_SYM;GSYM CX_ADD;GSYM CX_MUL;GSYM real_sub;
+COMPLEX_ADD_LINV;COMPLEX_ADD_RINV;COMPLEX_SUB_REFL;CEXP_0;
+GSYM CX_SUB;CFUN_ADD_AC;CFUN_SUB_AC;REAL_ADD_AC;REAL_SUB_REFL;
+REAL_NEG_NEG;GSYM CX_NEG;REAL_ADD_LINV;REAL_SUB_RZERO;REAL_ADD_RINV;
+REAL_ADD_LID;REAL_ADD_RID;GSYM CFUN_ADD_RDISTRIB_NEW;REAL_MUL_SYM;
+GSYM REAL_MUL_ASSOC;REAL_MUL_AC;REAL_POW_DIV;REAL_POW_ONE;REAL_MUL_RNEG;
+CFUN_SMUL_LZERO;REAL_MUL_RID;REAL_MUL_LZERO;REAL_DIV_RMUL;REAL_MUL_RZERO;
+REAL_MUL_LNEG;GSYM COMPLEX_NEG_ADD; GSYM COMPLEX_MUL_2;COMPLEX_NEG_NEG;
+COMPLEX_MUL_RNEG;MESON[CX_MUL; COMPLEX_MUL_ASSOC] 
+` Cx((y1:real)) * Cx(y2) * (x2: complex) = Cx(y1 * y2) * x2`] 
+THEN SIMP_TAC[REAL_FIELD `((x1:real)/y)+(x2/y)=(x1+x2)/y 
+/\ (pi / & 4) * &2 =  pi / &2`;
+REAL_POW_DIV;thm1;thm2;SQRT_DIV;SQRT_1;REAL_MUL_AC;
+GSYM REAL_POW_2;REAL_POS;SQRT_POW_2;REAL_POW_ONE;REAL_MUL_RNEG;
+CFUN_SMUL_LZERO;REAL_MUL_RID;REAL_MUL_LZERO;REAL_DIV_RMUL;REAL_MUL_RZERO;
+REAL_MUL_LNEG] THEN SIMP_TAC[COMPLEX_FIELD `x * ii = ii * x`;COMPLEX_NEG_NEG;
+CEXP_NEG;COMPLEX_MUL_LNEG;COMPLEX_INV_1;GSYM COMPLEX_NEG_INV
+;CEXP_II_PI2;CEXP_II_PI;COMPLEX_MUL_RNEG;COMPLEX_MUL_RID;COMPLEX_INV_II] 
+THEN CONV_TAC NUM_REDUCE_CONV THEN CFUN_ARITH_TAC;;
+
+
+let CIRCUIT3 = define 
+`CIRCUIT3 ((a0:sm), (a1:sm), (a2:sm), (a3:sm), 
+(i0:sm), (h1:sm), (g2:sm), (i3:sm),
+(ten:qop^N->(real^N->complex)-> (real^N->complex)), 
+(LH:sm->(real->complex)), (LV:sm->(real->complex)),
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=>  
+(!(b1:sm)  (b0:sm) ( c0 :sm) (b2:sm) ( c1:sm) ( d0:sm) ( c2:sm) ( e0:sm) ( f0:sm) ( b3:sm) 
+( d2:sm) ( g0:sm) ( e2:sm) ( e1:sm) ( c3:sm) ( f2:sm) ( d3:sm) ( f1:sm) ( e3:sm) 
+( g1:sm) ( f3:sm) ( h3:sm) ( d1:sm)  ( h0:sm) .
+SWAP_GATE(a0,a1,b1,b0,ten,LH,LV,m_modes_pro) /\
+V2_GATE(b0,a2,c0,b2,ten,LH,LV,m_modes_pro) /\
+V_GATE(b1,c0,c1,d0,ten,LH,LV,m_modes_pro) /\ 
+SWAP_GATE(d0,b2,c2,e0,ten,LH,LV,m_modes_pro) /\
+V2_GATE(e0,a3,f0,b3,ten,LH,LV,m_modes_pro) /\
+CNOT1_GATE(c1,c2,d1,d2,ten,LH,LV,m_modes_pro) /\
+SWAP_GATE(d2,f0,g0,e2,ten,LH,LV,m_modes_pro) /\
+SWAP_GATE(d1,g0,h0,e1,ten,LH,LV,m_modes_pro) /\ 
+SWAP_GATE(e2,b3,c3,f2,ten,LH,LV,m_modes_pro) /\
+SWAP_GATE(e1,c3,d3,f1,ten,LH,LV,m_modes_pro) /\
+CNOT1_GATE(d3,f1,e3,g1,ten,LH,LV,m_modes_pro) /\
+V2_STAR_GATE(h0,e3,i0,f3,ten,LH,LV,m_modes_pro) /\
+SWAP_GATE(f3,g1,h1,h3,ten,LH,LV,m_modes_pro) /\ 
+SWAP_GATE(h3,f2,g2,i3,ten,LH,LV,m_modes_pro))` ;;
+
+(* 8 * 4 +  2 * 4 + 4 * 2 + 12 * 8  = 32+16+96=144*)
+(*3 * 8 + 4 * 2 + 2 = 34 CZ gates *)
+
+let CIRCUIT_TAC = REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
+RIGHT_AND_FORALL_THM;CIRCUIT3] THEN
+REPEAT GEN_TAC THEN
+MAP_EVERY EXISTS_TAC [`(b1:sm)`; `(b0:sm)`;`( c0 :sm)`;`(b2:sm)`;`( c1:sm)`;`( d0:sm)`;`( c2:sm)`;`( e0:sm)`;`( f0:sm)`;`( b3:sm)`;
+`( d2:sm)`;`( g0:sm)`;`( e2:sm)`;`( e1:sm)`;`( c3:sm)`;`( f2:sm)`;`( d3:sm)`;`( f1:sm)`;`( e3:sm)`;
+`( g1:sm)`;`( f3:sm)`;`( h3:sm)`;`( d1:sm)`;`( h0:sm)`;] THEN 
+quantum_tac (matrix_procedure [] ((gate_matrix "test17.txt" [] [("V_GATE",2);("V2_GATE",2);("V2_STAR_GATE",2)] 0))  
+(extract_port [] "(ad1,0,ad2,1,ad3,1,ad4,0)" 0 0) 4) 4 0 0 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)];;
+
+
+let circuit3_1111 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4
+          ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LV (ad3) else LV (ad4) ):bqs^N) =     
+    Cx (&1 / &295147905179352825856) %
+tensor 4 (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT_TAC);;
+
+
+let circuit3_1110 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LV (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4
+          (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT_TAC);;
+
+						  
+let circuit3_1101 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LH (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4
+          (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT_TAC);;
+						  
+let circuit3_1100 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LH (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT_TAC);;
+						  
+						  
+let circuit3_1011 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LV (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4 (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT_TAC);;
+						  
+						  
+let circuit3_1010 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LV (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4 (lambda i. if i = 1 then LV ad5 else if i = 2
+then LV ad6 else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT_TAC);;
+						  
+						  
+let circuit3_1001 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LH (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT_TAC);;
+						  
+						  
+						  
+let circuit3_1000 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LH (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT_TAC);;
+						  
+						  
+let circuit3_0111 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LV (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT_TAC);;
+						  
+let circuit3_0110 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LV (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT_TAC);;
+
+let circuit3_0101 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LH (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT_TAC);;
+						  
+						  
+let circuit3_0100 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LH (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4  (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT_TAC);;
+						  
+						  
+let circuit3_0011 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LV (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT_TAC);;
+					
+let circuit3_0010 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LV (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4 (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT_TAC);;
+						  
+let circuit3_0001 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LH (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4 (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT_TAC);;
+						  
+let circuit3_0000 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT3 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LH (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &295147905179352825856) %
+tensor 4 (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT_TAC);;
+						 
+
+let circuit3_tac l = 
+ SUBGOAL_TAC "circuit3_0000" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit3_0000))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit3_0000] THEN CFUN_ARITH_TAC] THEN 
+ SUBGOAL_TAC "circuit3_0001" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit3_0001))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit3_0001] THEN CFUN_ARITH_TAC] THEN
+ SUBGOAL_TAC "circuit3_0010" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit3_0010))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit3_0010] THEN CFUN_ARITH_TAC] THEN
+ SUBGOAL_TAC "circuit3_0011" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit3_0011))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit3_0011] THEN CFUN_ARITH_TAC] THEN
+ SUBGOAL_TAC "circuit3_0100" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit3_0100))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit3_0100] THEN CFUN_ARITH_TAC] THEN
+ SUBGOAL_TAC "circuit3_0101" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit3_0101))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit3_0101] THEN CFUN_ARITH_TAC] THEN
+ SUBGOAL_TAC "circuit3_0110" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit3_0110))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit3_0110] THEN CFUN_ARITH_TAC] THEN
+ SUBGOAL_TAC "circuit3_0111" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit3_0111))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit3_0111] THEN CFUN_ARITH_TAC] THEN
+ASM_SIMP_TAC [] THEN SIMP_TAC [CFUN_SMUL_LID] THEN 
+REMOVE_THEN "circuit3_0000" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit3_0001" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit3_0010" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit3_0011" (fun thm-> ALL_TAC) THEN 
+REMOVE_THEN "circuit3_0100" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit3_0101" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit3_0110" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit3_0111" (fun thm-> ALL_TAC) ;;   
+
+
+
+REPEAT GEN_TAC THEN integer_equiv 4 THEN 
+ quantum_sub_tac  [["0"; "SWAP_GATE"; "2"; "ad1"; "ad2"; "b1"; "b0"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac  [["1"; "SWAP_GATE"; "2"; "b0"; "ad3"; "b2"; "c0"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac   [["2"; "V2_GATE"; "2"; "c0"; "ad4"; "d0"; "b3"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac  [["1"; "V_GATE"; "2"; "b2"; "d0"; "c2"; "e0"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac  [["1"; "SWAP_GATE"; "2"; "c2"; "e0"; "f0"; "d2"]]4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac  [["0"; "V_GATE"; "2"; "b1"; "f0"; "c1"; "g0"];
+    ["2"; "CNOT1_GATE"; "2"; "d2"; "b3"; "e2"; "ad8"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac  [["0"; "SWAP_GATE"; "2"; "c1"; "g0"; "h0"; "d1"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac   [["1"; "CNOT1_GATE"; "2"; "d1"; "e2"; "e1"; "ad7"]] 4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)] THEN
+   quantum_sub_tac  [["0"; "V2_STAR_GATE"; "2"; "h0"; "e1"; "ad5"; "ad6"]]  4 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)]
+   
+
+
+
+
+let CIRCUIT1 = define 
+`CIRCUIT1 ((a0:sm), (a1:sm), (a2:sm), (a3:sm), 
+(i0:sm), (f1:sm), (f2:sm), (c3:sm),
+(ten:qop^N->(real^N->complex)-> (real^N->complex)), 
+(LH:sm->(real->complex)), (LV:sm->(real->complex)),
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=>  
+(!(b1:sm) (b0:sm) (c0:sm) (b2:sm) (c1:sm) (d0:sm) (c2:sm) (e0:sm) (f0:sm) 
+(b3:sm) (d2:sm) (g0:sm) (e2:sm) (e1:sm) (d1:sm) (h0:sm).
+SWAP_GATE(a0,a1,b1,b0,ten,LH,LV,m_modes_pro) /\
+SWAP_GATE(b0,a2,b2,c0,ten,LH,LV,m_modes_pro) /\
+V2_GATE(c0,a3,d0,b3,ten,LH,LV,m_modes_pro) /\ 
+V_GATE(b2,d0,c2,e0,ten,LH,LV,m_modes_pro) /\
+SWAP_GATE(c2,e0,f0,d2,ten,LH,LV,m_modes_pro) /\
+V_GATE(b1,f0,c1,g0,ten,LH,LV,m_modes_pro) /\
+CNOT1_GATE(d2,b3,e2,c3,ten,LH,LV,m_modes_pro) /\
+SWAP_GATE(c1,g0,h0,d1,ten,LH,LV,m_modes_pro) /\
+CNOT1_GATE(d1,e2,e1,f2,ten,LH,LV,m_modes_pro) /\ 
+V2_STAR_GATE(h0,e1,i0,f1,ten,LH,LV,m_modes_pro))` ;;
+
+(* 8 * 4 +  2 * 4 + 4 * 2 + 12 * 4  = 96*)
+(*3 * 4 + 4 * 2 + 2 = 22 CZ gates *)
+
+let CIRCUIT1_TAC = REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
+RIGHT_AND_FORALL_THM;CIRCUIT1] THEN
+REPEAT GEN_TAC THEN
+MAP_EVERY EXISTS_TAC [`(b1:sm)`; `(b0:sm)`;`(c0 :sm)`;`(b2:sm)`;`(c1:sm)`;`(d0:sm)`;
+`(c2:sm)`;`(e0:sm)`;`(f0:sm)`;`(b3:sm)`;
+`(d2:sm)`;`(g0:sm)`;`(e2:sm)`;`(e1:sm)`;`( d1:sm)`;`(h0:sm)`;] THEN 
+quantum_tac (matrix_procedure [] ((gate_matrix "test18.txt" [] [("V_GATE",2);("V2_GATE",2);("V2_STAR_GATE",2)] 0))  
+(extract_port [] "(ad1,0,ad2,1,ad3,1,ad4,0)" 0 0) 4) 4 0 0 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)];;
+
+   
+let circuit1_1111 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4
+          ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LV (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+ tensor 4 (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT1_TAC);;
+
+
+let circuit1_1110 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LV (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4
+          (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT1_TAC);;
+
+						  
+let circuit1_1101 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LH (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4 (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT1_TAC);;
+						  
+let circuit1_1100 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LH (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT1_TAC);;
+						  
+						  
+let circuit1_1011 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LV (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4 (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT1_TAC);;
+						  
+						  
+let circuit1_1010 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LV (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT1_TAC);;
+						  
+						  
+let circuit1_1001 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LH (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT1_TAC);;
+						  
+						  
+						  
+let circuit1_1000 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LV (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LH (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT1_TAC);;
+						  
+						  
+let circuit1_0111 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LV (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT1_TAC);;
+						  
+let circuit1_0110 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LV (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT1_TAC);;
+
+let circuit1_0101 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LH (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4  (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT1_TAC);;
+						  
+						  
+let circuit1_0100 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LV (ad2) else if i = 3 then 
+LH (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4  (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT1_TAC);;
+						  
+						  
+let circuit1_0011 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LV (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4 (lambda i. if i = 1
+                     then LV ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT1_TAC);;
+					
+let circuit1_0010 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LV (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4 (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT1_TAC);;
+						  
+let circuit1_0001 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LH (ad3) else LV (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4 (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LV ad6
+                          else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT1_TAC);;
+						  
+let circuit1_0000 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
+(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 4 <= dimindex (:N) /\ 
+is_tensor_pro m_modes_pro /\ is_tensor ten /\ 
+CIRCUIT1 (ad1,ad2,ad3,ad4,ad5,ad6,ad7,ad8,ten,LH,LV,m_modes_pro)
+==>
+tensor 4 ((lambda i. if i = 1 then LH (ad1) 
+else  if i = 2 then LH (ad2) else if i = 3 then 
+LH (ad3) else LH (ad4) ):bqs^N) =     
+Cx (&1 / &17592186044416) %
+tensor 4 (lambda i. if i = 1
+                     then LH ad5
+                     else if i = 2
+                          then LH ad6
+                          else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT1_TAC);;
+						 
+
+let circuit1_tac l = 
+ SUBGOAL_TAC "circuit1_0000" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit1_0000))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit1_0000] THEN CFUN_ARITH_TAC] THEN 
+ SUBGOAL_TAC "circuit1_0001" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit1_0001))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit1_0001] THEN CFUN_ARITH_TAC] THEN
+ SUBGOAL_TAC "circuit1_0010" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit1_0010))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit1_0010] THEN CFUN_ARITH_TAC] THEN
+ SUBGOAL_TAC "circuit1_0011" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit1_0011))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit1_0011] THEN CFUN_ARITH_TAC] THEN
+ SUBGOAL_TAC "circuit1_0100" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit1_0100))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit1_0100] THEN CFUN_ARITH_TAC] THEN
+ SUBGOAL_TAC "circuit1_0101" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit1_0101))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit1_0101] THEN CFUN_ARITH_TAC] THEN
+ SUBGOAL_TAC "circuit1_0110" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit1_0110))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit1_0110] THEN CFUN_ARITH_TAC] THEN
+ SUBGOAL_TAC "circuit1_0111" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
+(SPEC_V ("ad2",(List.nth l 1)) (SPEC_V ("ad3",(List.nth l 2)) (SPEC_V("ad4",(List.nth l 3)) 
+(SPEC_V ("ad5",(List.nth l 4)) (SPEC_V("ad6",(List.nth l 5)) (SPEC_V ("ad7",(List.nth l 6)) 
+(SPEC_V("ad8",(List.nth l 7)) circuit1_0111))))))))))) 
+[IMP_REWRITE_TAC [spec_thm_tac circuit1_0111] THEN CFUN_ARITH_TAC] THEN
+ASM_SIMP_TAC [] THEN SIMP_TAC [CFUN_SMUL_LID] THEN 
+REMOVE_THEN "circuit1_0000" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit1_0001" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit1_0010" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit1_0011" (fun thm-> ALL_TAC) THEN 
+REMOVE_THEN "circuit1_0100" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit1_0101" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit1_0110" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit1_0111" (fun thm-> ALL_TAC) ;;
+THEN 
+REMOVE_THEN "circuit1_1000" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit1_1001" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit1_1010" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit1_1011" (fun thm-> ALL_TAC) THEN 
+REMOVE_THEN "circuit1_1100" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit1_1101" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit1_1110" (fun thm-> ALL_TAC)THEN
+REMOVE_THEN "circuit1_1111" (fun thm-> ALL_TAC);;   
+
+
+
+g `!(ten:qop^N->(real^N->complex)-> (real^N->complex)) 
+(LH:sm->(real->complex)) (LV:sm->(real->complex))  
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 19 <= dimindex (:N) 
+/\ is_tensor_pro m_modes_pro /\ is_tensor ten /\
+CIRCUIT1(ca$1,cin,(y$1),x$1,(ca01:sm),(cin1:sm),(y01:sm),(x01:sm),ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$1),(y$1),(x$1),ca01,ca11,y11,x11,ca02,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$2),(y$2),(x$2),ca11,ca21,y21,x21,ca12,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$3),(y$3),(x$3),ca21,ca31,y31,x31,ca22,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$4),(y$4),(x$4),ca31,ca41,y41,x41,ca32,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$5),(y$5),(x$5),ca41,ca51,y51,x51,ca42,ten,LH,LV,m_modes_pro)   ==>
+tensor 19 ((lambda i.if i = 1 then LH (ca$5) else if i = 2 then  LH (y$5) 
+else if i = 3 then LH (x$5) else if i = 4 then  LH (ca$4) else if i = 5 then LV (y$4) 
+else if i = 6 then  LH (x$4) else if i = 7 then LH (ca$3) else if i = 8 then  LV (y$3) else
+if i = 9 then LV (x$3) else if i = 10 then  LH (ca$2) else 
+if i = 11 then LH (y$2) else if i = 12 then  LV (x$2) else
+if i = 13 then LH (ca$1) else if i = 14 then  LH (y$1) else 
+if i = 15 then LH (x$1) else if i = 16 then  LH (ca$0) else
+if i = 17 then LV (cin) else if i = 18 then  LH (y$0) else LH (x$0)):bqs^N) = 
+abc`;;
+
+
+
+g `!(ten:qop^N->(real^N->complex)-> (real^N->complex)) 
+(LH:sm->(real->complex)) (LV:sm->(real->complex))  
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 49 <= dimindex (:N) 
+/\ is_tensor_pro m_modes_pro /\ is_tensor ten /\
+CIRCUIT1(ca$1,cin,(y$1),x$1,(ca01:sm),(cin1:sm),(y01:sm),(x01:sm),ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$1),(y$1),(x$1),ca01,ca11,y11,x11,ca02,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$2),(y$2),(x$2),ca11,ca21,y21,x21,ca12,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$3),(y$3),(x$3),ca21,ca31,y31,x31,ca22,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$4),(y$4),(x$4),ca31,ca41,y41,x41,ca32,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$5),(y$5),(x$5),ca41,ca51,y51,x51,ca42,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$6),(y$6),(x$6),ca51,ca61,y61,x61,ca52,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$7),(y$7),(x$7),ca61,ca71,y71,x71,ca62,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$8),(y$8),(x$8),ca71,ca81,y81,x81,ca72,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$9),(y$9),(x$9),ca81,ca91,y91,x91,ca82,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$10),(y$10),(x$10),ca91,ca101,y101,x101,ca92,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$11),(y$11),(x$11),ca101,ca111,y111,x111,ca102,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$12),(y$12),(x$12),ca111,ca121,y121,x121,ca112,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$13),(y$13),(x$13),ca121,ca131,y131,x131,ca122,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$14),(y$14),(x$14),ca131,ca141,y141,x141,ca132,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca$15),(y$15),(x$15),ca141,ca151,y151,x151,ca142,ten,LH,LV,m_modes_pro)  ==>
+tensor 49 ((lambda i. if i = 1 then LH (ca$15) else if i = 2 then  LV (y$15) else
+if i = 3 then LV (x$15) else if i = 4 then  LH (ca$14) else 
+if i = 5 then LH (y$14) else if i = 6 then  LV (x$14) else
+if i = 7 then LH (ca$13) else if i = 8 then  LH (y$13) else 
+if i = 9 then LH (x$13) else if i = 10 then  LH (ca$12) else
+if i = 11 then LV (y$12) else if i = 12 then  LH (x$12) else 
+if i = 13 then LH (ca$11) else if i = 14 then  LV (y$11) else
+if i = 15 then LV (x$11) else if i = 16 then  LH (ca$10) else 
+if i = 17 then LH (y$10) else if i = 18 then  LV (x$10) else
+if i = 19 then LH (ca$9) else if i = 20 then  LH (y$9) else 
+if i = 21 then LH (x$9) else if i = 22 then  LH (ca$8) else
+if i = 23 then LV (y$8) else if i = 24 then  LH (x$8) else 
+if i = 25 then LH (ca$7) else if i = 26 then  LV (y$7) else
+if i = 27 then LV (x$7) else if i = 28 then  LH (ca$6) else 
+if i = 29 then LH (y$6) else if i = 30 then  LV (x$6) else
+if i = 31 then LH (ca$5) else if i = 32 then  LH (y$5) else 
+if i = 33 then LH (x$5) else if i = 34 then  LH (ca$4) else
+if i = 35 then LV (y$4) else if i = 36 then  LH (x$4) else 
+if i = 37 then LH (ca$3) else if i = 38 then  LV (y$3) else
+if i = 39 then LV (x$3) else if i = 40 then  LH (ca$2) else 
+if i = 41 then LH (y$2) else if i = 42 then  LV (x$2) else
+if i = 43 then LH (ca$1) else if i = 44 then  LH (y$1) else 
+if i = 45 then LH (x$1) else if i = 46 then  LH (ca$0) else
+if i = 47 then LV (cin) else if i = 48 then  LH (y$0) else LH (x$0)):bqs^N) = 
+abc`;;
+
+CPU time (user): 33523.306683
+let five_qubits_ripple_adder = time prove( `!(ten:qop^N->(real^N->complex)-> (real^N->complex)) 
+(LH:sm->(real->complex)) (LV:sm->(real->complex))  
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 16 <= dimindex (:N) 
+/\ is_tensor_pro m_modes_pro /\ is_tensor ten /\
+CIRCUIT1(ca0,cin,(y0),x0,(ca01:sm),(cin1:sm),(y01:sm),(x01:sm),ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca1),(y1),x1,ca01,ca11,y11,x11,ca02,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca2),(y2),x2,ca11,ca21,y21,x21,ca12,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca3),(y3),x3,ca21,ca31,y31,x31,ca22,ten,LH,LV,m_modes_pro) /\
+CIRCUIT3((ca4),(y4),(x4),ca31,ca41,y41,x41,ca32,ten,LH,LV,m_modes_pro)   ==>
+tensor 16 ((lambda i. if i = 1 then LH (ca4) else
+if i = 2 then LV (y4) else if i = 3 then  LH (x4) else 
+if i = 4 then LH (ca3) else if i = 5 then  LV (y3) else
+if i = 6 then LV (x3) else if i = 7 then  LH (ca2) else 
+if i = 8 then LH (y2) else if i = 9 then  LV (x2) else
+if i = 10 then LH (ca1) else if i = 11 then  LH (y1) else 
+if i = 12 then LH (x1) else if i = 13 then  LH (ca0) else
+if i = 14 then LV (cin) else if i = 15 then  LH (y0) else LH (x0)):bqs^N) = 
+Cx (&1 / &133499189745056880149688856635597007162669032647290798121690100488888732861290034376435130433536) %
+tensor 16 (lambda i. if i = 1 then LV ca41 else if i = 2 then LV y41 else if i = 3 then LH x41
+else if i = 4 then LH ca32 else if i = 5 then LH y31 else if i = 6 then LV x31 else if i = 7 then LH ca22
+else if i = 8 then LV y21 else if i = 9 then LV x21 else if i = 10 then LV ca12 else if i = 11 then LH y11
+else if i = 12 then LH x11 else if i = 13 then LH ca02 else if i = 14 then LV cin1 else
+if i = 15 then LH y01 else LH x01),
+quantum_tac (matrix_procedure [] (gate_matrix "test21.txt" [] [("CIRCUIT3",4);("CIRCUIT1",4)] 0) 
+(extract_port [] "(ca4,1,y4,0,x4,0,ca3,1,y3,0,x3,1,ca2,1,y2,0,x2,0,ca1,1,y1,0,x1,0,ca0,1,cin,0,y0,0,x0,1)" 0 0) 4) 16 
+0 0 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)])`;;
+
+
+quantum_tac (matrix_procedure [] ((gate_matrix "test11.txt" [] [("F_ADDER",4)] 0))  
+(extract_port [] "(a3,0,b3,0,d2,0,a2,1,b2,1,d1,0,a1,1,b1,0,c0,0,d0,0)" 0 0) 4) 10 0 0 [("F_ADDER",full_adder_tac)])
+
+SIMP_TAC[(main_comp_inputs ll m)] THEN
+MP_TAC (SPEC_V ("m","45") (SPEC_V ("n","4") tensor_nmlem1)) THEN 
+ASM_REWRITE_TAC  ((one_less m) @ [(SPEC_V ("m","45") (SPEC_V ("n","4") tensor_nmlem1))]);;
+
+quantum_tac (matrix_procedure [] (gate_matrix "test19.txt" [] [("CIRCUIT3",4);("CIRCUIT1",4)] 0) 
+(extract_port [] "(ca15,1,y15,0,x15,1,ca14,1,y14,0,x14,1,ca13,1,y13,0,x13,0,ca12,1,y12,0,x12,1,ca11,1,y11,0,x11,1,
+ca10,1,y10,0,x10,0,ca9,1,y9,0,x9,0,ca8,1,y8,0,x8,0,ca7,1,y7,0,x7,1,ca6,1,y6,0,x6,0,ca5,1,y5,0,x5,1,ca4,1,y4,0,x4,0,
+ca3,1,y3,0,x3,1,ca2,1,y2,0,x2,0,ca1,1,y1,0,x1,0,ca0,1,cin,0,y0,0,x0,1)" 0 0) 4) 49 
+0 0 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)];;
+
+time e(quantum_tac (matrix_procedure [] (gate_matrix "test21.txt" [] [("CIRCUIT3",4);("CIRCUIT1",4)] 0) 
+(extract_port [] "(ca4,1,y4,0,x4,0,ca3,1,y3,0,x3,1,ca2,1,y2,0,x2,0,ca1,1,y1,0,x1,0,ca0,1,cin,0,y0,0,x0,1)" 0 0) 4) 16 
+0 0 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)]);;
+
+time e(REPEAT GEN_TAC THEN integer_equiv 16 THEN
+quantum_sub_tac  [["12"; "CIRCUIT1"; "4"; "ca0"; "cin"; "y0"; "x0"; "ca01"; "cin1"; "y01";
+     "x01"]] 16 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)])
+quantum_sub_tac [["9"; "CIRCUIT3"; "4"; "ca1"; "y1"; "x1"; "ca01"; "ca11"; "y11"; "x11";
+     "ca02"]] 16 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)]
+quantum_sub_tac [["6"; "CIRCUIT3"; "4"; "ca2"; "y2"; "x2"; "ca11"; "ca21"; "y21"; "x21";
+     "ca12"]] 16 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)]
+quantum_sub_tac [["3"; "CIRCUIT3"; "4"; "ca3"; "y3"; "x3"; "ca21"; "ca31"; "y31"; "x31";
+     "ca22"]] 16 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)]
+quantum_sub_tac [["0"; "CIRCUIT3"; "4"; "ca4"; "y4"; "x4"; "ca31"; "ca41"; "y41"; "x41";
+     "ca32"]] 16 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)]
+	 
+sub_procedure_3 (gate_matrix "test19.txt" [] [("CIRCUIT3",4);("CIRCUIT1",4)] 0) ["ca15"; "y15"; "x15"; "ca14"; "y14"; "x14"; "ca13"; "y13"; "x13"; "ca12";
+   "y12"; "x12"; "ca11"; "y11"; "x11"; "ca10"; "y10"; "x10"; "ca91"; "y91";
+   "x91"; "ca82"; "y81"; "x81"; "ca72"; "y71"; "x71"; "ca62"; "y61"; "x61";
+   "ca52"; "y51"; "x51"; "ca42"; "y41"; "x41"; "ca32"; "y31"; "x31"; "ca22";
+   "y21"; "x21"; "ca12"; "y11"; "x11"; "ca02"; "cin1"; "y01"; "x01"] 0 4 0
+
+sub_procedure_2 (gate_matrix "test19.txt" [] [("CIRCUIT3",4);("CIRCUIT1",4)] 0) ["ca15"; "y15"; "x15"; "ca14"; "y14"; "x14"; "ca13"; "y13"; "x13"; "ca12";
+   "y12"; "x12"; "ca11"; "y11"; "x11"; "ca10"; "y10"; "x10"; "ca91"; "y91";
+   "x91"; "ca82"; "y81"; "x81"; "ca72"; "y71"; "x71"; "ca62"; "y61"; "x61";
+   "ca52"; "y51"; "x51"; "ca42"; "y41"; "x41"; "ca32"; "y31"; "x31"; "ca22";
+   "y21"; "x21"; "ca12"; "y11"; "x11"; "ca02"; "cin1"; "y01"; "x01"] 0 4 0
+
+sub_procedure_4 (gate_matrix "test19.txt" [] [("CIRCUIT3",4);("CIRCUIT1",4)] 0) ["ca15"; "y15"; "x15"; "ca14"; "y14"; "x14"; "ca13"; "y13"; "x13"; "ca12";
+   "y12"; "x12"; "ca11"; "y11"; "x11"; "ca10"; "y10"; "x10"; "ca91"; "y91";
+   "x91"; "ca82"; "y81"; "x81"; "ca72"; "y71"; "x71"; "ca62"; "y61"; "x61";
+   "ca52"; "y51"; "x51"; "ca42"; "y41"; "x41"; "ca32"; "y31"; "x31"; "ca22";
+   "y21"; "x21"; "ca12"; "y11"; "x11"; "ca02"; "cin1"; "y01"; "x01"] 0 4 0
+
+REPEAT GEN_TAC THEN integer_equiv 49 THEN
+
+ONCE_ASM_SIMP_TAC ([ARITH_RULE`49 <= dimindex (:N) <=> (49 <= dimindex (:N) /\ 4 <= dimindex (:N))`])
+
+quantum_sub_tac12 main_tab_gates [["45"; "CIRCUIT1"; "4"; "ca0"; "cin"; "y0"; "x0"; "ca01"; "cin1"; "y01";
+    "x01"]] 4 4 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)]
+
+let quantum_sub_tac12 l m new_circuits =   
+    let ll = main_tab_gates l m in
+    let len = List.length ll in
+    ASM_SIMP_TAC ([(main_comp_inputs ll m);SPEC_V ("m","45") (SPEC_V ("n","4") tensor_nmlem1)] @ 
+    (one_less m)) THEN CONV_TAC NUM_REDUCE_CONV THEN
+    ONCE_SIMP_TAC (rewrite_l ll) THEN
+    rewrite_decompose_tac  m ll 0 0 THEN
+    rew_condition_tac  m ll  0 THEN
+    ASM_SIMP_TAC (map GSYM (rewrite_l ll)) THEN
+    STRIP_TAC THEN (rewrite_gates_tac l 0 new_circuits) THEN
+    SIMP_TAC[GSYM CFUN_ADD_RDISTRIB;GSYM CFUN_SUB_RDISTRIB;CFUN_ADD_LID;
+CFUN_ADD_RID;CFUN_SUB_LDISTRIB;CFUN_SUB_NEG;GSYM CFUN_SMUL_LNEG;
+CFUN_ADD_LDISTRIB;CFUN_SMUL_DISTRIB;
+CFUN_ADD_AC;CFUN_SUB_AC;REAL_ADD_AC;
+CFUN_ADD_THM;CFUN_SUB_THM;COMPLEX_ADD_RDISTRIB;
+    COMPLEX_ADD_LDISTRIB;
+    COMPLEX_SUB_RDISTRIB;COMPLEX_SUB_LDISTRIB] THEN
+    SIMP_TAC [GSYM COMPLEX_MUL_ASSOC] 
+	
+	
+time e(quantum_sub_tac [["45"; "CIRCUIT1"; "4"; "ca0"; "cin"; "y0"; "x0"; "ca01"; "cin1"; "y01";
+    "x01"]] 49 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)]) THEN
+time e(quantum_sub_tac [["42"; "CIRCUIT3"; "4"; "ca1"; "y1"; "x1"; "ca01"; "ca11"; "y11"; "x11";
+    "ca02"]] 49 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)])
+
+time e(quantum_sub_tac [["39"; "CIRCUIT3"; "4"; "ca2"; "y2"; "x2"; "ca11"; "ca21"; "y21"; "x21";"ca12"]] 49 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)])
+e(quantum_sub_tac [["36"; "CIRCUIT3"; "4"; "ca3"; "y3"; "x3"; "ca21"; "ca31"; "y31"; "x31";
+    "ca22"]] 49 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)])
+e(quantum_sub_tac [["33"; "CIRCUIT3"; "4"; "ca4"; "y4"; "x4"; "ca31"; "ca41"; "y41"; "x41";
+    "ca32"]] 49 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)])
+e(quantum_sub_tac [["30"; "CIRCUIT3"; "4"; "ca5"; "y5"; "x5"; "ca41"; "ca51"; "y51"; "x51";
+    "ca42"]] 49 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)])
+e(quantum_sub_tac [["27"; "CIRCUIT3"; "4"; "ca6"; "y6"; "x6"; "ca51"; "ca61"; "y61"; "x61";
+    "ca52"]] 49 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)])
+e(quantum_sub_tac [["24"; "CIRCUIT3"; "4"; "ca7"; "y7"; "x7"; "ca61"; "ca71"; "y71"; "x71";
+    "ca62"]] 49 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)])
+e(quantum_sub_tac [["21"; "CIRCUIT3"; "4"; "ca8"; "y8"; "x8"; "ca71"; "ca81"; "y81"; "x81";
+    "ca72"]] 49 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)])
+e(quantum_sub_tac [["18"; "CIRCUIT3"; "4"; "ca9"; "y9"; "x9"; "ca81"; "ca91"; "y91"; "x91";
+    "ca82"]] 49 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)])
+
+	
+
+let rec matrix_procedure str0 gates ports ks = 
+    let fin = sub_procedure_3 gates ports 0 ks 0 in 
+         if (fin > 0) then 
+         matrix_procedure (str0 @ [sub_procedure_2 gates ports 0 ks 0]) gates (sub_procedure_4 gates ports 0 ks 0) ks
+        else str0;;
+		
+		
+
+[("V_GATE",2);("V2_GATE",2);("V2_STAR_GATE",2)] 0))  
+(extract_port [] "(ad1,0,ad2,1,ad3,1,ad4,0)" 0 0) 4) 4 0 0 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)];;
+
+time (let decoder = prove(
+`!(ten:qop^N->(real^N->complex)-> (real^N->complex))
+(LH:sm->(real->complex)) (LV:sm->(real->complex))
+(m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)).
+8 <= dimindex (:N) /\ 6 <= dimindex (:N) 
+/\ is_tensor_pro m_modes_pro /\ is_tensor ten /\
+SWAP_GATE(a0,b0,b1,a1,ten,LH,LV,m_modes_pro) /\
+FREDKIN1_GATE(a1,e0,i0,a2,e1,i01,ten,LH,LV,m_modes_pro) /\
+SWAP_GATE(b1,a2,a3,b2,ten,LH,LV,m_modes_pro) /\
+SWAP_GATE(i01,i1,i11,i02,ten,LH,LV,m_modes_pro) /\
+FREDKIN1_GATE(b2,e1,i11,b3,e2,i12,ten,LH,LV,m_modes_pro) /\
+SWAP_GATE(b3,e2,o0,b4,ten,LH,LV,m_modes_pro) /\
+SWAP_GATE(b4,i12,o2,b5,ten,LH,LV,m_modes_pro) /\
+FREDKIN1_GATE(b5,i02,i2,b6,o1,o3,ten,LH,LV,m_modes_pro) ==>
+tensor 6 ((lambda i. if i = 1 then LV (a0) else if i = 2 then  LH (b0) else
+if i = 3 then LV (e0) else if i = 4 then  LH (i0) else 
+if i = 5 then LH (i1) else LH (i2)):bqs^N) = 
+Cx (&1 / &1152921504606846976) %
+tensor 6 (lambda i. if i = 1 then LV a3 else if i = 2 then LH o0
+else if i = 3 then LH o2 else if i = 4 then LH b6
+else if i = 5 then LV o1 else LH o3)`,
+quantum_tac (matrix_procedure [] (gate_matrix "test4.txt" [] [] 0) 
+(extract_port [] "(a0,1,b0,0,e0,1,i0,0,i1,0,i2,0)" 0 0) 3) 6 0 0 []));;
+
+
