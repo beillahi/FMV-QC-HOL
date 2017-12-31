@@ -19,6 +19,8 @@ needs "SWAP_GATE.ml";;
 (*-----------------------------------------------------*)
 (*----------------Formalization------------------------*)
 (*-----------------------------------------------------*)
+(*18 optical qubits *)
+(*3 CZ gates *)
 (*--------------------**********************------------------*) 
 
 
@@ -100,8 +102,7 @@ let IS_TS_MODEL = define `IS_TS_MODEL ((x1:sm), (x2:sm), (x3:sm), (y1:sm),
 CZ_GATE (c2, x3, d2, y3,ten,LH, LV ,m_modes_pro) /\
 CNOT2_GATE (c1,d2,y1,y2,ten,LH,LV,m_modes_pro) ) `;;
 
-(*18 optical qubits *)
-(*3 CZ gates *)
+
 
 let TS_GATE = define 
    `TS_GATE ((x1:sm), (x2:sm), (x3:sm), (y1:sm),(y2:sm),(y3:sm),ten, 
@@ -110,7 +111,6 @@ let TS_GATE = define
     (! (k:sm^N) (c1:sm) (c2:sm) (d2:sm). 
     IS_TS_MODEL (x1,x2,x3,y1,y2,y3,c1,c2,d2,ten,LH,LV,m_modes_pro) /\ 
     TS_outputs (k,y1, y2, y3,LH,LV) /\ TS_inputs (k, x1, x2,x3,LH,LV))`;;
-
 
 
 

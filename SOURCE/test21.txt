@@ -1,0 +1,5 @@
+CIRCUIT1(ca0,cin,y0,x0,ca01,cin1,y01,x01)
+CIRCUIT3(ca1,y1,x1,ca01,ca11,y11,x11,ca02)
+CIRCUIT3(ca2,y2,x2,ca11,ca21,y21,x21,ca12)
+CIRCUIT3(ca3,y3,x3,ca21,ca31,y31,x31,ca22)
+CIRCUIT3(ca4,y4,x4,ca31,ca41,y41,x41,ca32)

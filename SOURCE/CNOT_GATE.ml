@@ -22,7 +22,6 @@ needs "FLIP_GATE.ml";;
 (*--------------------**********************------------------*) 
 
 
-
 let CNOT1_GATE = define   `CNOT1_GATE ((x1:sm), (x2:sm), (y2:sm), (y1:sm),
    (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
     (LH:sm->(real->complex)), (LV:sm->(real->complex)),

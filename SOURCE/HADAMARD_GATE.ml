@@ -20,13 +20,6 @@ needs "CZ_GATE.ml";;
 (*----------------Formalization------------------------*)
 (*-----------------------------------------------------*)
 (*--------------------**********************------------------*)      
-let CEXP_II_PI = prove(`cexp (ii * Cx(pi)) = --Cx(&1)`,
-    REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI;
-    SIN_PI;COMPLEX_ADD_RID;COMPLEX_MUL_RZERO;CX_NEG]);;  
-           
-let CEXP_II_PI2 = prove(`cexp (ii * Cx(pi / &2)) = ii`,
-    REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI2;
-    SIN_PI2;COMPLEX_ADD_LID;COMPLEX_MUL_RZERO;COMPLEX_MUL_RID]);; 
 
 let Hadamard_In_Output = define 
 `Hadamard_In_Output ((x0:sm), (y0:sm), (a:sm^N), (c:sm^N), 

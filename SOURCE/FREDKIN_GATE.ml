@@ -4,7 +4,7 @@
 (*                                                                           *)
 (*                                                                           *)
 (*                                                                           *)
-(* Last update: May 18, 2016                                            *)
+(* Last update: May 18, 2017                                            *)
 (*                                                                           *)
 (* ========================================================================= *)
 
@@ -19,7 +19,10 @@ needs "TOFFOLI_GATE.ml";;
 (*-----------------------------------------------------*)
 (*----------------Formalization------------------------*)
 (*-----------------------------------------------------*)
-(*--------------------**********************------------------*) 
+(*24 optical qubits *)
+(*5 CZ gates *)
+(*------------------**********************-------------*) 
+
 let FREDKIN3_GATE = define 
 `FREDKIN3_GATE ((x1:sm), (x2:sm), (x3:sm), (y1:sm), (y2:sm), (y3:sm),
 (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
@@ -40,8 +43,7 @@ CNOT1_GATE (x2,x3, c2,c3,ten, LH, LV ,m_modes_pro) /\
 TOFFOLI3_GATE (x1,c2,c3,y1,d2,d3,ten,LH, LV,m_modes_pro) /\
 CNOT1_GATE (d2,d3, y2,y3,ten, LH, LV ,m_modes_pro))` ;;
 
-(*24 optical qubits *)
-(*5 CZ gates *)
+
 
 let FREDKIN3_tactic = 
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;

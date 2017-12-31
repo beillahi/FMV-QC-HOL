@@ -19,6 +19,8 @@ needs "CNOT_GATE.ml";;
 (*-----------------------------------------------------*)
 (*----------------Formalization------------------------*)
 (*-----------------------------------------------------*)
+(*16 optical qubits *)
+(*3 CZ gates *)
 (*--------------------**********************------------------*) 
 
 
@@ -31,9 +33,6 @@ let SWAP_GATE = define
 CNOT2_GATE (x1,x2, c1,c2,ten, LH, LV ,m_modes_pro) /\
 CNOT1_GATE (c1,c2,d1,d2,ten,LH, LV,m_modes_pro) /\
 CNOT2_GATE (d1,d2, y1,y2,ten, LH, LV ,m_modes_pro))` ;;
-
-(*16 optical qubits *)
-(*3 CZ gates *)
 
 let SWAP_tactic = 
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;SWAP_GATE] THEN

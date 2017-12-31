@@ -19,6 +19,8 @@ needs "TS_GATE.ml";;
 (*-----------------------------------------------------*)
 (*----------------Formalization------------------------*)
 (*-----------------------------------------------------*)
+(*18 optical qubits *)
+(*3 CZ gates *)
 (*--------------------**********************------------------*) 
 
 let TOFFOLI3_GATE = define 
@@ -31,9 +33,6 @@ TS_GATE (c1,x2,c3,d1,y2,d3,ten,LH, LV,m_modes_pro) /\
 FLIP_GATE (d1,y1,ten,LH, LV) /\ HADAMARD_GATE (d3,y3, ten,LH, LV))`;;
 
 
-
-
-
 let TOFFOLI1_GATE = define 
 `TOFFOLI1_GATE ((x1:sm), (x2:sm), (x3:sm), (y1:sm), (y2:sm), (y3:sm),
 ten , (LH:sm->(real->complex)), (LV:sm->(real->complex)),
@@ -42,10 +41,6 @@ ten , (LH:sm->(real->complex)), (LV:sm->(real->complex)),
 HADAMARD_GATE (x1, c1, ten,LH, LV) /\ FLIP_GATE (c1,d1,ten,LH, LV) /\
 TS_GATE (d1,x2,x3,e1,y2,y3,ten,LH, LV,m_modes_pro) /\
 FLIP_GATE (e1,f1,ten,LH, LV) /\ HADAMARD_GATE (f1,y1, ten,LH, LV))`;;
-
-(*18 optical qubits *)
-(*3 CZ gates *)
-
 
 
 let TOFFOLI1_tactic = 
@@ -150,8 +145,6 @@ CFUN_ADD_LID;REAL_FIELD `inv (sqrt (&2)) = &1 / sqrt (&2)  `;REAL_ADD_LINV;REAL_
 REAL_MUL_RZERO;REAL_ADD_LID;REAL_ADD_RID;REAL_SUB_RZERO;REAL_SUB_REFL;REAL_NEG_NEG;REAL_MUL_LNEG;
 MESON[GSYM SQRT_INJ;REAL_DIV_RMUL;REAL_FIELD `~(&2 = &0)` ;SQRT_0]  ` ((&1 / sqrt (&2)) * sqrt (&2) = &1) `;
 REAL_FIELD `&1 / &2 * &1 / &64 + &1 / &2 * &1 / &64 = &1 / &64`];;
-
-
 
 
 let TOFFOLI3_tactic = 

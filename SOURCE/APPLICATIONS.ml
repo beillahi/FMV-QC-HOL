@@ -4,16 +4,16 @@
 (*                                                                           *)
 (*                                                                           *)
 (*                                                                           *)
-(* Last update: October 24, 2016                                               *)
+(* Last update: December 31, 2017                                            *)
 (*                                                                           *)
 (* ========================================================================= *)
 
 
 (*-------------REQUIRED LIBRARIES ---------------------*)
 
-
+needs "V_GATE.ml";;
 needs "FULL_ADDER.ml";;
-
+needs "HELPER_CIRCUITS.ml";;
 
 
 (*-----------------------------------------------------*)
@@ -23,6 +23,9 @@ needs "FULL_ADDER.ml";;
 
 (****************************************************************************************)
 (**************** Grover's oracle ********************************************************)
+(*CPU time (user): 273.830371*)
+(* 5 * 2 + 12 * 10 + 4 * 4 +  4 * 12= 120+16+24+10=170*)
+(* 10 * 3 + 4 + 4 * 3=  46*)
 (****************************************************************************************)
 
 let grover = time prove(
@@ -56,12 +59,13 @@ tensor 5 (lambda i. if i = 1 then LV e6 else if i = 2 then LV d8
 else if i = 3 then LV c8 else if i = 4 then LH b10 else LV i8)`,
 quantum_tac (matrix_procedure [] (gate_matrix "test1.txt" [] [] 0) 
      (extract_port [] "(b0,0,c0,1,d0,1,e0,1,i0,0)" 0 0) 3) 5 0 0 []);;   
-CPU time (user): 273.830371
-(* 5 * 2 + 12 * 10 + 4 * 4 +  4 * 12= 120+16+24+10=170*)
-( 10 * 3 + 4 + 4 * 3=  46)
+
    
 (****************************************************************************************)
 (*************hwb4 is the hidden weighted bit function with parameter N=4****************)
+(*CPU time (user): 277.812766*)
+(* 4 * 2 + 12 * 10 + 9 * 4 +  3 * 12= 120+36+36+8=200*)
+(* 10 * 3 + 9 + 3 * 3=  48*)
 (****************************************************************************************)   
    
 let hwb4 = time prove(
@@ -99,13 +103,13 @@ Cx (&1 / &79228162514264337593543950336) %
  then LH b15 else if i = 3 then LH c13 else LV d9)`,
 quantum_tac (matrix_procedure [] (gate_matrix "test3.txt" [] [] 0) 
    (extract_port [] "(a0,0,b0,1,c0,1,d0,0)" 0 0) 3) 4 0 0 []);;
-   
-CPU time (user): 277.812766
-(* 4 * 2 + 12 * 10 + 9 * 4 +  3 * 12= 120+36+36+8=200*)
-( 10 * 3 + 9 + 3 * 3=  48)
+
 
 (***************gf23mult finds product of two elements of a field GF(23)*****************)
 (***********a=a0+a1x+a2x2 and b=b0+b1x+b2x2 with the output*******************************)
+(*CPU time (user): 13634.248279*)
+(* 9 * 2 + 12 * 50 + 2 * 4 +  9 * 12= 600+8+108+18=734*)
+(* 50 * 3 + 4 + 12 * 3=  190*)
 (************* ab=c=c0+c1x+c2x2 written on the last 3 bits *******************************)
 
 let gf23mult = time prove(
@@ -186,15 +190,13 @@ then LH a012 else if i = 7 then LH c10 else if i = 8 then LH d11 else LH e8) `,
 quantum_tac (matrix_procedure [] (gate_matrix "test2.txt" [] [] 0) 
 (extract_port [] "(a0,0,a1,0,a2,0,b0,1,b1,1,b2,1,c0,0,d0,0,e0,0)" 0 0) 3) 9 0 0 []);;
         
-CPU time (user): 13634.248279
-(* 9 * 2 + 12 * 50 + 2 * 4 +  9 * 12= 600+8+108+18=734*)
-( 50 * 3 + 4 + 12 * 3=  190)
 (****************************************************************************************)
-
-
 
 (****************************************************************************************)
 (**  output is 1 if and only if the number of ones in the input pattern is 2, 3 or 4.  **)
+(*    CPU time (user): 20679.371257    *)
+(* 10 * 2 + 12 * 41 + 7 * 4 +  13 * 12= 156+492+28+20=696*)
+(* 41 * 3 + 7 + 13 * 3=  169*)
 (****************************************************************************************)   
 
 let sym6 = time prove(
@@ -276,15 +278,16 @@ then LH x521 else if i = 6 then LV x618 else if i = 7 then LH b11
 else if i = 8 then LV a18 else if i = 9 then LH c8 else LV d4)`,                                         
 quantum_tac (matrix_procedure [] (gate_matrix "test5.txt" [] [] 0) 
 (extract_port [] "(x10,0,x20,0,x30,0,x40,1,x50,1,x60,1,a0,0,b0,0,c0,0,d0,0)" 0 0) 3) 10 0 0 []);;                 
-    CPU time (user): 20679.371257    
-(* 10 * 2 + 12 * 41 + 7 * 4 +  13 * 12= 156+492+28+20=696*)
-( 41 * 3 + 7 + 13 * 3=  169)
+
 (****************************************************************************************)
 
 (****************************************************************************************)
 (***2-to-4 decoder  has 3 inputs and 4 outputs. If enable bit (E, one of the 3 inputs) is low, ****)
 (*** all the output lines will be zero. If the enable bit is high, one of the four output ****)
 (***lines will become high selected by the remaining two input lines.***)
+(*CPU time (user): 132.209901*)
+(* 6 * 2 + 12 * 5 + 20 * 3 = 132 *)
+(* 10 * 3 =  30 *)
 (****************************************************************************************)
 
 let decoder = time prove(
@@ -311,16 +314,14 @@ else if i = 5 then LV o1 else LH o3)`,
 quantum_tac (matrix_procedure [] (gate_matrix "test4.txt" [] [] 0) 
 (extract_port [] "(a0,1,b0,0,e0,1,i0,0,i1,0,i2,0)" 0 0) 3) 6 0 0 []);;
 
-CPU time (user): 132.209901
-(* 6 * 2 + 12 * 5 + 20 * 3 = 132 *)
-( 10 * 3 =  30)
-
 (****************************************************************************************)
 
 (****************************************************************************************)
 (***************Function ham3 is the size 3 Hamming optimal coding function **************)
+(*CPU time (user): 21.973659*)
+(* 3 * 2 + 12 * 1 + 4 * 4 +  1 * 12= 16+24+6=46*)
+(*3 + 3 + 4 =  10*)
 (****************************************************************************************)
-
 
 let ham3 = time prove(
 `!(ten:qop^N->(real^N->complex)-> (real^N->complex))
@@ -340,12 +341,11 @@ tensor 3 (lambda i. if i = 1 then LV a2 else if i = 2 then LV c6 else LV b5)`,
 quantum_tac (matrix_procedure [] (gate_matrix "test6.txt" [] [] 0) 
 (extract_port [] "(a0,1,b0,0,c0,0)" 0 0) 3) 3 0 0 []);;
 
-CPU time (user): 21.973659
-
-(* 3 * 2 + 12 * 1 + 4 * 4 +  1 * 12= 16+24+6=46*)
-(3 + 3 + 4 =  10)
 (****************************************************************************************)
 (*******nth_prime3_inc may be used to find primes with up to 3 binary digits************)
+(*CPU time (user): 18.712156*)
+(* 3 * 2 + 12 * 2 + 3 * 4 +  1 * 12= 36+12+6=54*)
+(*2 * 3 + 3 + 3 =  12*)
 (****************************************************************************************)
 
 let nth_prime3_inc= time prove(
@@ -365,11 +365,12 @@ Cx (&1 / &16777216) %
 tensor 3 (lambda i. if i = 1 then LH a3 else if i = 2 then LV b5 else LH c5)`,
 quantum_tac (matrix_procedure [] (gate_matrix "test7.txt" [] [] 0) 
 (extract_port [] "(a0,1,b0,0,c0,0)" 0 0) 3) 3 0 0 []);;
-CPU time (user): 18.712156
-(* 3 * 2 + 12 * 2 + 3 * 4 +  1 * 12= 36+12+6=54*)
-(2 * 3 + 3 + 3 =  12)
+
 (****************************************************************************************)
 (*******Highrarchical 3-qubit Ripple Full Adder************)
+(*CPU time (user): 1506.897917*)
+(* 54 * 3 +  10 * 2 + 12 * 4 = 162+20+48=230*)
+(*14 * 3 + 3 * 4  =  54*)
 (****************************************************************************************)
 
 let highrarchical_ripple_adder = time prove(
@@ -398,13 +399,15 @@ else if i = 7 then LH s2 else if i = 8 then LV d02
 else if i = 9 then LV f0 else LV s1)`,
 quantum_tac (matrix_procedure [] ((gate_matrix "test11.txt" [] [("F_ADDER",4)] 0))  
 (extract_port [] "(a3,0,b3,0,d2,0,a2,1,b2,1,d1,0,a1,1,b1,0,c0,0,d0,0)" 0 0) 4) 10 0 0 [("F_ADDER",full_adder_tac)]);;
-CPU time (user): 1506.897917
-(* 54 * 3 +  10 * 2 + 12 * 4 = 162+20+48=230*)
-(14 * 3 + 3 * 4  =  54)
+
 (****************************************************************************************)
 (****************************************************************************************)
 (*******Flat 3-qubit Ripple Full Adder************)
+(*CPU time (user): 4551.165118*)
+(*10 * 3 + 3 * 5  + 9= 45 + 9 = 54*)
+(* 18 * 3 +  10 * 2 + 12 * 10  + 9 * 4= 54+20+120+36=230*)
 (****************************************************************************************)
+
 let flat_ripple_adder = time prove(
 `!(ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -446,10 +449,14 @@ else if i = 7 then LH s2 else if i = 8 then LV d04
 else if i = 9 then LV f0 else LV s1)`,
 quantum_tac (matrix_procedure [] ((gate_matrix "test12.txt" [] [] 0)) 
 (extract_port [] "(a3,0,b3,0,d2,0,a2,1,b2,1,d1,0,a1,1,b1,0,c0,0,d0,0)" 0 0) 4) 10 0 0 []);;
-CPU time (user): 4551.165118
-(10 * 3 + 3 * 5  + 9= 45 + 9 = 54)
-(* 18 * 3 +  10 * 2 + 12 * 10  + 9 * 4= 54+20+120+36=230*)
 
+(****************************************************************************************)
+(****************************************************************************************)
+(******* 5-qubit Ripple Full Adder************)
+(* (144 - 4*2) * 4 +  10 * 2 + (96 - 4*2) = 544+20+88=652*)
+(*34 * 4 + 22 = 136 + 22 = 158*)
+(*CPU time (user): 33523.306683*)
+(****************************************************************************************)
 
 let five_qubits_ripple_adder = time prove(`!(ten:qop^N->(real^N->complex)-> (real^N->complex)) 
 (LH:sm->(real->complex)) (LV:sm->(real->complex))  
@@ -478,8 +485,3 @@ if i = 15 then LH y01 else LH x01)`,
 quantum_tac (matrix_procedure [] (gate_matrix "test21.txt" [] [("CIRCUIT3",4);("CIRCUIT1",4)] 0) 
 (extract_port [] "(ca4,1,y4,0,x4,0,ca3,1,y3,0,x3,1,ca2,1,y2,0,x2,0,ca1,1,y1,0,x1,0,ca0,1,cin,0,y0,0,x0,1)" 0 0) 4) 16 
 0 0 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)]);;
-
-(* (144 - 4*2) * 4 +  10 * 2 + (96 - 4*2) = 544+20+88=652*)
-(34 * 4 + 22 = 136 + 22 = 158)
-
-CPU time (user): 33523.306683

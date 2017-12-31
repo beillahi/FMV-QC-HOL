@@ -4,7 +4,7 @@
 (*                                                                           *)
 (*                                                                           *)
 (*                                                                           *)
-(* Last update: October 24, 2016                                            *)
+(* Last update: October 24, 2017                                            *)
 (*                                                                           *)
 (* ========================================================================= *)
 
@@ -19,6 +19,8 @@ needs "tactics_2.ml";;
 (*-----------------------------------------------------*)
 (*----------------Formalization------------------------*)
 (*-----------------------------------------------------*)
+(* 62 optical qubits *)
+(*5 + 3 + 2 * 3 = 14 CZ gates *)
 (*--------------------**********************------------------*) 
 
 let tensor1_blin = prove(` !a x1 x2. 1 <=  dimindex (:N) ==>
@@ -45,9 +47,6 @@ CNOT2_GATE (b1,b2,c1,c2,ten,LH,LV,m_modes_pro) /\
 SWAP_GATE (b0,c1,c0,d1,ten,LH,LV,m_modes_pro) /\
 SWAP_GATE (c2,b3,d2, y4,ten,LH,LV,m_modes_pro) /\
 FREDKIN1_GATE (c0,d1,d2,y1,y2,y3,ten,LH,LV,m_modes_pro))` ;;
-
-(* 62 optical qubits *)
-(*5 + 3 + 2 * 3 = 14 CZ gates *)
     
 let adder_tactics =     
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;
