@@ -38,7 +38,7 @@ let T_GATE = new_definition
 `T_GATE ((x0:sm), (y0:sm), 
 (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
 (LH:sm->(real->complex)), (LV:sm->(real->complex)))  
-<=>  (!(a:sm^N) (d:sm^N).
+<=>  (? (a:sm^N) (d:sm^N).
 a$1 = d$1  /\ PHASE_SHIFTER (ten,--(pi / &4),a$2,2,d$2,2) /\ 
 T_In_Out (x0,y0,a, d, LH, LV)) `;;
 
@@ -46,7 +46,7 @@ let T_STAR_GATE = new_definition
 `T_STAR_GATE ((x0:sm), (y0:sm), 
 (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
 (LH:sm->(real->complex)), (LV:sm->(real->complex)))  
-<=>  (!(a:sm^N) (d:sm^N).
+<=>  (? (a:sm^N) (d:sm^N).
 a$1 = d$1  /\ PHASE_SHIFTER (ten, pi / &4,a$2,2,d$2,2) /\ 
 T_In_Out (x0,y0,a, d, LH, LV)) `;;
 
@@ -59,8 +59,9 @@ tensor 1  (lambda i. LH (fl1))  `,
 REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
 RIGHT_AND_FORALL_THM;T_GATE] THEN
 REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(a:sm^N)` ;  `(d:sm^N)`]
-THEN IMP_REWRITE_TAC[T_In_Out] THEN  
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
+ IMP_REWRITE_TAC[T_In_Out] THEN  
 REWRITE_TAC[GSYM T_In_Out;is_beam_splitter;PHASE_SHIFTER;pos] THEN
 SIMP_TAC[REWRITE_RULE[CFUN_ARITH `tensor 2 x = tensor 1 y <=> 
 tensor 1 y = tensor 2 x`] T_In_Out]
@@ -78,8 +79,9 @@ tensor 1  (lambda i. LH (fl1))  `,
 REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
 RIGHT_AND_FORALL_THM;T_STAR_GATE] THEN
 REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(a:sm^N)` ;  `(d:sm^N)`]
-THEN IMP_REWRITE_TAC[T_In_Out] THEN  
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
+IMP_REWRITE_TAC[T_In_Out] THEN  
 REWRITE_TAC[GSYM T_In_Out;is_beam_splitter;PHASE_SHIFTER;pos] THEN
 SIMP_TAC[REWRITE_RULE[CFUN_ARITH `tensor 2 x = tensor 1 y <=> 
 tensor 1 y = tensor 2 x`] T_In_Out]

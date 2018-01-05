@@ -108,7 +108,7 @@ let TS_GATE = define
    `TS_GATE ((x1:sm), (x2:sm), (x3:sm), (y1:sm),(y2:sm),(y3:sm),ten, 
     (LH:sm->(real->complex)), (LV:sm->(real->complex)),
     (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=> 
-    (! (k:sm^N) (c1:sm) (c2:sm) (d2:sm). 
+    (? (k:sm^N) (c1:sm) (c2:sm) (d2:sm). 
     IS_TS_MODEL (x1,x2,x3,y1,y2,y3,c1,c2,d2,ten,LH,LV,m_modes_pro) /\ 
     TS_outputs (k,y1, y2, y3,LH,LV) /\ TS_inputs (k, x1, x2,x3,LH,LV))`;;
 
@@ -117,7 +117,8 @@ let TS_GATE = define
 let TS_tactic = 
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;TS_GATE] THEN
 REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(k:sm^N)`;`(c1:sm)`;`(c2:sm)`;`(d2:sm)`] THEN
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 REWRITE_TAC[IS_TS_MODEL] THEN
 ASM_SIMP_TAC [TS_inputs ] THEN
 ASM_SIMP_TAC [GSYM TS_inputs ] THEN

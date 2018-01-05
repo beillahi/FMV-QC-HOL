@@ -29,7 +29,7 @@ let SWAP_GATE = define
    (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
     (LH:sm->(real->complex)), (LV:sm->(real->complex)),
     (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=> 
-(! (c1:sm) (c2:sm) (d1:sm) (d2:sm).
+(? (c1:sm) (c2:sm) (d1:sm) (d2:sm).
 CNOT2_GATE (x1,x2, c1,c2,ten, LH, LV ,m_modes_pro) /\
 CNOT1_GATE (c1,c2,d1,d2,ten,LH, LV,m_modes_pro) /\
 CNOT2_GATE (d1,d2, y1,y2,ten, LH, LV ,m_modes_pro))` ;;
@@ -37,7 +37,8 @@ CNOT2_GATE (d1,d2, y1,y2,ten, LH, LV ,m_modes_pro))` ;;
 let SWAP_tactic = 
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;SWAP_GATE] THEN
 REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(c1:sm)`; `(c2:sm)`; `(d1:sm)`;`(d2:sm)`] THEN
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 STRIP_TAC THEN cnot2_tac "sw1" "sw2" "c1" "c2" THEN cnot1_tac "c1" "c2" "d1" "d2" THEN
 cnot2_tac "d1" "d2" "sw3" "sw4" THEN
 REPEAT (POP_ASSUM MP_TAC) THEN

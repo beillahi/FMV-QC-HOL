@@ -26,7 +26,7 @@ let V2_GATE = define
    (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
     (LH:sm->(real->complex)), (LV:sm->(real->complex)),
     (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=> 
-(! (a1:sm) (a2:sm) (b1:sm) (b2:sm) (d1:sm) (d2:sm) (e2:sm). 
+(? (a1:sm) (a2:sm) (b1:sm) (b2:sm) (d1:sm) (d2:sm) (e2:sm). 
 T_STAR_GATE (c, a1,ten,LH, LV) /\ 
 HADAMARD_GATE  (t, a2, ten, LH, LV) /\ 
 CNOT2_GATE (a2, a1, b2, b1,ten, LH, LV ,m_modes_pro) /\
@@ -39,7 +39,8 @@ HADAMARD_GATE  (e2, t1, ten, LH, LV) )` ;;
 let V2_TAC = REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
 RIGHT_AND_FORALL_THM;V2_GATE] THEN
 REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(a1:sm)`;`(a2:sm)`;`(b1:sm)`;`(b2:sm)`;`(d1:sm)`;`(d2:sm)`;`(e2:sm)`] THEN 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 quantum_tac (matrix_procedure [] ((gate_matrix "test15.txt" [] [("T_STAR_GATE",1);("T_GATE",1)] 0))  
 (extract_port [] "(t,1,c,0)" 0 0) 3) 2 0 0 [("T_STAR_GATE",T_STAR_tac);("T_GATE",TT_tac)];;
 
@@ -111,7 +112,7 @@ let V_GATE = define
    (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
     (LH:sm->(real->complex)), (LV:sm->(real->complex)),
     (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=> 
-(! (a1:sm) (a2:sm) (b1:sm) (b2:sm) (d1:sm) (d2:sm) (e2:sm). 
+(? (a1:sm) (a2:sm) (b1:sm) (b2:sm) (d1:sm) (d2:sm) (e2:sm). 
 T_STAR_GATE (c, a1,ten,LH, LV) /\ 
 HADAMARD_GATE  (t, a2, ten, LH, LV) /\ 
 CNOT1_GATE (a1,a2, b1,b2,ten, LH, LV ,m_modes_pro) /\
@@ -124,7 +125,8 @@ HADAMARD_GATE  (e2, t1, ten, LH, LV) )` ;;
 let V_TAC = REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
 RIGHT_AND_FORALL_THM;V_GATE] THEN
 REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(a1:sm)`;`(a2:sm)`;`(b1:sm)`;`(b2:sm)`;`(d1:sm)`;`(d2:sm)`;`(e2:sm)`] THEN 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 quantum_tac (matrix_procedure [] ((gate_matrix "test13.txt" [] [("T_STAR_GATE",1);("T_GATE",1)] 0))  
 (extract_port [] "(c,0,t,1)" 0 0) 3) 2 0 0 [("T_STAR_GATE",T_STAR_tac);("T_GATE",TT_tac)];;
 
@@ -197,7 +199,7 @@ let V2_STAR_GATE = define
    (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
     (LH:sm->(real->complex)), (LV:sm->(real->complex)),
     (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=> 
-(! (a1:sm) (a2:sm) (b1:sm) (b2:sm) (d1:sm) (d2:sm) (e2:sm). 
+(? (a1:sm) (a2:sm) (b1:sm) (b2:sm) (d1:sm) (d2:sm) (e2:sm). 
 T_GATE (c, a1,ten,LH, LV) /\ 
 HADAMARD_GATE  (t, a2, ten, LH, LV) /\ 
 CNOT2_GATE (a2,a1, b2,b1,ten, LH, LV ,m_modes_pro) /\
@@ -210,7 +212,8 @@ HADAMARD_GATE  (e2, t1, ten, LH, LV) )` ;;
 let V2_STAR_TAC = REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
 RIGHT_AND_FORALL_THM;V2_STAR_GATE] THEN
 REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(a1:sm)`;`(a2:sm)`;`(b1:sm)`;`(b2:sm)`;`(d1:sm)`;`(d2:sm)`;`(e2:sm)`] THEN 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 quantum_tac (matrix_procedure [] ((gate_matrix "test16.txt" [] [("T_STAR_GATE",1);("T_GATE",1)] 0))  
 (extract_port [] "(t,1,c,0)" 0 0) 3) 2 0 0 [("T_STAR_GATE",T_STAR_tac);("T_GATE",TT_tac)];;
 
@@ -284,7 +287,7 @@ let V_STAR_GATE = define
    (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
     (LH:sm->(real->complex)), (LV:sm->(real->complex)),
     (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=> 
-(! (a1:sm) (a2:sm) (b1:sm) (b2:sm) (d1:sm) (d2:sm) (e2:sm). 
+(? (a1:sm) (a2:sm) (b1:sm) (b2:sm) (d1:sm) (d2:sm) (e2:sm). 
 T_GATE (c, a1,ten,LH, LV) /\ 
 HADAMARD_GATE  (t, a2, ten, LH, LV) /\ 
 CNOT1_GATE (a1,a2, b1,b2,ten, LH, LV ,m_modes_pro) /\
@@ -297,7 +300,8 @@ HADAMARD_GATE  (e2, t1, ten, LH, LV) )` ;;
 let V_STAR_TAC = REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
 RIGHT_AND_FORALL_THM;V_STAR_GATE] THEN
 REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(a1:sm)`;`(a2:sm)`;`(b1:sm)`;`(b2:sm)`;`(d1:sm)`;`(d2:sm)`;`(e2:sm)`] THEN 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN  
 quantum_tac (matrix_procedure [] ((gate_matrix "test14.txt" [] [("T_STAR_GATE",1);("T_GATE",1)] 0))  
 (extract_port [] "(c,0,t,1)" 0 0) 3) 2 0 0 [("T_STAR_GATE",T_STAR_tac);("T_GATE",TT_tac)];;
 

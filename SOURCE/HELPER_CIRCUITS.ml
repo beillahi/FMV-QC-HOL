@@ -17,7 +17,7 @@ let CIRCUIT3 = define
 (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
 (LH:sm->(real->complex)), (LV:sm->(real->complex)),
 (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=>  
-(!(b1:sm)  (b0:sm) ( c0 :sm) (b2:sm) ( c1:sm) ( d0:sm) ( c2:sm) ( e0:sm) ( f0:sm) ( b3:sm) 
+(? (b1:sm)  (b0:sm) ( c0 :sm) (b2:sm) ( c1:sm) ( d0:sm) ( c2:sm) ( e0:sm) ( f0:sm) ( b3:sm) 
 ( d2:sm) ( g0:sm) ( e2:sm) ( e1:sm) ( c3:sm) ( f2:sm) ( d3:sm) ( f1:sm) ( e3:sm) 
 ( g1:sm) ( f3:sm) ( h3:sm) ( d1:sm)  ( h0:sm) .
 SWAP_GATE(a0,a1,b1,b0,ten,LH,LV,m_modes_pro) /\
@@ -39,9 +39,8 @@ SWAP_GATE(h3,f2,g2,i3,ten,LH,LV,m_modes_pro))` ;;
 let CIRCUIT_TAC = REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
 RIGHT_AND_FORALL_THM;CIRCUIT3] THEN
 REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(b1:sm)`; `(b0:sm)`;`( c0 :sm)`;`(b2:sm)`;`( c1:sm)`;`( d0:sm)`;`( c2:sm)`;`( e0:sm)`;`( f0:sm)`;`( b3:sm)`;
-`( d2:sm)`;`( g0:sm)`;`( e2:sm)`;`( e1:sm)`;`( c3:sm)`;`( f2:sm)`;`( d3:sm)`;`( f1:sm)`;`( e3:sm)`;
-`( g1:sm)`;`( f3:sm)`;`( h3:sm)`;`( d1:sm)`;`( h0:sm)`;] THEN 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 quantum_tac (matrix_procedure [] ((gate_matrix "test17.txt" [] [("V_GATE",2);("V2_GATE",2);("V2_STAR_GATE",2)] 0))  
 (extract_port [] "(ad1,0,ad2,1,ad3,1,ad4,0)" 0 0) 4) 4 0 0 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)];;
 
@@ -406,7 +405,7 @@ let CIRCUIT1 = define
 (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
 (LH:sm->(real->complex)), (LV:sm->(real->complex)),
 (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=>  
-(!(b1:sm) (b0:sm) (c0:sm) (b2:sm) (c1:sm) (d0:sm) (c2:sm) (e0:sm) (f0:sm) 
+(? (b1:sm) (b0:sm) (c0:sm) (b2:sm) (c1:sm) (d0:sm) (c2:sm) (e0:sm) (f0:sm) 
 (b3:sm) (d2:sm) (g0:sm) (e2:sm) (e1:sm) (d1:sm) (h0:sm).
 SWAP_GATE(a0,a1,b1,b0,ten,LH,LV,m_modes_pro) /\
 SWAP_GATE(b0,a2,b2,c0,ten,LH,LV,m_modes_pro) /\
@@ -423,9 +422,8 @@ V2_STAR_GATE(h0,e1,i0,f1,ten,LH,LV,m_modes_pro))` ;;
 let CIRCUIT1_TAC = REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
 RIGHT_AND_FORALL_THM;CIRCUIT1] THEN
 REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(b1:sm)`; `(b0:sm)`;`(c0 :sm)`;`(b2:sm)`;`(c1:sm)`;`(d0:sm)`;
-`(c2:sm)`;`(e0:sm)`;`(f0:sm)`;`(b3:sm)`;
-`(d2:sm)`;`(g0:sm)`;`(e2:sm)`;`(e1:sm)`;`( d1:sm)`;`(h0:sm)`;] THEN 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 quantum_tac (matrix_procedure [] ((gate_matrix "test18.txt" [] [("V_GATE",2);("V2_GATE",2);("V2_STAR_GATE",2)] 0))  
 (extract_port [] "(ad1,0,ad2,1,ad3,1,ad4,0)" 0 0) 4) 4 0 0 [("V_GATE",VG_tac);("V2_GATE",VG2_tac);("V2_STAR_GATE",VG2_STAR_tac)];;
 

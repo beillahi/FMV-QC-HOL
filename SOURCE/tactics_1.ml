@@ -4,7 +4,7 @@
 (*                                                                           *)
 (*                                                                           *)
 (*                                                                           *)
-(* Last update: October 24, 2016                                            *)
+(* Last update: January 5th, 2018                                            *)
 (*                                                                           *)
 (* ========================================================================= *)
 
@@ -72,9 +72,6 @@ let condition_thm0 n1 n3 =
 
     
 (****************************************************************************************)  
-         
-
-
 
 let rec condRecomposeTac (i:int) (j:int) (ll: int list)  =  
     let len = List.length ll in
@@ -142,21 +139,6 @@ let one_less n =
      map ARITH_RULE (map thm_integer (1--n));;
 
 (****************************************************************************************)   
-let rewrite_decompose_tac m l k i =
-    let rec rewrite_decompose m l k i =  
-       let len = List.length l in
-       let thm_integer n m k = "((" :: (string_of_int m) :: " <= dimindex (:N) ==> (i <= " ::
-       (string_of_int n) :: " ==> i + " :: (string_of_int k) :: " <= dimindex (:N))) /\ (1 <= i + " :: 
-       (string_of_int k) :: [")):bool"] in 
-        if (i < len)  then
-            if (i = 0) then 
-                (rewrite_decompose m l (k+(List.nth l i)) (i+1))
-            else
-            (parse_term (String.concat "" (thm_integer (List.nth l i) m k))) :: 
-            (rewrite_decompose m l (k+(List.nth l i)) (i+1))
-        else [] in  
-    (ASM_SIMP_TAC ([ARITH_RULE `(((i:num) + j = k) <=> (if (j <= k) then i = k - j else F))`;
-    LAMBDA_BETA] @ map ARITH_RULE (rewrite_decompose m l k i))) THEN CONV_TAC NUM_REDUCE_CONV;;
     
 let rewrite_decompose_tac m l k i =
     let rec rewrite_decompose m l k i =  
@@ -173,9 +155,6 @@ let rewrite_decompose_tac m l k i =
         else [] in  
     (ASM_SIMP_TAC ([ARITH_RULE `(((i:num) + j = k) <=> (if (j <= k) then i = k - j else F))`;
     LAMBDA_BETA] @ map ARITH_RULE (rewrite_decompose m l k i))) THEN CONV_TAC NUM_REDUCE_CONV;;
-	
-MP_TAC([ARITH_RULE `(((i:num) + j = k) <=> (if (j <= k) then i = k - j else F))`] @ map ARITH_RULE (rewrite_decompose m l k i)) THEN 
-       ASM_SIMP_TAC[LAMBDA_BETA]
     
 (****************************************************************************************)
      
@@ -485,13 +464,34 @@ let integer_equiv n =
     (rev (map (spec_new  thm_integer) (2--n))));;
     
 (****************************************************************************************)
-        
+(****************************************************************************)
+(*             Some useful linear algebra lemmas                            *)
+(****************************************************************************)
+let CFUN_ADD_LEMBDA =
+ CFUN_ARITH `!f g. (\y:A^N. f y + g y) =
+ (\y:A^N. f y) + (\y:A^N. g y)`;;
+
+let CFUN_SUB_LEMBDA = 
+CFUN_ARITH `!f g. (\y:A^N. f y - g y) = 
+(\y:A^N. f y) - (\y:A^N. g y)`;;
+
+let  CFUN_ADD_AC = 
+CFUN_ARITH `(m:cfun) + (n:cfun) = n + m 
+/\ (m + n) + (p:cfun) = m + n + p 
+ /\ m + n + p = n + m + p`;;
+
+let CFUN_SUB_AC = 
+CFUN_ARITH`!(a:cfun)  (d:cfun) (f:cfun) . 
+ a - ( d + f) = a - d - f /\
+a - (d -f) = a - d + f /\ (a + d) - f = a + d - f `;;
+
 let CFUN_ADD_RDISTRIB_NEW = CFUN_ARITH 
 `!(a:complex) (b:complex) (x:cfun) (x1:cfun) (x2:cfun). 
 (a + b) % x = a % x + b % x /\  
 (a + b) % x + x1 = a % x + b % x + x1 /\ 
 x2 + (a + b) % x + x1= x2+ a % (x:cfun) + b % x + x1`;;
 
+(*
 
 let thm1 =  MESON[REAL_OF_NUM_MUL;REAL_MUL_ASSOC;REAL_MUL_SYM]
 `&m * &n * x = &(m * n) * x /\ &m * y * &n * x = &(m * n) * x * y /\ &m * &n = &(m * n) /\
@@ -519,8 +519,66 @@ x1 * cexp(y1) * x2 * x3 * cexp(y2) = (x1 * x2 * x3) * (cexp(y1) * cexp(y2)) /\
 x1 * cexp(y1) * x2 * x4 * cexp(y2) * x3 = (x1 * x2 * x4 * x3) * (cexp(y1) * cexp(y2)) /\
 cexp(y1) * x1 * x2 * cexp(y2) * x3 = (x1 * x2 * x3) * (cexp(y1) * cexp(y2)) /\
 x1 * cexp(y1) * x2 * x3 = (x1 * x2 * x3) * cexp(y1) /\ 
-x1 * (ii * x2)  =ii * (x1 * x2) `;;
+x1 * (ii * x2)  =ii * (x1 * x2) `;;  
+
+*)
+
+	
+let thm4 =  prove( ` ii * x = x * ii /\
+x * ii * y =  (x*y) * ii  /\ x * y * ii  = (x*y) * ii  /\
+x * --ii * y =  (x*y) * --ii  /\ x * y * --ii  = (x*y) * --ii  /\
+x * ii + y * ii = (x + y) * ii /\  x * ii + y * --ii = (x - y) * ii /\
+x * --ii + y * ii = (y - x) * ii /\ x * --ii + y * --ii = (x + y) * --ii`,
+SIMP_TAC[COMPLEX_MUL_AC;COMPLEX_MUL_LNEG;COMPLEX_MUL_RNEG;GSYM COMPLEX_POW_2;
+COMPLEX_POW_II_2;COMPLEX_MUL_LID] THEN CONV_TAC COMPLEX_FIELD);;
+
+let thm5 =  prove( ` (&x / sqrt(&y)) * &z = &z * (&x / sqrt(&y)) /\ 
+(&x / sqrt(&y)) * &z * (v:real) = &z * (&x / sqrt(&y)) * v /\
+(&x / sqrt(&y)) * (&z / &t) = (&z / &t) * (&x / sqrt(&y)) /\
+ (&x / sqrt(&y)) * (&z / &t) * v = (&z / &t) * (&x / sqrt(&y)) * v  `, 
+CONV_TAC REAL_FIELD);;
+
+let CEXP_II_PI = prove(`cexp (ii * Cx(pi)) = --Cx(&1)`,
+    REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI;
+    SIN_PI;COMPLEX_ADD_RID;COMPLEX_MUL_RZERO;CX_NEG]);;  
+	
+let CEXP_II_PI_CNJ = prove(`cexp (-- (ii * Cx(pi))) = --Cx(&1)`,
+   REWRITE_TAC[MESON[CX_NEG;COMPLEX_MUL_RNEG] `--(ii * Cx(x)) = ii * Cx(--x)`] THEN
+	REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI;COMPLEX_ADD_RID;
+    REAL_POS; SIN_PI;COS_NEG;SIN_NEG;COMPLEX_MUL_RZERO;COMPLEX_ADD_LID;CX_NEG] THEN 
+	CONV_TAC COMPLEX_FIELD);; 
+    
+let CEXP_II_PI2 = prove(`cexp (ii * Cx(pi / &2)) = ii`,
+    REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI2;
+    SIN_PI2;COMPLEX_ADD_LID;COMPLEX_MUL_RZERO;COMPLEX_MUL_RID]);; 
+	
+let CEXP_II_PI2_CNJ = prove(`cexp (--(ii * Cx(pi / &2))) = --ii`,
+    REWRITE_TAC[MESON[CX_NEG;COMPLEX_MUL_RNEG] `--(ii * Cx(x)) = ii * Cx(--x)`] THEN
+	REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI2;COMPLEX_ADD_RID;
+    REAL_POS; SIN_PI2;COS_NEG;SIN_NEG;COMPLEX_MUL_RZERO;COMPLEX_ADD_LID;CX_NEG] THEN 
+	CONV_TAC COMPLEX_FIELD);; 
+
+let SIN_PI4 = prove
+ (`sin(pi / &4) = sqrt(&1 / &2)`,
+  MP_TAC(SPEC `pi / &4` SIN_CIRCLE) THEN
+  SIMP_TAC[SPEC `pi / &4` COS_SIN; REAL_ARITH `p / &2 - p / &4 = p / &4`] THEN
+  REWRITE_TAC[REAL_RING `x pow 2  + x pow 2= &1 <=> x pow 2 = &1 / &2 `] THEN
+  MP_TAC (SPEC `sin(pi / &4)` (SPEC `&1 / &2` SQRT_UNIQUE)) THEN 
+  MP_TAC(SPEC `pi / &4` SIN_POS_PI) THEN MP_TAC PI_POS THEN REAL_ARITH_TAC);;
+  
+let COS_PI4 = prove
+ (`cos(pi / &4) = sqrt(&1 / &2)`,
+  SIMP_TAC[SIN_PI4;SPEC `pi / &4` COS_SIN; REAL_ARITH `p / &2 - p / &4 = p / &4`]);;
+  
+let CEXP_II_PI4 = prove(`cexp (ii * Cx(pi / &4)) = Cx(&1 / sqrt(&2)) + ii * Cx(&1 / sqrt(&2))`,
+    REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI4;SQRT_DIV;SQRT_1;
+REAL_POS; SIN_PI4]);; 
+
+let CEXP_II_PI4_CNJ = prove(`cexp (--(ii * Cx(pi / &4))) = Cx(&1 / sqrt(&2)) - ii * Cx(&1 / sqrt(&2))`,
+    REWRITE_TAC[MESON[CX_NEG;COMPLEX_MUL_RNEG] `--(ii * Cx(x)) = ii * Cx(--x)`] THEN
+	REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI4;SQRT_DIV;SQRT_1;
+    REAL_POS; SIN_PI4;COS_NEG;SIN_NEG] THEN 
+    REWRITE_TAC[CX_NEG;GSYM complex_sub;COMPLEX_MUL_RNEG]);; 
+	
 (****************************************************************************************)
-
-
     

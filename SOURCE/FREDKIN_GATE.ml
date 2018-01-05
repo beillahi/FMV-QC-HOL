@@ -28,7 +28,7 @@ let FREDKIN3_GATE = define
 (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
 (LH:sm->(real->complex)), (LV:sm->(real->complex)),
 (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex))) <=> 
-(!(c1:sm) (c2:sm) (d1:sm) (d2:sm).
+(? (c1:sm) (c2:sm) (d1:sm) (d2:sm).
 CNOT2_GATE (x1,x2, c1,c2,ten, LH, LV ,m_modes_pro) /\
 TOFFOLI1_GATE (c1,c2,x3,d1,d2,y3,ten,LH, LV,m_modes_pro) /\
 CNOT2_GATE (d1,d2,y1,y2,ten, LH, LV ,m_modes_pro))` ;;
@@ -38,7 +38,7 @@ let FREDKIN1_GATE = define
 (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
 (LH:sm->(real->complex)), (LV:sm->(real->complex)),
 (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex))) <=> 
-(!(c2:sm) (c3:sm) (d2:sm) (d3:sm).
+(? (c2:sm) (c3:sm) (d2:sm) (d3:sm).
 CNOT1_GATE (x2,x3, c2,c3,ten, LH, LV ,m_modes_pro) /\
 TOFFOLI3_GATE (x1,c2,c3,y1,d2,d3,ten,LH, LV,m_modes_pro) /\
 CNOT1_GATE (d2,d3, y2,y3,ten, LH, LV ,m_modes_pro))` ;;
@@ -47,8 +47,9 @@ CNOT1_GATE (d2,d3, y2,y3,ten, LH, LV ,m_modes_pro))` ;;
 
 let FREDKIN3_tactic = 
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;
-FREDKIN3_GATE] THEN REPEAT GEN_TAC THEN MAP_EVERY EXISTS_TAC [`(c1:sm)`; 
-`(c2:sm)`;`(d1:sm)`;`(d2:sm)`] THEN
+FREDKIN3_GATE] THEN REPEAT GEN_TAC THEN 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 ASM_SIMP_TAC [ARITH_RULE `3 = (2+1) /\ 1 <= 1`;tensor_nmlem1;ARITH_RULE 
 `(8 <= dimindex (:N) ==>  1 <= dimindex (:N)) `] THEN CONV_TAC NUM_REDUCE_CONV 
 THEN ONCE_ASM_REWRITE_TAC[ARITH_RULE `(8 <= dimindex (:N) <=> 
@@ -147,7 +148,8 @@ REAL_FIELD `(&1 / &4 * &1 / &64) * &1 / &4 = &1 / &1024`];;
 let FREDKIN1_tactic = 
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;FREDKIN1_GATE] THEN
 REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(c2:sm)`; `(c3:sm)`;`(d2:sm)`;`(d3:sm)`] THEN
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 ASM_SIMP_TAC [ARITH_RULE `3 = (1+2)/\  1 <= 2  `;tensor_nmlem1;ARITH_RULE 
     `(8 <= dimindex (:N) ==>  2 <= dimindex (:N)) `] THEN
     CONV_TAC NUM_REDUCE_CONV THEN

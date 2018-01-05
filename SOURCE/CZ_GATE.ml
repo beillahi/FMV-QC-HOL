@@ -21,26 +21,6 @@ needs "NS_gate_2_proj.ml";;
 (*-----------------------------------------------------*)
 (*--------------------**********************------------------*) 
 
-(****************************************************************************)
-(*             Some useful linear algebra lemmas                            *)
-(****************************************************************************)
-let CFUN_ADD_LEMBDA =
- CFUN_ARITH `!f g. (\y:A^N. f y + g y) =
- (\y:A^N. f y) + (\y:A^N. g y)`;;
-
-let CFUN_SUB_LEMBDA = 
-CFUN_ARITH `!f g. (\y:A^N. f y - g y) = 
-(\y:A^N. f y) - (\y:A^N. g y)`;;
-
-let  CFUN_ADD_AC = 
-CFUN_ARITH `(m:cfun) + (n:cfun) = n + m 
-/\ (m + n) + (p:cfun) = m + n + p 
- /\ m + n + p = n + m + p`;;
-
-let CFUN_SUB_AC = 
-CFUN_ARITH`!(a:cfun)  (d:cfun) (f:cfun) . 
- a - ( d + f) = a - d - f /\
-a - (d -f) = a - d + f /\ (a + d) - f = a + d - f `;;
 
 (****************************************************************************)
 (*                              CZ gate structure                           *)
@@ -48,7 +28,7 @@ a - (d -f) = a - d + f /\ (a + d) - f = a + d - f `;;
              
 let is_CZ_model = 
 define `is_CZ_model ((a:sm^N), (b:sm^N), (c:sm^N), (j:sm^N),ten)  <=> 
- (!(d:sm^N) (q:sm^N) (l:sm^N) (k:sm^N) (m:sm^N) (p:sm^N).
+ (?(d:sm^N) (q:sm^N) (l:sm^N) (k:sm^N) (m:sm^N) (p:sm^N).
 is_beam_splitter (Cx(sqrt(&1/ &2)),Cx(sqrt(&1/ &2)),Cx(sqrt(&1/ &2)),
 --Cx(sqrt(&1/ &2)) ,ten,a$1,1,a$4,4,b$1,1,b$4,4)/\
 is_beam_splitter (Cx(sqrt(&1/ &2)),Cx(sqrt(&1/ &2)),Cx(sqrt(&1/ &2)),
@@ -219,7 +199,7 @@ let CZ_GATE = define
    `CZ_GATE ((x1:sm), (x2:sm), (y1:sm), (y2:sm),ten,
    (LH:sm->(real->complex)), (LV:sm->(real->complex)),
    (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=> 
-   (!(a:sm^N) (b:sm^N) (c:sm^N) (j:sm^N).
+   (?(a:sm^N) (b:sm^N) (c:sm^N) (j:sm^N).
    (is_CZ_model (a, b, c, j, ten) /\ CZ_INPUTS  (x1,x2,a, b, c,LH,LV, m_modes_pro) /\
     CZ_OUTPUTS  (y1,y2,a, c, j,LH,LV)))`;;
 
@@ -429,8 +409,8 @@ else if i = 5 then fock (c$5) 1 else (if i = 7 then fock (a$2) 1
 else (if i = 8 then fock (a$3) 1 else vac (c$3))))`,
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
 RIGHT_AND_FORALL_THM;is_CZ_model] THEN REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(d:sm^N)` ;`(q:sm^N)`; `(l:sm^N)`; 
-`(k:sm^N)`; `(m:sm^N)`; `(p:sm^N)`] THEN
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 ASM_SIMP_TAC [ARITH_RULE `8 = 6 + 2 /\  1 <= 2  `;proj_tensor_m_n;
 ARITH_RULE `(8 <= dimindex (:N) ==>  2 <= dimindex (:N)) `] THEN
 CONV_TAC NUM_REDUCE_CONV THEN ONCE_ASM_REWRITE_TAC[ARITH_RULE 
@@ -517,8 +497,9 @@ CZ_GATE (cz1, cz2, cz3, cz4,ten,LH,LV,m_modes_pro)
  LH (cz3) else  LH (cz4)):bqs^N))`,
 REPEAT GEN_TAC THEN  REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;
 LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;CZ_GATE] THEN 
-MAP_EVERY EXISTS_TAC[`(a:sm^N)`;`(b:sm^N)`;`(c:sm^N)`;`(j:sm^N)`] 
-THEN IMP_REWRITE_TAC[CZ_INPUTS;CZ_00;CZ_OUTPUTS]);;
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
+IMP_REWRITE_TAC[CZ_INPUTS;CZ_00;CZ_OUTPUTS]);;
 
 (****************************************************************************)
 (*   The projection of CZ outputs for two 1-qubit fock state inputs          *)
@@ -548,8 +529,9 @@ if i = 4 then cr (j$4) (vac (c$3)) else if i = 2 then fock (c$2) 1
 else if i = 5 then fock (c$5) 1 else if i = 7 then vac (a$2) else if i = 8 
 then vac (a$3) else vac (c$3))`,         
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;
-is_CZ_model] THEN REPEAT GEN_TAC THEN MAP_EVERY EXISTS_TAC [`(d:sm^N)` ;
-`(q:sm^N)`; `(l:sm^N)`; `(k:sm^N)`; `(m:sm^N)`; `(p:sm^N)`] THEN
+is_CZ_model] THEN REPEAT GEN_TAC THEN 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 SIMP_TAC[COP_ADD_THM] THEN SIMP_TAC[is_beam_splitter;
 LET_RULE_L[GSYM COP_SMUL_THM] FOCK_HERM_VAC] THEN SIMP_TAC[GSYM is_beam_splitter] 
 THEN SIMP_TAC[cop_pow;COP_MUL_RID;ONE;FACT;TWO] THEN SIMP_TAC[GSYM ONE; GSYM TWO] 
@@ -829,8 +811,9 @@ CZ_GATE (cz1, cz2, cz3, cz4,ten,LH,LV,m_modes_pro)
 LV (cz3) else LV (cz4)):bqs^N))`,
 REPEAT GEN_TAC THEN  REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;
 LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;CZ_GATE] THEN 
-MAP_EVERY EXISTS_TAC[`(a:sm^N)`;`(b:sm^N)`;`(c:sm^N)`;`(j:sm^N)`] 
-THEN IMP_REWRITE_TAC[CZ_INPUTS;CZ_11;CZ_OUTPUTS]);;
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
+ IMP_REWRITE_TAC[CZ_INPUTS;CZ_11;CZ_OUTPUTS]);;
 (****************************************************************************)
 (* The projection of CZ outputs for one 1-qubit fock and one vacuum state inputs *)
 (****************************************************************************)
@@ -855,8 +838,9 @@ fock (j$4) 1 else if i = 2 then fock (c$2) 1 else if i = 5 then fock (c$5) 1
 else if i = 7 then fock (a$2) 1 else if i = 8 then vac (a$3) else vac (c$3)):bqs^N)`,
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
 RIGHT_AND_FORALL_THM;is_CZ_model] THEN REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(d:sm^N)` ;`(q:sm^N)`; `(l:sm^N)`; 
-`(k:sm^N)`; `(m:sm^N)`; `(p:sm^N)`] THEN SIMP_TAC[is_beam_splitter;
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
+ SIMP_TAC[is_beam_splitter;
 LET_RULE_L[GSYM COP_SMUL_THM] FOCK_HERM_VAC] THEN 
 SIMP_TAC[GSYM is_beam_splitter] THEN SIMP_TAC[cop_pow;
 COP_MUL_RID;ONE;FACT;TWO] THEN SIMP_TAC[GSYM ONE; GSYM TWO] THEN
@@ -1064,8 +1048,9 @@ CZ_GATE (cz1, cz2, cz3, cz4,ten,LH,LV,m_modes_pro)
  LH (cz3) else LV (cz4)):bqs^N))`,
 REPEAT GEN_TAC THEN  REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;
 LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;CZ_GATE] THEN 
-MAP_EVERY EXISTS_TAC[`(a:sm^N)`;`(b:sm^N)`;`(c:sm^N)`;`(j:sm^N)`] 
-THEN IMP_REWRITE_TAC[CZ_INPUTS;CZ_01;CZ_OUTPUTS]);;
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
+ IMP_REWRITE_TAC[CZ_INPUTS;CZ_01;CZ_OUTPUTS]);;
 (****************************************************************************)
 (* The projection of CZ outputs for one vacuum state and one 1-qubit fock inputs *)
 (****************************************************************************)
@@ -1094,8 +1079,8 @@ if i = 8 then fock (a$3) 1  else vac (c$3)):bqs^N)`,
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
 RIGHT_AND_FORALL_THM;is_CZ_model] THEN
 REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(d:sm^N)` ;`(q:sm^N)`; `(l:sm^N)`; 
-`(k:sm^N)`; `(m:sm^N)`; `(p:sm^N)`] THEN
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 SIMP_TAC[is_beam_splitter;LET_RULE_L[GSYM COP_SMUL_THM] FOCK_HERM_VAC]
 THEN SIMP_TAC[GSYM is_beam_splitter] THEN
 SIMP_TAC[cop_pow;COP_MUL_RID;ONE;FACT;TWO] THEN
@@ -1333,8 +1318,9 @@ CZ_GATE (cz1, cz2, cz3, cz4,ten,LH,LV,m_modes_pro)
  LV (cz3) else  LH (cz4)):bqs^N))`,
 REPEAT GEN_TAC THEN  REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;
 LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;CZ_GATE] THEN 
-MAP_EVERY EXISTS_TAC[`(a:sm^N)`;`(b:sm^N)`;`(c:sm^N)`;`(j:sm^N)`] 
-THEN IMP_REWRITE_TAC[CZ_INPUTS;CZ_10;CZ_OUTPUTS]);;
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
+ IMP_REWRITE_TAC[CZ_INPUTS;CZ_10;CZ_OUTPUTS]);;
 
 (****************************************************************************)
 (* The projection of CZ outputs for one vacuum state and another quantum state *)
@@ -1356,8 +1342,9 @@ let CZ_0vac = prove(
    fock (c$2) 1 else if i = 5 then fock (c$5) 1 else (if i = 7 then fock (a$2) 1 
    else (if i = 8 then vac (a$3) else vac (c$3))))`,    
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;
-is_CZ_model] THEN REPEAT GEN_TAC THEN MAP_EVERY EXISTS_TAC [`(d:sm^N)` ;
-`(q:sm^N)`; `(l:sm^N)`; `(k:sm^N)`; `(m:sm^N)`; `(p:sm^N)`] THEN
+is_CZ_model] THEN REPEAT GEN_TAC THEN 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 ASM_SIMP_TAC [ARITH_RULE `8 = 6 + 2 /\  1 <= 2  `;proj_tensor_m_n;
 ARITH_RULE `(8 <= dimindex (:N) ==>  2 <= dimindex (:N)) `] THEN
 CONV_TAC NUM_REDUCE_CONV THEN ONCE_ASM_REWRITE_TAC[ARITH_RULE 
@@ -1441,7 +1428,8 @@ CZ_GATE (cz1, cz2, cz3, cz4,ten,LH,LV,m_modes_pro)
  LH (cz3) else  vac (cz4)):bqs^N))`,
 REPEAT GEN_TAC THEN  REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;
 LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;CZ_GATE] THEN 
-MAP_EVERY EXISTS_TAC[`(a:sm^N)`;`(b:sm^N)`;`(c:sm^N)`;`(j:sm^N)`] 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 THEN IMP_REWRITE_TAC[CZ_INPUTS;CZ_0vac;CZ_OUTPUTS]);;
 
 (****************************************************************************)
@@ -1463,8 +1451,9 @@ let CZ_vac0 =  prove(
     fock (c$2) 1 else if i = 5 then fock (c$5) 1 else (if i = 7 then vac (a$2) else 
     (if i = 8 then fock (a$3) 1 else vac (c$3))))`, 
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;
-is_CZ_model] THEN REPEAT GEN_TAC THEN MAP_EVERY EXISTS_TAC [`(d:sm^N)` ;
-`(q:sm^N)`; `(l:sm^N)`; `(k:sm^N)`; `(m:sm^N)`; `(p:sm^N)`] THEN
+is_CZ_model] THEN REPEAT GEN_TAC THEN 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 ASM_SIMP_TAC [ARITH_RULE `8 = 6 + 2 /\ 1 <= 2`;proj_tensor_m_n;ARITH_RULE 
 `(8 <= dimindex (:N) ==>  2 <= dimindex (:N)) `] THEN
 CONV_TAC NUM_REDUCE_CONV THEN ONCE_ASM_REWRITE_TAC[ARITH_RULE 
@@ -1547,7 +1536,8 @@ CZ_GATE (cz1, cz2, cz3, cz4,ten,LH,LV,m_modes_pro)
  vac (cz3) else  LH (cz4)):bqs^N))`,
 REPEAT GEN_TAC THEN  REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;
 LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;CZ_GATE] THEN 
-MAP_EVERY EXISTS_TAC[`(a:sm^N)`;`(b:sm^N)`;`(c:sm^N)`;`(j:sm^N)`] 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 THEN IMP_REWRITE_TAC[CZ_INPUTS;CZ_vac0;CZ_OUTPUTS]);;
 (****************************************************************************)
 (* The projection of CZ outputs for one quantum state where there is no     *)
@@ -1573,8 +1563,9 @@ Cx (&1 / &4) % tensor 8 ((lambda i. if i = 4 then fock (j$4) 1 else if i = 2
 then fock (c$2) 1 else if i = 5 then fock (c$5) 1 else if i = 7 then 
 vac (a$2) else if i = 8 then vac (a$3) else vac (c$3)):bqs^N)`,
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;
-is_CZ_model] THEN REPEAT GEN_TAC THEN MAP_EVERY EXISTS_TAC [`(d:sm^N)` ;
-`(q:sm^N)`; `(l:sm^N)`; `(k:sm^N)`; `(m:sm^N)`; `(p:sm^N)`] THEN
+is_CZ_model] THEN REPEAT GEN_TAC THEN 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 SIMP_TAC[is_beam_splitter;LET_RULE_L[GSYM COP_SMUL_THM] FOCK_HERM_VAC]
 THEN SIMP_TAC[GSYM is_beam_splitter] THEN SIMP_TAC[cop_pow;COP_MUL_RID;
 ONE;FACT;TWO] THEN SIMP_TAC[GSYM ONE; GSYM TWO] THEN SIMP_TAC[MULT_CLAUSES;
@@ -1729,8 +1720,9 @@ CZ_GATE (cz1, cz2, cz3, cz4,ten,LH,LV,m_modes_pro)
  vac (cz3) else  LV (cz4)):bqs^N))`,
 REPEAT GEN_TAC THEN  REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;
 LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;CZ_GATE] THEN 
-MAP_EVERY EXISTS_TAC[`(a:sm^N)`;`(b:sm^N)`;`(c:sm^N)`;`(j:sm^N)`] 
-THEN IMP_REWRITE_TAC[CZ_INPUTS;CZ_vac1;CZ_OUTPUTS]);;
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
+ IMP_REWRITE_TAC[CZ_INPUTS;CZ_vac1;CZ_OUTPUTS]);;
 
 (****************************************************************************)
 (* The projection of CZ outputs for one input is one photon fock state and   *)
@@ -1753,8 +1745,9 @@ is_CZ_model (a, b, c, j,ten) ==>
  then fock (j$1) 1 else if i = 2 then fock (c$2) 1 else if i = 5 then fock (c$5) 1 else 
  if i = 7 then vac (a$2) else if i = 8 then vac (a$3)  else vac (c$3)):bqs^N)`,
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;
-is_CZ_model] THEN REPEAT GEN_TAC THEN MAP_EVERY EXISTS_TAC [`(d:sm^N)` ;
-`(q:sm^N)`; `(l:sm^N)`; `(k:sm^N)`; `(m:sm^N)`; `(p:sm^N)`] THEN
+is_CZ_model] THEN REPEAT GEN_TAC THEN 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 SIMP_TAC[is_beam_splitter;LET_RULE_L[GSYM COP_SMUL_THM] FOCK_HERM_VAC]
 THEN SIMP_TAC[GSYM is_beam_splitter] THEN SIMP_TAC[cop_pow;COP_MUL_RID;
 ONE;FACT;TWO] THEN SIMP_TAC[GSYM ONE;GSYM TWO] THEN SIMP_TAC[MULT_CLAUSES;
@@ -1906,8 +1899,9 @@ CZ_GATE (cz1, cz2, cz3, cz4,ten,LH,LV,m_modes_pro)
 LV (cz3) else vac (cz4)):bqs^N))`,
 REPEAT GEN_TAC THEN  REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;
 LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;CZ_GATE] THEN 
-MAP_EVERY EXISTS_TAC[`(a:sm^N)`;`(b:sm^N)`;`(c:sm^N)`;`(j:sm^N)`] 
-THEN IMP_REWRITE_TAC[CZ_INPUTS;CZ_1vac;CZ_OUTPUTS]);;
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
+ IMP_REWRITE_TAC[CZ_INPUTS;CZ_1vac;CZ_OUTPUTS]);;
 
 
 let cz_tac cz1 cz2 cz3 cz4 = 

@@ -26,7 +26,7 @@ let CNOT1_GATE = define   `CNOT1_GATE ((x1:sm), (x2:sm), (y2:sm), (y1:sm),
    (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
     (LH:sm->(real->complex)), (LV:sm->(real->complex)),
     (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=> 
-(! (a1:sm) (c1:sm).
+(? (a1:sm) (c1:sm).
 HADAMARD_GATE (x1, a1, ten, LH, LV) /\
 CZ_GATE (a1, x2, c1, y1,ten, LH, LV ,m_modes_pro) /\
 HADAMARD_GATE (c1, y2, ten, LH, LV))` ;;
@@ -35,7 +35,7 @@ let CNOT2_GATE = define   `CNOT2_GATE ((x2:sm), (x1:sm), (y1:sm), (y2:sm),
    (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
     (LH:sm->(real->complex)), (LV:sm->(real->complex)),
     (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=> 
-(! (a1:sm) (c1:sm).
+(? (a1:sm) (c1:sm).
 HADAMARD_GATE (x1, a1, ten, LH, LV) /\
 CZ_GATE (x2, a1, y1, c1,ten, LH, LV ,m_modes_pro) /\
 HADAMARD_GATE (c1, y2, ten, LH, LV))` ;;
@@ -45,7 +45,8 @@ HADAMARD_GATE (c1, y2, ten, LH, LV))` ;;
 let CNOT_tactic = 
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;
 CFUN_SMUL_LID;CNOT1_GATE] THEN REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(a1:sm)`;`(c1:sm)`] THEN
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 ASM_SIMP_TAC [ARITH_RULE `2 = (1+1)/\  1 <= 1  `;tensor_nmlem1;ARITH_RULE 
     `(8 <= dimindex (:N) ==>  1 <= dimindex (:N)) `] THEN
     CONV_TAC NUM_REDUCE_CONV THEN
@@ -196,7 +197,8 @@ let CNOT2_tactic =
 REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;
 LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;CNOT2_GATE] THEN
 REPEAT GEN_TAC THEN
-MAP_EVERY EXISTS_TAC [`(a1:sm)`;`(c1:sm)`] THEN
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 ASM_SIMP_TAC [ARITH_RULE `2 = (1+1)/\  1 <= 1  `;tensor_nmlem1;ARITH_RULE 
     `(8 <= dimindex (:N) ==>  1 <= dimindex (:N)) `] THEN
     CONV_TAC NUM_REDUCE_CONV THEN

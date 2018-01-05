@@ -40,7 +40,7 @@ let F_ADDER = define
 (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
 (LH:sm->(real->complex)), (LV:sm->(real->complex)),
 (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=>  
-(!(b0:sm) (b1:sm) (b2:sm) (b3:sm) (c1:sm) (c2:sm) (c0:sm) (d1:sm) (d2:sm).
+(? (b0:sm) (b1:sm) (b2:sm) (b3:sm) (c1:sm) (c2:sm) (c0:sm) (d1:sm) (d2:sm).
 CNOT2_GATE (x1,x2,b0,b1,ten,LH,LV,m_modes_pro) /\
 CNOT2_GATE (x3,x4,b2,b3,ten,LH,LV,m_modes_pro) /\
 CNOT2_GATE (b1,b2,c1,c2,ten,LH,LV,m_modes_pro) /\ 
@@ -50,9 +50,9 @@ FREDKIN1_GATE (c0,d1,d2,y1,y2,y3,ten,LH,LV,m_modes_pro))` ;;
     
 let adder_tactics =     
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;
-F_ADDER] THEN REPEAT GEN_TAC THEN MAP_EVERY EXISTS_TAC [
-`(b0:sm)`; `(b1:sm)`; `(b2:sm)`; `(b3:sm)`; `(c1:sm)`; 
-`(c2:sm)`; `(c0:sm)`; `(d1:sm)`; `(d2:sm)`] THEN
+F_ADDER] THEN REPEAT GEN_TAC THEN 
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
     REPEAT GEN_TAC THEN integer_equiv 4 THEN
     ASM_SIMP_TAC ([(main_comp_inputs [1;1;1;1] 4);tensor_nmlem1] @ 
     (one_less 4)) THEN CONV_TAC NUM_REDUCE_CONV THEN

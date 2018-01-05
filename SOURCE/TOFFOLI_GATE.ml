@@ -27,7 +27,7 @@ let TOFFOLI3_GATE = define
 `TOFFOLI3_GATE ((x1:sm), (x2:sm), (x3:sm), (y1:sm), (y2:sm), (y3:sm),
 ten , (LH:sm->(real->complex)), (LV:sm->(real->complex)),
  (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex))) <=> 
-(! (c3:sm) (d3:sm) (c1:sm) (d1:sm).
+(? (c3:sm) (d3:sm) (c1:sm) (d1:sm).
 HADAMARD_GATE (x3, c3, ten,LH, LV) /\ FLIP_GATE (x1,c1,ten,LH, LV) /\
 TS_GATE (c1,x2,c3,d1,y2,d3,ten,LH, LV,m_modes_pro) /\
 FLIP_GATE (d1,y1,ten,LH, LV) /\ HADAMARD_GATE (d3,y3, ten,LH, LV))`;;
@@ -37,7 +37,7 @@ let TOFFOLI1_GATE = define
 `TOFFOLI1_GATE ((x1:sm), (x2:sm), (x3:sm), (y1:sm), (y2:sm), (y3:sm),
 ten , (LH:sm->(real->complex)), (LV:sm->(real->complex)),
  (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex))) <=> 
-(! (c1:sm) (d1:sm) (e1:sm) (f1:sm).
+(? (c1:sm) (d1:sm) (e1:sm) (f1:sm).
 HADAMARD_GATE (x1, c1, ten,LH, LV) /\ FLIP_GATE (c1,d1,ten,LH, LV) /\
 TS_GATE (d1,x2,x3,e1,y2,y3,ten,LH, LV,m_modes_pro) /\
 FLIP_GATE (e1,f1,ten,LH, LV) /\ HADAMARD_GATE (f1,y1, ten,LH, LV))`;;
@@ -46,7 +46,8 @@ FLIP_GATE (e1,f1,ten,LH, LV) /\ HADAMARD_GATE (f1,y1, ten,LH, LV))`;;
 let TOFFOLI1_tactic = 
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;TOFFOLI1_GATE] THEN
 REPEAT GEN_TAC THEN    
-MAP_EVERY EXISTS_TAC [`(c1:sm)`; `(d1:sm)`; `(e1:sm)`; `(f1:sm)`] THEN
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 ASM_SIMP_TAC [ARITH_RULE `3 = ((1+1)+1)/\  1 <= 1  `;tensor_nmlem1;ARITH_RULE 
     `(8 <= dimindex (:N) ==>  1 <= dimindex (:N)) `] THEN
     CONV_TAC NUM_REDUCE_CONV THEN
@@ -150,7 +151,8 @@ REAL_FIELD `&1 / &2 * &1 / &64 + &1 / &2 * &1 / &64 = &1 / &64`];;
 let TOFFOLI3_tactic = 
 REWRITE_TAC[LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;TOFFOLI3_GATE] THEN
 REPEAT GEN_TAC THEN    
-MAP_EVERY EXISTS_TAC [`(c3:sm)`; `(d3:sm)`; `(c1:sm)`; `(d1:sm)`] THEN
+REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
+REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
 ASM_SIMP_TAC [ARITH_RULE `3 = ((1+1)+1)/\  1 <= 1  `;tensor_nmlem1;ARITH_RULE 
     `(8 <= dimindex (:N) ==>  1 <= dimindex (:N)) `] THEN
     CONV_TAC NUM_REDUCE_CONV THEN
