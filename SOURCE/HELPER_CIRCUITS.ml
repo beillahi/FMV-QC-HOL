@@ -17,9 +17,9 @@ let CIRCUIT3 = define
 (ten:qop^N->(real^N->complex)-> (real^N->complex)), 
 (LH:sm->(real->complex)), (LV:sm->(real->complex)),
 (m_modes_pro:(real^N->complex)->(real^N->complex)->(real^N->complex)))  <=>  
-(? (b1:sm)  (b0:sm) ( c0 :sm) (b2:sm) ( c1:sm) ( d0:sm) ( c2:sm) ( e0:sm) ( f0:sm) ( b3:sm) 
-( d2:sm) ( g0:sm) ( e2:sm) ( e1:sm) ( c3:sm) ( f2:sm) ( d3:sm) ( f1:sm) ( e3:sm) 
-( g1:sm) ( f3:sm) ( h3:sm) ( d1:sm)  ( h0:sm) .
+(?(b1:sm)  (b0:sm) ( c0 :sm) (b2:sm) ( c1:sm) ( d0:sm) ( c2:sm) ( e0:sm) ( f0:sm) ( b3:sm) 
+(d2:sm) ( g0:sm) ( e2:sm) ( e1:sm) ( c3:sm) ( f2:sm) ( d3:sm) ( f1:sm) ( e3:sm) 
+(g1:sm) ( f3:sm) ( h3:sm) ( d1:sm)  ( h0:sm) .
 SWAP_GATE(a0,a1,b1,b0,ten,LH,LV,m_modes_pro) /\
 V2_GATE(b0,a2,c0,b2,ten,LH,LV,m_modes_pro) /\
 V_GATE(b1,c0,c1,d0,ten,LH,LV,m_modes_pro) /\ 
@@ -84,7 +84,7 @@ tensor 4
                           then LH ad6
                           else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT_TAC);;
 
-						  
+                          
 let circuit3_1101 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -103,7 +103,7 @@ tensor 4
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT_TAC);;
-						  
+                          
 let circuit3_1100 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -121,8 +121,8 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT_TAC);;
-						  
-						  
+                          
+                          
 let circuit3_1011 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -140,8 +140,8 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT_TAC);;
-						  
-						  
+                          
+                          
 let circuit3_1010 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -156,8 +156,8 @@ LV (ad3) else LH (ad4) ):bqs^N) =
 Cx (&1 / &295147905179352825856) %
 tensor 4 (lambda i. if i = 1 then LV ad5 else if i = 2
 then LV ad6 else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT_TAC);;
-						  
-						  
+                          
+                          
 let circuit3_1001 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -175,9 +175,9 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LH ad6
                           else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT_TAC);;
-						  
-						  
-						  
+                          
+                          
+                          
 let circuit3_1000 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -195,8 +195,8 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LH ad6
                           else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT_TAC);;
-						  
-						  
+                          
+                          
 let circuit3_0111 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -214,7 +214,7 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LH ad6
                           else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT_TAC);;
-						  
+                          
 let circuit3_0110 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -250,8 +250,8 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT_TAC);;
-						  
-						  
+                          
+                          
 let circuit3_0100 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -269,8 +269,8 @@ tensor 4  (lambda i. if i = 1
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT_TAC);;
-						  
-						  
+                          
+                          
 let circuit3_0011 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -288,7 +288,7 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT_TAC);;
-					
+                    
 let circuit3_0010 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -306,7 +306,7 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT_TAC);;
-						  
+                          
 let circuit3_0001 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -324,7 +324,7 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LH ad6
                           else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT_TAC);;
-						  
+                          
 let circuit3_0000 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -342,7 +342,7 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LH ad6
                           else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT_TAC);;
-						 
+                         
 
 let circuit3_tac l = 
  SUBGOAL_TAC "circuit3_0000" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))
@@ -467,7 +467,7 @@ tensor 4
                           then LH ad6
                           else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT1_TAC);;
 
-						  
+                          
 let circuit1_1101 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -485,7 +485,7 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LH ad6
                           else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT1_TAC);;
-						  
+                          
 let circuit1_1100 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -503,8 +503,8 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT1_TAC);;
-						  
-						  
+                          
+                          
 let circuit1_1011 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -522,8 +522,8 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LH ad6
                           else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT1_TAC);;
-						  
-						  
+                          
+                          
 let circuit1_1010 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -541,8 +541,8 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT1_TAC);;
-						  
-						  
+                          
+                          
 let circuit1_1001 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -560,9 +560,9 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT1_TAC);;
-						  
-						  
-						  
+                          
+                          
+                          
 let circuit1_1000 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -580,8 +580,8 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LH ad6
                           else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT1_TAC);;
-						  
-						  
+                          
+                          
 let circuit1_0111 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -599,7 +599,7 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT1_TAC);;
-						  
+                          
 let circuit1_0110 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -635,8 +635,8 @@ tensor 4  (lambda i. if i = 1
                      else if i = 2
                           then LH ad6
                           else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT1_TAC);;
-						  
-						  
+                          
+                          
 let circuit1_0100 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -654,8 +654,8 @@ tensor 4  (lambda i. if i = 1
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT1_TAC);;
-						  
-						  
+                          
+                          
 let circuit1_0011 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -673,7 +673,7 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LH ad6
                           else if i = 3 then LH ad7 else LV ad8)`,CIRCUIT1_TAC);;
-					
+                    
 let circuit1_0010 = prove( `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -691,7 +691,7 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LV ad7 else LH ad8)`,CIRCUIT1_TAC);;
-						  
+                          
 let circuit1_0001 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -709,7 +709,7 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LV ad6
                           else if i = 3 then LV ad7 else LV ad8)`,CIRCUIT1_TAC);;
-						  
+                          
 let circuit1_0000 = prove(  `!(ad1:sm) (ad2:sm) (ad3:sm) (ad4:sm)  (ad5:sm) (ad6:sm) (ad7:sm) (ad8:sm)
 (ten:qop^N->(real^N->complex)-> (real^N->complex))
 (LH:sm->(real->complex)) (LV:sm->(real->complex))
@@ -727,7 +727,7 @@ tensor 4 (lambda i. if i = 1
                      else if i = 2
                           then LH ad6
                           else if i = 3 then LH ad7 else LH ad8)`,CIRCUIT1_TAC);;
-						 
+                         
 
 let circuit1_tac l = 
  SUBGOAL_TAC "circuit1_0000" (concl (UNDISCH_ALL (spec_thm_tac (SPEC_V ("ad1",(List.nth l 0))

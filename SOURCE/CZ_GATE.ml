@@ -1430,7 +1430,7 @@ REPEAT GEN_TAC THEN  REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;
 LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;CZ_GATE] THEN 
 REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
 REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
-THEN IMP_REWRITE_TAC[CZ_INPUTS;CZ_0vac;CZ_OUTPUTS]);;
+IMP_REWRITE_TAC[CZ_INPUTS;CZ_0vac;CZ_OUTPUTS]);;
 
 (****************************************************************************)
 (* The projection of CZ outputs for one quantum state where there is no     *)
@@ -1538,7 +1538,7 @@ REPEAT GEN_TAC THEN  REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;
 LEFT_AND_FORALL_THM;RIGHT_AND_FORALL_THM;CZ_GATE] THEN 
 REWRITE_TAC[LEFT_AND_EXISTS_THM;RIGHT_AND_EXISTS_THM] THEN
 REWRITE_TAC[LEFT_IMP_EXISTS_THM] THEN REPEAT GEN_TAC THEN 
-THEN IMP_REWRITE_TAC[CZ_INPUTS;CZ_vac0;CZ_OUTPUTS]);;
+IMP_REWRITE_TAC[CZ_INPUTS;CZ_vac0;CZ_OUTPUTS]);;
 (****************************************************************************)
 (* The projection of CZ outputs for one quantum state where there is no     *)
 (*         photon and in the other input is one photon fock state           *)

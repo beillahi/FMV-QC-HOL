@@ -491,6 +491,38 @@ let CFUN_ADD_RDISTRIB_NEW = CFUN_ARITH
 (a + b) % x + x1 = a % x + b % x + x1 /\ 
 x2 + (a + b) % x + x1= x2+ a % (x:cfun) + b % x + x1`;;
 
+
+let pisum_thm k = prove( (parse_term (String.concat "" 
+("Cx(y)*x+Cx(&("::(string_of_int (k))::")*y)*x=Cx(&("::(string_of_int (k+1))::[")*y)*x"]))),
+SIMP_TAC[GSYM REAL_OF_NUM_ADD;REAL_ADD_RDISTRIB;CX_ADD;COMPLEX_ADD_RDISTRIB;
+SIMP_RULE[ADD1] ((num_CONV o mk_small_numeral)(k+1)); REAL_MUL_LID;COMPLEX_ADD_AC] );;
+		
+
+let rec pisum n k = 
+          if (k < n) then   (pisum_thm k) :: (pisum n (k+1))
+		  else [(COMPLEX_FIELD (parse_term (String.concat "" ["x + x = Cx(&2) * x"])))];;
+
+let pisum_thm2 k = SIMP_RULE [REAL_MUL_LID] (prove( (parse_term (String.concat "" 
+("Cx(y)*x+ --(Cx(&("::(string_of_int (k))::")*y)*x)= --(Cx(&("::(string_of_int (k-1))::[")*y)*x)"]))),
+SIMP_TAC[GSYM REAL_OF_NUM_ADD;REAL_ADD_RDISTRIB;CX_ADD;COMPLEX_ADD_RDISTRIB;
+SIMP_RULE[ADD1] ((num_CONV o mk_small_numeral)(k)); REAL_MUL_LID;COMPLEX_ADD_AC;] 
+THEN CONV_TAC COMPLEX_FIELD));;
+		
+
+let rec pisum2 n k = if (k < n) then   (pisum_thm2 k) :: (pisum2 n (k+1))
+else [(COMPLEX_FIELD (parse_term (String.concat "" ["x + x = Cx(&2) * x"])))];;
+
+
+let pisum_thm3 k = SIMP_RULE [REAL_MUL_LID] (prove( (parse_term (String.concat "" 
+("(Cx(&("::(string_of_int (k))::")*y)*x) + --(Cx(y)*x) = (Cx(&("::(string_of_int (k-1))::[")*y)*x)"]))),
+SIMP_TAC[GSYM REAL_OF_NUM_ADD;REAL_ADD_RDISTRIB;CX_ADD;COMPLEX_ADD_RDISTRIB;
+SIMP_RULE[ADD1] ((num_CONV o mk_small_numeral)(k)); REAL_MUL_LID;COMPLEX_ADD_AC;] 
+THEN CONV_TAC COMPLEX_FIELD));;
+		
+
+let rec pisum3 n k = if (k < n) then   (pisum_thm3 k) :: (pisum3 n (k+1))
+else [(COMPLEX_FIELD (parse_term (String.concat "" ["x + x = Cx(&2) * x"])))];;
+
 (*
 
 let thm1 =  MESON[REAL_OF_NUM_MUL;REAL_MUL_ASSOC;REAL_MUL_SYM]
@@ -523,7 +555,7 @@ x1 * (ii * x2)  =ii * (x1 * x2) `;;
 
 *)
 
-	
+    
 let thm4 =  prove( ` ii * x = x * ii /\
 x * ii * y =  (x*y) * ii  /\ x * y * ii  = (x*y) * ii  /\
 x * --ii * y =  (x*y) * --ii  /\ x * y * --ii  = (x*y) * --ii  /\
@@ -541,22 +573,22 @@ CONV_TAC REAL_FIELD);;
 let CEXP_II_PI = prove(`cexp (ii * Cx(pi)) = --Cx(&1)`,
     REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI;
     SIN_PI;COMPLEX_ADD_RID;COMPLEX_MUL_RZERO;CX_NEG]);;  
-	
+    
 let CEXP_II_PI_CNJ = prove(`cexp (-- (ii * Cx(pi))) = --Cx(&1)`,
    REWRITE_TAC[MESON[CX_NEG;COMPLEX_MUL_RNEG] `--(ii * Cx(x)) = ii * Cx(--x)`] THEN
-	REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI;COMPLEX_ADD_RID;
+    REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI;COMPLEX_ADD_RID;
     REAL_POS; SIN_PI;COS_NEG;SIN_NEG;COMPLEX_MUL_RZERO;COMPLEX_ADD_LID;CX_NEG] THEN 
-	CONV_TAC COMPLEX_FIELD);; 
+    CONV_TAC COMPLEX_FIELD);; 
     
 let CEXP_II_PI2 = prove(`cexp (ii * Cx(pi / &2)) = ii`,
     REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI2;
     SIN_PI2;COMPLEX_ADD_LID;COMPLEX_MUL_RZERO;COMPLEX_MUL_RID]);; 
-	
+    
 let CEXP_II_PI2_CNJ = prove(`cexp (--(ii * Cx(pi / &2))) = --ii`,
     REWRITE_TAC[MESON[CX_NEG;COMPLEX_MUL_RNEG] `--(ii * Cx(x)) = ii * Cx(--x)`] THEN
-	REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI2;COMPLEX_ADD_RID;
+    REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI2;COMPLEX_ADD_RID;
     REAL_POS; SIN_PI2;COS_NEG;SIN_NEG;COMPLEX_MUL_RZERO;COMPLEX_ADD_LID;CX_NEG] THEN 
-	CONV_TAC COMPLEX_FIELD);; 
+    CONV_TAC COMPLEX_FIELD);; 
 
 let SIN_PI4 = prove
  (`sin(pi / &4) = sqrt(&1 / &2)`,
@@ -576,9 +608,9 @@ REAL_POS; SIN_PI4]);;
 
 let CEXP_II_PI4_CNJ = prove(`cexp (--(ii * Cx(pi / &4))) = Cx(&1 / sqrt(&2)) - ii * Cx(&1 / sqrt(&2))`,
     REWRITE_TAC[MESON[CX_NEG;COMPLEX_MUL_RNEG] `--(ii * Cx(x)) = ii * Cx(--x)`] THEN
-	REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI4;SQRT_DIV;SQRT_1;
+    REWRITE_TAC[CEXP_EULER;GSYM CX_COS;GSYM CX_SIN;COS_PI4;SQRT_DIV;SQRT_1;
     REAL_POS; SIN_PI4;COS_NEG;SIN_NEG] THEN 
     REWRITE_TAC[CX_NEG;GSYM complex_sub;COMPLEX_MUL_RNEG]);; 
-	
+    
 (****************************************************************************************)
     
