@@ -195,7 +195,7 @@ STEPS
     > #use "hol.ml";;
       
 
-  4. Copy the contents of  tcadcode.zip to HOL Light top directory.
+  4. Copy the contents of the SOURCE directory to HOL Light top directory.
 
 
   5. And finally load the top file:
