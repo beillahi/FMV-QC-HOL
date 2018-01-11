@@ -1,7 +1,7 @@
 ----------------------------------------------------------------------
 ===============================================================================
-               Formal development of the paper
-      ''Towards the Design Automation of Quantum Circuits''
+        Formal Development of a Tool built using HOL Light theorem prover
+	    for the Modeling and Verification of Optical Quantum Circuits
 ===============================================================================
 
 ===================
@@ -105,6 +105,12 @@ FLIP_GATE.ml :
 Contains the verification of the outputs for all possible inputs for
 the Flip gate.
 
+------------------------
+T_GATE.ml :
+---------------
+Contains the verification of the outputs for all possible inputs for
+the T gate.
+
 --------------------
 CNOT_GATE.ml :
 ------------------------
@@ -141,24 +147,40 @@ tactics_2.ml :
 Contains the definition of the sub tactic and the main tactic of the 
 decision procedure.
 
+------------------------
+V_GATE.ml :
+---------------
+Contains the verification of the outputs for all possible inputs for
+the V gate.
+
 ----------------
 FULL_ADDER.ml :
 ----------------
 Contains the verification of the operations for quantum full adder.
 
+----------------
+shorcircuit.ml :
+----------------
+Contains the verification of the operations for Shor's circuit.
+
+----------------
+HELPER_CIRCUITS.ml :
+----------------
+Contains the verification of the operations for two circuits that will be used 
+in the last application in the file APPLICATIONS.ml.
 
 ----------------
 APPLICATIONS.ml :
 ----------------
-Contains the verification of the operations for all the seven remaining
-quantum applications that were taken from the online library.
+Contains the verification of the operations for several 
+quantum applications that were taken from the online libraries.
 
 
 ==================
 How to Load Files
 ==================
  
-NOTE:  Tested with the latest svn version of HOL Light.
+NOTE:  Tested with the latest github version of HOL Light.
 
 ------
 STEPS
