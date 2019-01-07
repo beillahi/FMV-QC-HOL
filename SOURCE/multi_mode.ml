@@ -77,11 +77,13 @@ let pos = new_definition
  `pos (tens:cops^N->(A^N->complex)-> (A^N->complex)) (op:cops) m = 
     tens (lambda i. if i = m then op else I)`;;
     
+let is_beam_splitter0 = new_definition 
+  `is_beam_splitter0 (i1,i2,o1,o2) <=> 
+      w i1 = w i2 /\ w i2 = w o1 /\ w o1 = w o2 `;;
 
 let is_beam_splitter = new_definition 
   `is_beam_splitter (p1,p2,p3,p4,ten,i1,m1,i2,m2,o1,m3,o2,m4) <=> 
-     is_sm i1 /\ is_sm i2 /\ is_sm o1 /\ is_sm o2
-     /\ w i1 = w i2 /\ w i2 = w o1 /\ w o1 = w o2 /\ 
+     is_sm i1 /\ is_sm i2 /\ is_sm o1 /\ is_sm o2 /\ 
        vac i1 = vac i2 /\ vac i2 = vac o1 /\ vac o1 = vac o2 /\  
      pos ten (anh i1) m1 = p1 % pos ten (anh o1) m3 + 
        p2 % pos ten (anh o2) m4 
@@ -91,7 +93,8 @@ let is_beam_splitter = new_definition
     pos ten (cr i1) m1  = cnj p1 % pos ten (cr o1) m3  + 
        cnj p2 % pos ten (cr o2)  m4 
     /\ pos ten (cr i2) m2  = cnj p3 % pos ten (cr o1) m3  + 
-       cnj p4 % pos ten (cr o2) m4`;;
+       cnj p4 % pos ten (cr o2) m4
+     /\ is_beam_splitter0 (i1,i2,o1,o2)`;;
      
 
 let PHASE_SHIFTER = new_definition
@@ -100,13 +103,13 @@ let PHASE_SHIFTER = new_definition
    pos ten (cr i1) m1 = (cexp (--ii * Cx f)) % pos ten (cr o1) m2 /\
    pos ten (anh i1) m1 = (cexp (ii * Cx f)) % pos ten (anh o1) m2)`;;
 (****************************************************************************)
-(* MACH-ZEHNDER                                                             *)
+(*       MIRROR                                                             *)
 (****************************************************************************)
 
 let keylem  =   GEN_ALL ( MESON[]  `(p x ==> f x = q) ==> (if p x then q else (f x)) = f x`);;
 let MULTI_MODE_DECOMPOSE_TAC = 
         ONCE_REWRITE_TAC[MESON[I_THM] `(if p then (x:bqs) else y) = (if p then x else I y)`] THEN 
-        ONCE_REWRITE_TAC[MESON[] `(if p then f1 x else f2 y) = (if p then f1  else f2 ) (if p then  x else  y)`]
+        ONCE_REWRITE_TAC[MESON[] `(if p then f1 x else f2 y) = (if p then f1  else f2 ) (if p then  x else  y)`]											   
         THEN ONCE_REWRITE_TAC[CFUN_LAMBDA_APP] THEN
         SIMP_TAC[keylem;ARITH;COND_ID] THEN
         FIRST_ASSUM(fun th -> REWRITE_TAC[(MATCH_MP (GSYM COP_TENSOR_CFUN) th)]);;
@@ -114,7 +117,10 @@ let MULTI_MODE_DECOMPOSE_TAC =
 let CFUN_FLATTEN_TAC =
             REWRITE_TAC[COP_MUL_THM;COP_SMUL_THM;COP_ADD_THM;CFUN_SMUL;FUN_EQ_THM;CFUN_ADD_THM]
             THEN REWRITE_TAC[COMPLEX_MUL_SYM;COMPLEX_ADD_AC];;
+
 let mirror = new_definition
        `mirror (ten,i1,m1,o1,m2) <=> 
+   (is_sm i1 /\ is_sm o1 /\ w i1 = w o1 /\ vac i1 = vac o1 /\
    pos ten (cr i1) m1 = --ii % pos ten (cr o1) m2 /\
-   pos ten (anh i1) m1 = ii % pos ten (anh o1) m2`;;
+   pos ten (anh i1) m1 = ii % pos ten (anh o1) m2)`;;
+   

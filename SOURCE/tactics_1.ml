@@ -115,7 +115,8 @@ let condition_recompose m l  =
    (prove( (mk_eq ((parse_term (String.concat ""  ("(if i <= " :: 
     (string_of_int m) :: " /\ 1 <= i then " :: 
     (make_fst_cond l 0 0) @ (main_make_concl l 0 0) @ [" g i):A"]))), (main_make_cond m m))),
-   condRecomposeTac 0 0 l));;
+   condRecomposeTac 0 0 l));; 
+ 
 
 (****************************************************************************************)
             
@@ -168,7 +169,7 @@ let rewrite_recompose_tac m l k i =
            (parse_term (String.concat "" (thm_integer m k))) :: 
            (rewrite_recompose m l (k+(List.nth l i)) (i+1))
         else [] in
-    ONCE_SIMP_TAC [(ISPECL [mk_numeral (Int m)] tensor_1mlem1d)] THEN       
+    ONCE_ASM_SIMP_TAC [(ISPECL [mk_numeral (Int m)] tensor_1mlem1d)] THEN       
     (ASM_SIMP_TAC ([ARITH_RULE `~(i <= j) ==> (((i:num) - j = k) <=> (i = k + j))`;
     LAMBDA_BETA] @ (map (REWRITE_RULE [SUB_0]) 
     (map ARITH_RULE (rewrite_recompose m l k i))))) THEN 
@@ -477,19 +478,33 @@ CFUN_ARITH `!f g. (\y:A^N. f y - g y) =
 
 let  CFUN_ADD_AC = 
 CFUN_ARITH `(m:cfun) + (n:cfun) = n + m 
+/\  a % (x:cfun) + b % y  =  b % y + a % x 
 /\ (m + n) + (p:cfun) = m + n + p 
- /\ m + n + p = n + m + p`;;
+ /\ m + n + p = n + m + p 
+ /\ m + n + p = p + m + n`;;
 
 let CFUN_SUB_AC = 
 CFUN_ARITH`!(a:cfun)  (d:cfun) (f:cfun) . 
- a - ( d + f) = a - d - f /\
+ a - ( d + f) = a - d - f /\ 
+ a - b =  a + (-- b) /\ 
+ c + a - b + d = c + a + (-- b) + d /\ 
+ c + a - b - d = c + a + (-- b) + (-- d) /\ 
+ c + a - b = c + a + (-- b) /\ 
+  (x) % (-- a) = (-- x) % (a) /\ 
+  (x) % (-- a) + x1 = (-- x) % (a) + x1 /\ 
+x2 + (x) % (-- a) + x1 = x2+ (-- x) % (a) + x1 /\
 a - (d -f) = a - d + f /\ (a + d) - f = a + d - f `;;
 
 let CFUN_ADD_RDISTRIB_NEW = CFUN_ARITH 
-`!(a:complex) (b:complex) (x:cfun) (x1:cfun) (x2:cfun). 
+`!(a:complex) (b:complex) (x:cfun) (x1:cfun) (y:cfun) (x2:cfun). 
 (a + b) % x = a % x + b % x /\  
 (a + b) % x + x1 = a % x + b % x + x1 /\ 
-x2 + (a + b) % x + x1= x2+ a % (x:cfun) + b % x + x1`;;
+(a + b) % x  + x2 + x1 = x2 + a % (x:cfun) + b % x + x1 /\
+(a + b) % x + y = a % x + y + b % x  /\  
+(a + b) % x + y + x1 = a % x + y + b % x + x1 /\ 
+(a + b) % x + x2 + y +  x1 = x2+ a % (x:cfun) + y + b % x + x1`;;
+
+
 
 
 let pisum_thm k = prove( (parse_term (String.concat "" 
@@ -556,8 +571,11 @@ x1 * (ii * x2)  =ii * (x1 * x2) `;;
 *)
 
     
-let thm4 =  prove( ` ii * x = x * ii /\
+let thm4 =  prove( ` ii * x = x * ii /\ (x * ii) * y =  (x*y) * ii  /\
 x * ii * y =  (x*y) * ii  /\ x * y * ii  = (x*y) * ii  /\
+z + x * ii + y * ii =  z + (x + y) * ii /\
+x * ii + y * ii + tt = (x + y) * ii + tt /\
+z + x * ii + y * ii + tt  = z + (x + y) * ii  + tt /\
 x * --ii * y =  (x*y) * --ii  /\ x * y * --ii  = (x*y) * --ii  /\
 x * ii + y * ii = (x + y) * ii /\  x * ii + y * --ii = (x - y) * ii /\
 x * --ii + y * ii = (y - x) * ii /\ x * --ii + y * --ii = (x + y) * --ii`,
