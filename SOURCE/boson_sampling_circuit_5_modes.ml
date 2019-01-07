@@ -503,35 +503,35 @@ g `!(ten:qop^N->(real^N->complex)-> (real^N->complex)) (a:sm^N) (f:sm^N).
 Boson_five_Circuit2(a,f,ten)  ==>
 tensor 5 ((lambda i. if i = 2 then  fock (a$2) 1 else
   (if i = 3 then fock (a$3) 1  else vac (a$5))):bqs^N) =    
-  Cx (&5053589271 / &15625000000000) %
+  Cx (&5053589271 / &15625000000000) % 
  tensor 5 (lambda i. if i = 2 then  fock (f$4) 1 else (if i = 5 then fock (f$1) 1  else vac (f$5))) +
- Cx (-- &841 / &250000000) %
+ Cx (-- &841 / &250000000) %  
   tensor 5 (lambda i. if i = 5 then Cx (sqrt (&2)) %  fock (f$1) 2 else vac (f$5))+
- Cx (-- &314654553 / &625000000000) %
+ Cx (-- &314654553 / &625000000000) % 
  tensor 5 (lambda i. if i = 4 then Cx (sqrt (&2)) %  fock (f$2) 2   else vac (f$5)) +
-  Cx (&2854723669047 / &781250000000000) %
+  Cx (&2854723669047 / &781250000000000) % 
  tensor 5 (lambda i. if i = 2 then  fock (f$4) 1 else (if i = 4 then fock (f$2) 1  else vac (f$5))) +
- Cx (-- &524697 / &6250000000) %
+ Cx (-- &524697 / &6250000000) % 
  tensor 5 (lambda i. if i = 4 then  fock (f$2) 1 else (if i = 5 then fock (f$1) 1  else vac (f$5))) +
- Cx (-- &23366782087307001 / &3906250000000000000) %
+ Cx (-- &23366782087307001 / &3906250000000000000) % 
  tensor 5 (lambda i. if i = 2 then Cx (sqrt (&2)) %  fock (f$4) 2 else vac (f$5)) +
- Cx (-- &5874616984977 / &1562500000000000) %
+ Cx (-- &5874616984977 / &1562500000000000) % 
  tensor 5 (lambda i. if i = 3 then Cx (sqrt (&2)) %  fock (f$3) 2 else vac (f$5)) +
-  Cx (-- &46084751091 / &15625000000000) %
+  Cx (-- &46084751091 / &15625000000000) % 
    tensor 5 (lambda i. if i = 3 then  fock (f$3) 1 else (if i = 4 then fock (f$2) 1  else vac (f$5))) +
-  Cx (&1875860265100059 / &39062500000000000) %
+  Cx (&1875860265100059 / &39062500000000000) % 
  tensor 5 (lambda i. if i = 1 then  fock (f$5) 1 else (if i = 3 then fock (f$3) 1  else vac (f$5))) +
-  Cx (&23352911966097 / &781250000000000) %
+  Cx (&23352911966097 / &781250000000000) % 
  tensor 5 (lambda i. if i = 1 then  fock (f$5) 1 else (if i = 4 then fock (f$2) 1  else vac (f$5))) +
-  Cx (-- &82298259 / &312500000000) %
+  Cx (-- &82298259 / &312500000000) % 
  tensor 5 (lambda i. if i = 3 then  fock (f$3) 1 else (if i = 5 then fock (f$1) 1  else vac (f$5))) +
- Cx (-- &128776848733749951 / &1953125000000000000) %
+ Cx (-- &128776848733749951 / &1953125000000000000) % 
  tensor 5 (lambda i. if i = 1 then  fock (f$5) 1 else (if i = 2 then fock (f$4) 1  else vac (f$5))) +
- Cx (&371029011203709 / &39062500000000000) %
+ Cx (&371029011203709 / &39062500000000000) % 
  tensor 5 (lambda i. if i = 2 then  fock (f$4) 1 else (if i = 3 then fock (f$3) 1  else vac (f$5))) +
- Cx (&48561884721 / &15625000000000) %
+ Cx (&48561884721 / &15625000000000) % 
  tensor 5 (lambda i. if i = 1 then  fock (f$5) 1 else (if i = 5 then fock (f$1) 1  else vac (f$5))) +
- Cx (&992789705736364599 / &3906250000000000000) %
+ Cx (&992789705736364599 / &3906250000000000000) % 
  tensor 5 (lambda i. if i = 1 then  Cx (sqrt (&2)) % fock (f$5) 2  else vac (f$5))   `;;
   
  
@@ -676,7 +676,27 @@ complex_simp_tactic2 THEN CONV_TAC REAL_RAT_REDUCE_CONV THEN CFUN_ARITH_TAC;;
 
 let boson_five_thm1 = top_thm();;
 
+(*---------------------------------------------------*)
+(*
+   To simplify the proof we define the boson_five input 
+   in term of outputs which have an emplititude that 
+   is bigger than 0.01
+                                                       *)
 (*--------------------**********************-----------*) 
+
+let boson_five_thm0110 = new_definition
+ `boson_five_thm0110 ((a:sm^N), (f:sm^N), (ten:qop^N->(real^N->complex)-> (real^N->complex))) <=>
+((5 <= dimindex (:N) /\ is_tensor ten /\ Boson_five_Circuit2(a,f,ten))  ==>
+tensor 5 ((lambda i. if i = 2 then  fock (a$2) 1 else (if i = 3 then fock (a$3) 1  else vac (a$5))):bqs^N) =    
+  Cx (&1875860265100059 / &39062500000000000) %
+ tensor 5 (lambda i. if i = 1 then  fock (f$5) 1 else (if i = 3 then fock (f$3) 1  else vac (f$5))) +
+  Cx (&23352911966097 / &781250000000000) % 
+ tensor 5 (lambda i. if i = 1 then  fock (f$5) 1 else (if i = 4 then fock (f$2) 1  else vac (f$5))) +
+ Cx (-- &128776848733749951 / &1953125000000000000) % 
+ tensor 5 (lambda i. if i = 1 then  fock (f$5) 1 else (if i = 2 then fock (f$4) 1  else vac (f$5))) +
+ Cx (&992789705736364599 / &3906250000000000000) % 
+ tensor 5 (lambda i. if i = 1 then  Cx (sqrt (&2)) % fock (f$5) 2  else vac (f$5)))`;;
+ 
 (*--------------Useless Formalization------------------*)
 (*-----------
 REMOVE_THEN "asm_p1" (fun thm-> ALL_TAC);;
@@ -812,6 +832,36 @@ let Boson_five_Circuit_output = new_definition
  (Cx (&11687725 / &14155776) + Cx (&6917225 / &1179648) * ii) %
  (pos ten (cr (e$2)) 3 ** pos ten (cr (e$2)) 3)) (tensor 5 (lambda j. vac (f$5)))`;;
  
+  Cx (&5053589271 / &15625000000000) % (*0.000323429713344*)
+ tensor 5 (lambda i. if i = 2 then  fock (f$4) 1 else (if i = 5 then fock (f$1) 1  else vac (f$5))) +
+ Cx (-- &841 / &250000000) %  (*0.000003364*)
+  tensor 5 (lambda i. if i = 5 then Cx (sqrt (&2)) %  fock (f$1) 2 else vac (f$5))+
+ Cx (-- &314654553 / &625000000000) % (*0.0005034472848*)
+ tensor 5 (lambda i. if i = 4 then Cx (sqrt (&2)) %  fock (f$2) 2   else vac (f$5)) +
+  Cx (&2854723669047 / &781250000000000) % (*0.00365404629638016*)
+ tensor 5 (lambda i. if i = 2 then  fock (f$4) 1 else (if i = 4 then fock (f$2) 1  else vac (f$5))) +
+ Cx (-- &524697 / &6250000000) % (*0.00008395152*)
+ tensor 5 (lambda i. if i = 4 then  fock (f$2) 1 else (if i = 5 then fock (f$1) 1  else vac (f$5))) +
+ Cx (-- &23366782087307001 / &3906250000000000000) % (*0.005981896214350592256*)
+ tensor 5 (lambda i. if i = 2 then Cx (sqrt (&2)) %  fock (f$4) 2 else vac (f$5)) +
+ Cx (-- &5874616984977 / &1562500000000000) % (*0.00375975487038528*)
+ tensor 5 (lambda i. if i = 3 then Cx (sqrt (&2)) %  fock (f$3) 2 else vac (f$5)) +
+  Cx (-- &46084751091 / &15625000000000) % (*0.002949424069824*)
+   tensor 5 (lambda i. if i = 3 then  fock (f$3) 1 else (if i = 4 then fock (f$2) 1  else vac (f$5))) +
+  Cx (&1875860265100059 / &39062500000000000) % (*0.0480220227865615104*)
+ tensor 5 (lambda i. if i = 1 then  fock (f$5) 1 else (if i = 3 then fock (f$3) 1  else vac (f$5))) +
+  Cx (&23352911966097 / &781250000000000) % (*0.02989172731660416*)
+ tensor 5 (lambda i. if i = 1 then  fock (f$5) 1 else (if i = 4 then fock (f$2) 1  else vac (f$5))) +
+  Cx (-- &82298259 / &312500000000) % (*0.0002633544288*)
+ tensor 5 (lambda i. if i = 3 then  fock (f$3) 1 else (if i = 5 then fock (f$1) 1  else vac (f$5))) +
+ Cx (-- &128776848733749951 / &1953125000000000000) % (*0.065933746551679974912*)
+ tensor 5 (lambda i. if i = 1 then  fock (f$5) 1 else (if i = 2 then fock (f$4) 1  else vac (f$5))) +
+ Cx (&371029011203709 / &39062500000000000) % (*0.0094983426868149504*)
+ tensor 5 (lambda i. if i = 2 then  fock (f$4) 1 else (if i = 3 then fock (f$3) 1  else vac (f$5))) +
+ Cx (&48561884721 / &15625000000000) % (*0.003107960622144*)
+ tensor 5 (lambda i. if i = 1 then  fock (f$5) 1 else (if i = 5 then fock (f$1) 1  else vac (f$5))) +
+ Cx (&992789705736364599 / &3906250000000000000) % (*0.254154164668509337344*)
+ tensor 5 (lambda i. if i = 1 then  Cx (sqrt (&2)) % fock (f$5) 2  else vac (f$5))
  
  let thm_help4 = COP_ARITH`
  Cx (&36598743125 / &115964116992) %
@@ -899,6 +949,7 @@ let Boson_five_Circuit_output = new_definition
  (pos ten (cr (f$2)) 4 ** (pos ten (cr (f$2)) 4)) +
  (Cx (&90993151375 / &130459631616) + Cx (&8344086625 / &1358954496) * ii) %
  (pos ten (cr (f$4)) 2 ** (pos ten (cr (f$1)) 5))) (tensor 5 (lambda j. vac (f$5)))`
+ 
  
  
  

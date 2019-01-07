@@ -603,11 +603,11 @@ ASM_SIMP_TAC[(condition_new_thm 6 2 [5;6] [6;5])]);;
 (*-----------------------------------------------------*)
 
 let thm_help5 = (prove(`
-(Boson_six_Circuit2 (a,l,ten))  ==> (vac (l$1) = vac (l$6) /\ vac (l$2) = vac (l$6) /\ 
+(Boson_six_Circuit3 (a,l,ten))  ==> (vac (l$1) = vac (l$6) /\ vac (l$2) = vac (l$6) /\ 
 vac (l$3) = vac (l$6) /\ vac (l$4) = vac (l$6) /\ vac (l$5) = vac (l$6))`,
 REPEAT (POP_ASSUM MP_TAC) THEN 
 REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
-RIGHT_AND_FORALL_THM;Boson_six_Circuit2] THEN 
+RIGHT_AND_FORALL_THM;Boson_six_Circuit3] THEN 
 REWRITE_TAC[is_beam_splitter;pos;mirror] THEN REPEAT STRIP_TAC THEN
 ASM_MESON_TAC[]));;
 
@@ -621,75 +621,32 @@ ASM_MESON_TAC[]));;
 
 
 let thm_help4 = COP_ARITH`
-Cx (&5053589271 / &15625000000000) %
- pos ten (cr (f$4)) 2 (pos ten (cr (f$1)) 5 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &841 / &250000000) %
- pos ten (cr (f$1)) 5 (pos ten (cr (f$1)) 5 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &314654553 / &625000000000) %
- pos ten (cr (f$2)) 4 (pos ten (cr (f$2)) 4 (tensor 6 (lambda j. vac (l$6)))) +
-  Cx (&2854723669047 / &781250000000000) %
- pos ten (cr (f$4)) 2 (pos ten (cr (f$2)) 4 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &524697 / &6250000000) %
- pos ten (cr (f$2)) 4 (pos ten (cr (f$1)) 5 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &23366782087307001 / &3906250000000000000) %
- pos ten (cr (f$4)) 2 (pos ten (cr (f$4)) 2 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &5874616984977 / &1562500000000000) %
- pos ten (cr (f$3)) 3 (pos ten (cr (f$3)) 3 (tensor 6 (lambda j. vac (l$6)))) +
-  Cx (-- &46084751091 / &15625000000000) %
- pos ten (cr (f$3)) 3 (pos ten (cr (f$2)) 4 (tensor 6 (lambda j. vac (l$6)))) +
   Cx (&1875860265100059 / &39062500000000000) %
  pos ten (cr (f$5)) 1 (pos ten (cr (f$3)) 3 (tensor 6 (lambda j. vac (l$6)))) +
   Cx (&23352911966097 / &781250000000000) %
  pos ten (cr (f$5)) 1 (pos ten (cr (f$2)) 4 (tensor 6 (lambda j. vac (l$6)))) +
-  Cx (-- &82298259 / &312500000000) %
- pos ten (cr (f$3)) 3 (pos ten (cr (f$1)) 5 (tensor 6 (lambda j. vac (l$6)))) +
  Cx (-- &128776848733749951 / &1953125000000000000) %
  pos ten (cr (f$5)) 1 (pos ten (cr (f$4)) 2 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (&371029011203709 / &39062500000000000) %
- pos ten (cr (f$4)) 2 (pos ten (cr (f$3)) 3 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (&48561884721 / &15625000000000) %
- pos ten (cr (f$5)) 1 (pos ten (cr (f$1)) 5 (tensor 6 (lambda j. vac (l$6)))) +
  Cx (&992789705736364599 / &3906250000000000000) %
  pos ten (cr (f$5)) 1 (pos ten (cr (f$5)) 1 (tensor 6 (lambda j. vac (l$6)))) = 
- (Cx (&5053589271 / &15625000000000) %
- (pos ten (cr (f$4)) 2 ** (pos ten (cr (f$1)) 5 )) +
- Cx (-- &841 / &250000000) %
- (pos ten (cr (f$1)) 5 ** (pos ten (cr (f$1)) 5 )) +
- Cx (-- &314654553 / &625000000000) %
- (pos ten (cr (f$2)) 4 ** (pos ten (cr (f$2)) 4 )) +
-  Cx (&2854723669047 / &781250000000000) %
- (pos ten (cr (f$4)) 2 ** (pos ten (cr (f$2)) 4 )) +
- Cx (-- &524697 / &6250000000) %
- (pos ten (cr (f$2)) 4 ** (pos ten (cr (f$1)) 5 )) +
- Cx (-- &23366782087307001 / &3906250000000000000) %
- (pos ten (cr (f$4)) 2 ** (pos ten (cr (f$4)) 2 )) +
- Cx (-- &5874616984977 / &1562500000000000) %
- (pos ten (cr (f$3)) 3 ** (pos ten (cr (f$3)) 3 )) +
-  Cx (-- &46084751091 / &15625000000000) %
- (pos ten (cr (f$3)) 3 ** (pos ten (cr (f$2)) 4 )) +
-  Cx (&1875860265100059 / &39062500000000000) %
+ (Cx (&1875860265100059 / &39062500000000000) %
  (pos ten (cr (f$5)) 1 ** (pos ten (cr (f$3)) 3 )) +
   Cx (&23352911966097 / &781250000000000) %
  (pos ten (cr (f$5)) 1 ** (pos ten (cr (f$2)) 4 )) +
-  Cx (-- &82298259 / &312500000000) %
- (pos ten (cr (f$3)) 3 ** (pos ten (cr (f$1)) 5 )) +
  Cx (-- &128776848733749951 / &1953125000000000000) %
  (pos ten (cr (f$5)) 1 ** (pos ten (cr (f$4)) 2 )) +
- Cx (&371029011203709 / &39062500000000000) %
- (pos ten (cr (f$4)) 2 ** (pos ten (cr (f$3)) 3 )) +
- Cx (&48561884721 / &15625000000000) %
- (pos ten (cr (f$5)) 1 ** (pos ten (cr (f$1)) 5 )) +
  Cx (&992789705736364599 / &3906250000000000000) %
  (pos ten (cr (f$5)) 1 ** (pos ten (cr (f$5)) 1))) (tensor 6 (lambda j. vac (l$6)))`;;
  
 (*------------------------Circuit Definition---------------------*)
  
- let Boson_six_Circuit2 = new_definition 
-`Boson_six_Circuit2 ((a:sm^N), (l:sm^N), 
+ let Boson_six_Circuit3 = new_definition 
+`Boson_six_Circuit3 ((a:sm^N), (l:sm^N), 
 (ten:qop^N->(real^N->complex)-> (real^N->complex)))  
 <=>  (? (b:sm^N) (c:sm^N) (d:sm^N) (e:sm^N) (f:sm^N).
 6 <= dimindex (:N) /\ is_tensor ten /\ 
-Boson_five_Circuit2 (a,f,ten) /\
+Boson_five_Circuit2 (a,f,ten) /\ 
+boson_five_thm0110(a,f,ten) /\
 mirror (ten,f$6,1,l$6,1) /\ vac (a$6) = vac (a$5) /\ 
 is_beam_splitter (--Cx((&9 / &10))*ii,Cx((&1 / &10)),--Cx((&42 / &100)),Cx((&58 / &100))*ii,ten,f$5,1,e$6,2,f$6,1,l$5,2) /\
 is_beam_splitter (--Cx((&9 / &10))*ii,Cx((&1 / &10)),--Cx((&42 / &100)),Cx((&58 / &100))*ii,ten,f$4,2,d$6,3,e$6,2,l$4,3) /\
@@ -701,53 +658,28 @@ is_beam_splitter (--Cx((&9 / &10))*ii,Cx((&1 / &10)),--Cx((&42 / &100)),Cx((&58 
 (*------------------------ Goal--------------------------------*)
 
 g `!(ten:qop^N->(real^N->complex)-> (real^N->complex)) (a:sm^N) (l:sm^N).
-6 <= dimindex (:N) /\ is_tensor ten /\
-Boson_six_Circuit2 (a,l,ten)  ==>
+6 <= dimindex (:N) /\ is_tensor ten /\  
+Boson_six_Circuit3 (a,l,ten)  ==>
 tensor 6 ((lambda i. if i = 2 then  fock (a$2) 1 else
-  (if i = 3 then fock (a$3) 1  else vac (a$6))):bqs^N) =  Cx (-- &416286201276829989 / &95367431640625000000) %
+  (if i = 3 then fock (a$3) 1  else vac (a$6))):bqs^N) =  
+  Cx (-- &8192330734451657409 / &4882812500000000000000) %
  tensor 6 (lambda i. if i = 2 then  Cx (sqrt (&2)) % fock (l$5) 2 else vac (l$6)) +
- Cx (-- &161459037 / &15625000000000) %
- tensor 6 (lambda i. if i = 5 then  Cx (sqrt (&2)) % fock (l$2) 2  else vac (l$6)) +
- Cx (-- &841 / &25000000000) %
- tensor 6 (lambda i. if i = 6 then  Cx (sqrt (&2)) % fock (l$1) 2 else vac (l$6)) +
- Cx (-- &48987349986681 / &156250000000000000) %
- tensor 6 (lambda i. if i = 4 then  Cx (sqrt (&2)) % fock (l$3) 2 else vac (l$6)) +
- Cx (-- &701055169543773 / &976562500000000000) %
- tensor 6 (lambda i. if i = 3 then  Cx (sqrt (&2)) % fock (l$4) 2 else vac (l$6)) +
- Cx (&644166840807 / &2441406250000000) %
- tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 6 then fock (l$1) 1  else vac (l$6))) +
-  Cx (-- &372099 / &312500000000 ) %
- tensor 6 (lambda i. if i = 5 then  fock (l$2) 1 else (if i = 6 then fock (l$1) 1  else vac (l$6))) +
- Cx (-- &3411798003 / &390625000000000) %
- tensor 6 (lambda i. if i = 3 then  fock (l$4) 1 else (if i = 6 then fock (l$1) 1  else vac (l$6))) +
-  Cx (-- &276777125631 / &1953125000000000) %
- tensor 6 (lambda i. if i = 3 then  fock (l$4) 1 else (if i = 5 then fock (l$2) 1  else vac (l$6))) +
- Cx (-- &69286509303831 / &190734863281250000) %
- tensor 6 (lambda i. if i = 3 then  Cx (sqrt (&2)) % fock (l$4) 2  else vac (l$6)) + 
-  Cx (-- &701055169543773 / &976562500000000000 ) %
- tensor 6 (lambda i. if i = 3 then  fock (l$4) 1 else (if i = 4 then fock (l$3) 1  else vac (l$6))) +
- Cx (-- &90676685061 / &781250000000000) %
- tensor 6 (lambda i. if i = 4 then  fock (l$3) 1 else (if i = 5 then fock (l$2) 1  else vac (l$6))) + 
-  Cx (-- &42926931 / &62500000000000) %
- tensor 6 (lambda i. if i = 4 then  fock (l$3) 1 else (if i = 6 then fock (l$1) 1  else vac (l$6))) +
-  Cx (&980353579202248851 / &305175781250000000000) %
- tensor 6 (lambda i. if i = 2 then  fock (l$5) 1 else (if i = 3 then fock (l$4) 1  else vac (l$6))) +
- Cx (&2832504412216483028493 / &12207031250000000000000) %
- tensor 6 (lambda i. if i = 1 then  Cx (sqrt (&2)) % fock (l$6) 2  else vac (l$6)) +
-  Cx (&5825112854364157977 / &610351562500000000000) %
-tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 3 then fock (l$4) 1  else vac (l$6)))  +
- Cx (&50035253134072563 / &3051757812500000000) %
- tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 4 then fock (l$3) 1  else vac (l$6))) +
-  Cx (&949484152412271 / &244140625000000000) %
-  tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 5 then fock (l$2) 1  else vac (l$6))) +
- Cx (&187765319241772983 / &48828125000000000000) %
- tensor 6 (lambda i. if i = 2 then  fock (l$5) 1 else (if i = 4 then fock (l$3) 1  else vac (l$6))) +
-  Cx (&89136970676268757263 / &6103515625000000000000) %
+ Cx (&10575340251395085747 / &976562500000000000000) %
  tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 2 then fock (l$5) 1  else vac (l$6))) +
-  Cx (&401357166454917 / &488281250000000000) %
+ Cx (&210176207694873 / &78125000000000000) %
+ tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 5 then fock (l$2) 1  else vac (l$6))) +
+ Cx (&23352911966097 / &78125000000000000) %
  tensor 6 (lambda i. if i = 2 then  fock (l$5) 1 else (if i = 5 then fock (l$2) 1  else vac (l$6))) +
- Cx (&1034949360681 / &19531250000000000) %
- tensor 6 (lambda i. if i = 2 then  fock (l$5) 1 else (if i = 6 then fock (l$1) 1  else vac (l$6))) `;;
+ Cx (&142433637600420388593 / &610351562500000000000) %
+ tensor 6 (lambda i. if i = 1 then  Cx (sqrt (&2)) % fock (l$6) 2  else vac (l$6)) +
+ Cx (&4483670787141399 / &244140625000000000) %
+ tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 4 then fock (l$3) 1  else vac (l$6))) +
+ Cx (&2095428329740690119 / &195312500000000000000) %
+ tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 3 then fock (l$4) 1  else vac (l$6))) +
+ Cx (&232825369971187791 / &195312500000000000000) %
+ tensor 6 (lambda i. if i = 2 then  fock (l$5) 1 else (if i = 3 then fock (l$4) 1  else vac (l$6))) +
+ Cx (&498185643015711 / &244140625000000000) %
+ tensor 6 (lambda i. if i = 2 then  fock (l$5) 1 else (if i = 4 then fock (l$3) 1  else vac (l$6))) `;;
  
  
 
@@ -764,8 +696,8 @@ IMP_REWRITE_TAC[thm_help5] THEN
 REPEAT (POP_ASSUM MP_TAC) THEN   
      
 REWRITE_TAC[CFUN_SMUL_LID;LEFT_IMP_FORALL_THM;LEFT_AND_FORALL_THM;
-RIGHT_AND_FORALL_THM;Boson_six_Circuit2] THEN 
-integer_equiv 6 THEN REPEAT STRIP_TAC THEN 
+RIGHT_AND_FORALL_THM;Boson_six_Circuit3] THEN 
+integer_equiv 6 THEN REWRITE_TAC[boson_five_thm0110] THEN REPEAT STRIP_TAC THEN 
     
 ASM_SIMP_TAC ([(main_comp_inputs [5;1] 6);tensor_nmlem1] @ 
 (one_less 6)) THEN CONV_TAC NUM_REDUCE_CONV THEN
@@ -774,7 +706,7 @@ rewrite_decompose_tac  6 [5;1] 0 0 THEN
 rew_condition_tac  6 [5;1]  0 THEN
 ASM_SIMP_TAC (map GSYM (rewrite_l [5;1])) THEN
     
-IMP_REWRITE_TAC[boson_five_thm1] THEN 
+
     
 ASM_SIMP_TAC[GSYM CFUN_ADD_RDISTRIB;GSYM CFUN_SUB_RDISTRIB;CFUN_ADD_LID;
 CFUN_ADD_RID;CFUN_SUB_LDISTRIB;CFUN_SUB_NEG;GSYM CFUN_SMUL_LNEG;
@@ -815,10 +747,10 @@ ASM_SIMP_TAC (map GSYM (rewrite_l [6])) ;;
 SUBGOAL_THEN ` (
 vac ((f:sm^N)$1) = vac (f$5) /\ vac (f$2) = vac (f$5) /\ 
 vac (f$3) = vac (f$5) /\ vac (f$4) = vac (f$5) )` ASSUME_TAC THEN
+
 IMP_REWRITE_TAC[thm_help3] THEN 
-REPEAT (POP_ASSUM MP_TAC)
 
-
+REPEAT (POP_ASSUM MP_TAC) THEN
 REWRITE_TAC[is_beam_splitter;pos;mirror] THEN REPEAT STRIP_TAC
 THEN ASM_SIMP_TAC[LET_RULE_L[GSYM COP_SMUL_THM] FOCK_HERM_VAC]
 THEN NUMBER_SFG_TAC1 [] THEN 
@@ -837,7 +769,6 @@ THEN REPEAT STRIP_TAC
 THEN ASM_SIMP_TAC[] THEN 
 
 MULTI_MODE_DECOMPOSE_TAC THEN MULTI_MODE_DECOMPOSE_TAC
-THEN MULTI_MODE_DECOMPOSE_TAC 
 THEN SIMP_TAC[cop_pow;COP_MUL_RID;ONE;FACT] THEN
 SIMP_TAC[GSYM ONE] THEN
 SIMP_TAC[ MULT_CLAUSES;SQRT_1;COMPLEX_INV_1;COP_SMUL_LID;CFUN_SMUL_LID] THEN
@@ -858,6 +789,7 @@ complex_simp_tactic2 THEN ASM_SIMP_TAC[pos] THEN CONV_TAC REAL_RAT_REDUCE_CONV T
 (* CPU time (user): 1453.697004*)       
 (*CPU time (user): 1588.76947*) 
 (*CPU time (user): 792.593507*)
+(*CPU time (user): 188.750306*)
 IMP_REWRITE_TAC[pos;COP_TENSOR_LINEAR;LINCOP_MUL_DISTRIB_CLAUSES;COP_SMUL_ASSOC;COP_MUL_LSMUL;
 LINCOP_ADD_MUL_LDISTRIB;LINCOP_MUL_RMUL;COP_ADD_MUL_RDISTRIB;COP_ADD_ASSOC;ARITH_LINCOP_CLAUSES]
 THEN ASM_SIMP_TAC[ARITH_LINCOP_CLAUSES ;COP_TENSOR_LINEAR;CNJ_MUL;COP_ADD_LDISTRIB;COP_SMUL_ASSOC;COP_MUL_LSMUL;GSYM CX_MUL;
@@ -878,13 +810,13 @@ THEN complex_simp_tactic2 THEN CONV_TAC REAL_RAT_REDUCE_CONV
 THEN complex_simp_tactic2 THEN CONV_TAC REAL_RAT_REDUCE_CONV  
 THEN complex_simp_tactic2 THEN CONV_TAC REAL_RAT_REDUCE_CONV THEN
          
-REWRITE_TAC[CFUN_SUB_AC;CFUN_ADD_AC;GSYM CFUN_ADD_RDISTRIB_NEW] THEN
+(*REWRITE_TAC[CFUN_SUB_AC;CFUN_ADD_AC;GSYM CFUN_ADD_RDISTRIB_NEW] THEN
 REWRITE_TAC[GSYM COMPLEX_ADD_LDISTRIB; 
 COMPLEX_FIELD `!a b c. a*b+a*c+d = (a*b+a*c)+d  /\ a*b+a*c-d = (a*b+a*c)-d  /\ a*b-a*c+d = (a*b-a*c)+d`;
 COMPLEX_SUB_REFL;COMPLEX_MUL_RZERO;COMPLEX_ADD_LID; 
 CNJ_MUL;GSYM CX_MUL;CNJ_CX;CNJ_II;GSYM CX_NEG] THEN 
 complex_simp_tactic2 THEN CONV_TAC REAL_RAT_REDUCE_CONV THEN 
-complex_simp_tactic2 THEN CONV_TAC REAL_RAT_REDUCE_CONV THEN 
+complex_simp_tactic2 THEN CONV_TAC REAL_RAT_REDUCE_CONV THEN *)
         
 
 SUBGOAL_THEN `6 <= dimindex (:N) /\ is_tensor (ten:qop^N->(real^N->complex)->(real^N->complex))  /\ is_sm (l$1) /\ 
@@ -892,119 +824,106 @@ is_sm (l$4) /\ is_sm (l$3) /\ is_sm (l$2) /\ is_sm (l$5) /\ is_sm (l$6)
  /\ vac ((l:sm^N)$1) = vac (l$5) /\ vac (l$2) = vac (l$5) /\ 
  vac (l$3) = vac (l$5) /\ vac (l$4) = vac (l$5) /\ vac (l$5) = vac (l$6)` ASSUME_TAC 
  
-THEN ASM_SIMP_TAC[] THEN       
+THEN ASM_SIMP_TAC[] THEN  
+
+ASM_SIMP_TAC[thm603] THEN CFUN_ARITH_TAC;;
  
-ASM_SIMP_TAC[thm609;thm608;thm607;thm606;thm605;thm604;thm603;thm602;thm601; thm60;
+(*ASM_SIMP_TAC[thm609;thm608;thm607;thm606;thm605;thm604;thm603;thm602;thm601; thm60;
 thm6010;thm6011;thm6012;thm6013;thm6014] THEN 
         
-
-
 REWRITE_TAC[CFUN_SUB_AC;CFUN_ADD_AC;GSYM CFUN_ADD_RDISTRIB_NEW] THEN
 complex_simp_tactic2 THEN CONV_TAC REAL_RAT_REDUCE_CONV THEN 
 REWRITE_TAC[CFUN_SUB_AC;CFUN_ADD_AC;GSYM CFUN_ADD_RDISTRIB_NEW] THEN
-complex_simp_tactic2 THEN CONV_TAC REAL_RAT_REDUCE_CONV ;;
+complex_simp_tactic2 THEN CONV_TAC REAL_RAT_REDUCE_CONV ;;*)
 
-REWRITE_TAC[CFUN_SUB_AC;CFUN_ADD_AC;GSYM CFUN_ADD_RDISTRIB_NEW;
-GSYM CFUN_ADD_RDISTRIB;GSYM CFUN_SUB_RDISTRIB;CFUN_ADD_LID;
-CFUN_ADD_RID;CFUN_SUB_LDISTRIB;CFUN_SUB_NEG;GSYM CFUN_SMUL_LNEG;
-CFUN_ADD_LDISTRIB;CFUN_SMUL_DISTRIB;CFUN_SMUL_LZERO; rewrite_add_cfun 75; rewrite_add_cfun 74;
- rewrite_add_cfun 73; rewrite_add_cfun 72; rewrite_add_cfun 76; rewrite_add_cfun 77; rewrite_add_cfun 78;
-  rewrite_add_cfun 71; rewrite_add_cfun 70; rewrite_add_cfun 79]
+
 
 let boson_six_thm1 = top_thm();;
 
-(*--------------------------End------------------------*)
 (*--------------------**********************-----------*) 
 
-`Cx (-- &416286201276829989 / &95367431640625000000) %
+(*---------------------------------------------------*)
+(*
+   To simplify the proof we define the boson_six input 
+   in term of outputs which have an emplititude that 
+   is bigger than 0.01
+                                                       *)
+(*--------------------**********************-----------*) 
+
+let boson_six_thm0110 = new_definition
+ `boson_six_thm0110 ((a:sm^N), (l:sm^N), (ten:qop^N->(real^N->complex)-> (real^N->complex))) <=>
+((6 <= dimindex (:N) /\ is_tensor ten /\ Boson_six_Circuit3(a,l,ten))  ==>
+tensor 6 ((lambda i. if i = 2 then  fock (a$2) 1 else (if i = 3 then fock (a$3) 1  else vac (a$6))):bqs^N) =    
+ Cx (&10575340251395085747 / &976562500000000000000) %
+ tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 2 then fock (l$5) 1  else vac (l$6))) +
+ Cx (&142433637600420388593 / &610351562500000000000) % 
+ tensor 6 (lambda i. if i = 1 then  Cx (sqrt (&2)) % fock (l$6) 2  else vac (l$6)) +
+ Cx (&4483670787141399 / &244140625000000000) % 
+ tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 4 then fock (l$3) 1  else vac (l$6))) +
+ Cx (&2095428329740690119 / &195312500000000000000) % 
+ tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 3 then fock (l$4) 1  else vac (l$6)))) `;;
+ 
+(*--------------Useless Formalization------------------*)
+(*-----------
+
+ Cx (-- &8192330734451657409 / &4882812500000000000000) % (*0.0016777893344156994373632*)
+ tensor 6 (lambda i. if i = 2 then  Cx (sqrt (&2)) % fock (l$5) 2 else vac (l$6)) +
+ Cx (&10575340251395085747 / &976562500000000000000) % (*0.010829148417428567804928*)
+ tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 2 then fock (l$5) 1  else vac (l$6))) +
+ Cx (&210176207694873 / &78125000000000000) % (*0.0026902554584943744*)
+ tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 5 then fock (l$2) 1  else vac (l$6))) +
+ Cx (&23352911966097 / &78125000000000000) % (*0.0002989172731660416*)
+ tensor 6 (lambda i. if i = 2 then  fock (l$5) 1 else (if i = 5 then fock (l$2) 1  else vac (l$6))) +
+ Cx (&142433637600420388593 / &610351562500000000000) % (*0.2333632718445287646707712*)
+ tensor 6 (lambda i. if i = 1 then  Cx (sqrt (&2)) % fock (l$6) 2  else vac (l$6)) +
+ Cx (&4483670787141399 / &244140625000000000) % (*0.018365115544131170304*)
+ tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 4 then fock (l$3) 1  else vac (l$6))) +
+ Cx (&2095428329740690119 / &195312500000000000000) % (*0.01072859304827233340928*)
+ tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 3 then fock (l$4) 1  else vac (l$6))) +
+ Cx (&232825369971187791 / &195312500000000000000) % (*0.00119206589425248148992*)
+ tensor 6 (lambda i. if i = 2 then  fock (l$5) 1 else (if i = 3 then fock (l$4) 1  else vac (l$6))) +
+ Cx (&498185643015711 / &244140625000000000) % (*0.002040568393792352256*)
+ tensor 6 (lambda i. if i = 2 then  fock (l$5) 1 else (if i = 4 then fock (l$3) 1  else vac (l$6)))
+ 
+`Cx (-- &8192330734451657409 / &4882812500000000000000) %
  pos ten (cr (l$5)) 2 (pos ten (cr (l$5)) 2 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &161459037 / &15625000000000) %
- pos ten (cr (l$2)) 5 (pos ten (cr (l$2)) 5 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &841 / &25000000000) %
- pos ten (cr (l$1)) 6 (pos ten (cr (l$1)) 6 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &48987349986681 / &156250000000000000) %
- pos ten (cr (l$3)) 4 (pos ten (cr (l$3)) 4 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &701055169543773 / &976562500000000000) %
- pos ten (cr (l$4)) 3 (pos ten (cr (l$3)) 4 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (&644166840807 / &2441406250000000) %
- pos ten (cr (l$6)) 1 (pos ten (cr (l$1)) 6 (tensor 6 (lambda j. vac (l$6)))) +
-  Cx (-- &372099 / &312500000000 ) %
- pos ten (cr (l$2)) 5 (pos ten (cr (l$1)) 6 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &3411798003 / &390625000000000) %
- pos ten (cr (l$4)) 3 (pos ten (cr (l$1)) 6 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &37585012419 / &1562500000000000) %
- pos ten (cr (l$3)) 4 (pos ten (cr (l$2)) 5 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &11860370286039 / &78125000000000000) %
- pos ten (cr (l$4)) 3 (pos ten (cr (l$2)) 5 (tensor 6 (lambda j. vac (l$6)))) +
-  Cx (-- &25264784601 / &156250000000000000) %
- pos ten (cr (l$4)) 3 (pos ten (cr (l$2)) 5 (tensor 6 (lambda j. vac (l$6)))) +
-  Cx (&1603835306199 / &156250000000000000) %
- pos ten (cr (l$4)) 3 (pos ten (cr (l$2)) 5 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &69286509303831 / &190734863281250000) %
- pos ten (cr (l$4)) 3 (pos ten (cr (l$4)) 3 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (-- &143768357703 / &1562500000000000) %
- pos ten (cr (l$3)) 4 (pos ten (cr (l$2)) 5 (tensor 6 (lambda j. vac (l$6)))) +
-  Cx (-- &424659789 / &62500000000000) %
- pos ten (cr (l$3)) 4 (pos ten (cr (l$1)) 6 (tensor 6 (lambda j. vac (l$6)))) +
-  Cx (&980353579202248851 / &305175781250000000000) %
- pos ten (cr (l$5)) 2 (pos ten (cr (l$4)) 3 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (&2832504412216483028493 / &12207031250000000000000) %
- pos ten (cr (l$6)) 1 (pos ten (cr (l$6)) 1 (tensor 6 (lambda j. vac (l$6)))) +
-  Cx (&5825112854364157977 / &610351562500000000000) %
- pos ten (cr (l$6)) 1 (pos ten (cr (l$4)) 3 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (&50035253134072563 / &3051757812500000000) %
- pos ten (cr (l$6)) 1 (pos ten (cr (l$3)) 4 (tensor 6 (lambda j. vac (l$6)))) +
-  Cx (&949484152412271 / &244140625000000000) %
+ Cx (&10575340251395085747 / &976562500000000000000) %
+ pos ten (cr (l$6)) 1 (pos ten (cr (l$5)) 2 (tensor 6 (lambda j. vac (l$6)))) +
+ Cx (&210176207694873 / &78125000000000000) %
  pos ten (cr (l$6)) 1 (pos ten (cr (l$2)) 5 (tensor 6 (lambda j. vac (l$6)))) +
- Cx (&13186060440907473 / &390625000000000000000) %
- pos ten (cr (l$5)) 2 (pos ten (cr (l$3)) 4 (tensor 6 (lambda j. vac (l$6)))) +
-  Cx (&89136970676268757263 / &6103515625000000000000) %
-  +
-  Cx (&401357166454917 / &488281250000000000) %
-  +
- Cx (&1034949360681 / &19531250000000000) %
+ Cx (&23352911966097 / &78125000000000000) %
+ pos ten (cr (l$5)) 2 (pos ten (cr (l$2)) 5 (tensor 6 (lambda j. vac (l$6)))) +
+ Cx (&142433637600420388593 / &610351562500000000000) %
+ pos ten (cr (l$6)) 1 (pos ten (cr (l$6)) 1 (tensor 6 (lambda j. vac (l$6)))) +
+ Cx (&4483670787141399 / &244140625000000000) %
+ pos ten (cr (l$6)) 1 (pos ten (cr (l$3)) 4 (tensor 6 (lambda j. vac (l$6)))) +
+ Cx (&2095428329740690119 / &195312500000000000000) %
+ pos ten (cr (l$6)) 1 (pos ten (cr (l$4)) 3 (tensor 6 (lambda j. vac (l$6)))) +
+ Cx (&232825369971187791 / &195312500000000000000) %
+ pos ten (cr (l$5)) 2 (pos ten (cr (l$4)) 3 (tensor 6 (lambda j. vac (l$6)))) +
+ Cx (&498185643015711 / &244140625000000000) %
+ pos ten (cr (l$5)) 2 (pos ten (cr (l$3)) 4 (tensor 6 (lambda j. vac (l$6))))
+ 
+
+ 
+ 
+
   
  
  
  
-  Cx (-- &416286201276829989 / &95367431640625000000) %
- tensor 6 (lambda i. if i = 2 then  Cx (sqrt (&2)) % fock (l$5) 2 else vac (l$6)) +
- Cx (-- &161459037 / &15625000000000) %
- tensor 6 (lambda i. if i = 5 then  Cx (sqrt (&2)) % fock (l$2) 2  else vac (l$6)) +
- Cx (-- &841 / &25000000000) %
- tensor 6 (lambda i. if i = 6 then  Cx (sqrt (&2)) % fock (l$1) 2 else vac (l$6)) +
- Cx (-- &48987349986681 / &156250000000000000) %
- tensor 6 (lambda i. if i = 4 then  Cx (sqrt (&2)) % fock (l$3) 2 else vac (l$6)) +
- Cx (-- &701055169543773 / &976562500000000000) %
- tensor 6 (lambda i. if i = 3 then  Cx (sqrt (&2)) % fock (l$4) 2 else vac (l$6)) +
- Cx (&644166840807 / &2441406250000000) %
- tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 6 then fock (l$1) 1  else vac (l$6))) +
-  Cx (-- &372099 / &312500000000 ) %
- tensor 6 (lambda i. if i = 5 then  fock (l$2) 1 else (if i = 6 then fock (l$1) 1  else vac (l$6))) +
- Cx (-- &3411798003 / &390625000000000) %
- tensor 6 (lambda i. if i = 3 then  fock (l$4) 1 else (if i = 6 then fock (l$1) 1  else vac (l$6))) +
-  Cx (-- &276777125631 / &1953125000000000) %
- tensor 6 (lambda i. if i = 3 then  fock (l$4) 1 else (if i = 5 then fock (l$2) 1  else vac (l$6))) +
- Cx (-- &69286509303831 / &190734863281250000) %
- tensor 6 (lambda i. if i = 3 then  Cx (sqrt (&2)) % fock (l$4) 2  else vac (l$6)) + 
-  Cx (-- &701055169543773 / &976562500000000000 ) %
- tensor 6 (lambda i. if i = 3 then  fock (l$4) 1 else (if i = 4 then fock (l$3) 1  else vac (l$6))) +
- Cx (-- &90676685061 / &781250000000000) %
- tensor 6 (lambda i. if i = 4 then  fock (l$3) 1 else (if i = 5 then fock (l$2) 1  else vac (l$6))) + 
-  Cx (-- &42926931 / &62500000000000) %
- tensor 6 (lambda i. if i = 4 then  fock (l$3) 1 else (if i = 6 then fock (l$1) 1  else vac (l$6))) +
-  Cx (&980353579202248851 / &305175781250000000000) %
- tensor 6 (lambda i. if i = 2 then  fock (l$5) 1 else (if i = 3 then fock (l$4) 1  else vac (l$6))) +
+
+  +
  Cx (&2832504412216483028493 / &12207031250000000000000) %
- tensor 6 (lambda i. if i = 1 then  Cx (sqrt (&2)) % fock (l$6) 2  else vac (l$6)) +
+  +
   Cx (&5825112854364157977 / &610351562500000000000) %
-tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 3 then fock (l$4) 1  else vac (l$6)))  +
+  +
  Cx (&50035253134072563 / &3051757812500000000) %
- tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 4 then fock (l$3) 1  else vac (l$6))) +
+  +
   Cx (&949484152412271 / &244140625000000000) %
-  tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 5 then fock (l$2) 1  else vac (l$6))) +
+   +
  Cx (&187765319241772983 / &48828125000000000000) %
- tensor 6 (lambda i. if i = 2 then  fock (l$5) 1 else (if i = 4 then fock (l$3) 1  else vac (l$6))) +
+  +
   Cx (&89136970676268757263 / &6103515625000000000000) %
  pos ten (cr (l$6)) 1 (pos ten (cr (l$5)) 2 (tensor 6 (lambda j. vac (l$6)))) +
   Cx (&401357166454917 / &488281250000000000) %
@@ -1055,19 +974,20 @@ tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 3 then fock (l$4) 1
   
  
  Cx (-- &416286201276829989 / &95367431640625000000) %
-  tensor 6 (lambda i. if i = 2 then  Cx (sqrt (&2)) % fock (l$5) 2 else vac (l$6)) +
+ tensor 6 (lambda i. if i = 2 then  Cx (sqrt (&2)) % fock (l$5) 2 else vac (l$6)) +
  Cx (-- &1804779178240705317 / &9765625000000000000000) %
  pos ten (cr (l$5)) 2 (pos ten (cr (l$4)) 3 (tensor 6 (lambda j. vac (l$6)))) +
+ tensor 6 (lambda i. if i = 2 then  fock (l$5) 1 else (if i = 3 then fock (l$4) 1  else vac (l$6))) +
  Cx (-- &96799941 / &3125000000000000) %
- pos ten (cr (l$4)) 3 (pos ten (cr (l$1)) 6 (tensor 6 (lambda j. vac (l$6)))) +
+ tensor 6 (lambda i. if i = 3 then  fock (l$4) 1 else (if i = 6 then fock (l$1) 1  else vac (l$6))) +
  Cx (-- &219501 / &1250000000000) %
- pos ten (cr (l$2)) 5 (pos ten (cr (l$1)) 6 (tensor 6 (lambda j. vac (l$6)))) +
+ tensor 6 (lambda i. if i = 5 then  fock (l$2) 1 else (if i = 6 then fock (l$1) 1  else vac (l$6))) +
  Cx (-- &627907640043213 / &7812500000000000000) %
- pos ten (cr (l$4)) 3 (pos ten (cr (l$3)) 4 (tensor 6 (lambda j. vac (l$6)))) +
+ tensor 6 (lambda i. if i = 3 then  fock (l$4) 1 else (if i = 4 then fock (l$3) 1  else vac (l$6))) +
  Cx (-- &161459037 / &15625000000000) %
- pos ten (cr (l$2)) 5 (pos ten (cr (l$2)) 5 (tensor 6 (lambda j. vac (l$6)))) +
+ tensor 6 (lambda i. if i = 5 then Cx (sqrt (&2)) % fock (l$2) 2 else vac (l$6)) + 
  Cx (-- &9548526526174377 / &390625000000000000000) %
- pos ten (cr (l$6)) 1 (pos ten (cr (l$3)) 4 (tensor 6 (lambda j. vac (l$6)))) +
+ tensor 6 (lambda i. if i = 1 then  fock (l$6) 1 else (if i = 4 then fock (l$3) 1  else vac (l$6))) +
  Cx (-- &841 / &25000000000) %
  pos ten (cr (l$1)) 6 (pos ten (cr (l$1)) 6 (tensor 6 (lambda j. vac (l$6)))) +
  Cx (-- &25264784601 / &156250000000000000) %
