@@ -12,7 +12,7 @@
 (*-------------REQUIRED LIBRARIES ---------------------*)
 
 
-needs "tactics_1.ml";;
+needs "../Tactics/tactics_1.ml";;
 
 
 (*----------------- Common Tactics --------------------------*)

@@ -12,7 +12,7 @@
 (*-------------REQUIRED LIBRARIES ---------------------*)
 
 
-needs "tensor_product_projection.ml";;
+needs "../TensorProduct/tensor_product_projection.ml";;
 
 
 

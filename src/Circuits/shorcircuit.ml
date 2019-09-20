@@ -12,7 +12,7 @@
 (*-------------REQUIRED LIBRARIES ---------------------*)
 
 
-needs "Flip_gate.ml";;
+needs "../Gates/1Qubit/FLIP_GATE.ml";;
 
 
 

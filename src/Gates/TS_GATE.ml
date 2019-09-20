@@ -12,7 +12,7 @@
 (*-------------REQUIRED LIBRARIES ---------------------*)
 
 
-needs "SWAP_GATE.ml";;
+needs "2Qubits/SWAP_GATE.ml";;
 
 
 

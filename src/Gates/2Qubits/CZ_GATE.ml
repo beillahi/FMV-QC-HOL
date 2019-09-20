@@ -12,7 +12,7 @@
 (*-------------REQUIRED LIBRARIES ---------------------*)
 
 
-needs "NS_gate_2_proj.ml";;
+needs "../NS_gate_2_proj.ml";;
 
 
 

@@ -195,12 +195,12 @@ STEPS
     > #use "hol.ml";;
       
 
-  4. Copy the contents of the SOURCE directory to HOL Light top directory.
+  4. Copy the contents of the ```src``` directory to HOL Light top directory.
 
 
   5. And finally load the top file:
 
-    > needs "APPLICATIONS.ml";;
+    ```> needs "APPLICATIONS.ml";;```
  	or just
     > needs "tactics_2.ml";;
     

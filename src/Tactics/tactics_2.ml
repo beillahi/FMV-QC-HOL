@@ -12,7 +12,7 @@
 (*-------------REQUIRED LIBRARIES ---------------------*)
 
 
-needs "FREDKIN_GATE.ml";;
+needs "../Gates/3Qubits/FREDKIN_GATE.ml";;
 
 
 

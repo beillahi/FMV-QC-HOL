@@ -12,7 +12,7 @@
 (*-------------REQUIRED LIBRARIES ---------------------*)
 
 
-needs "CZ_GATE.ml";;
+needs "../2Qubits/CZ_GATE.ml";;
 
 
 

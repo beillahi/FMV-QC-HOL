@@ -11,7 +11,7 @@
 
 (*-------------REQUIRED LIBRARIES ---------------------*)
 
-needs "V_GATE.ml";;
+needs "../Gates/2Qubits/V_GATE.ml";;
 needs "FULL_ADDER.ml";;
 needs "HELPER_CIRCUITS.ml";;
 
@@ -57,7 +57,7 @@ if i = 3 then  LV (d0) else if i = 4 then  LV (e0) else LH (i0)):bqs^N) =
 Cx (&1 / &4951760157141521099596496896) %
 tensor 5 (lambda i. if i = 1 then LV e6 else if i = 2 then LV d8
 else if i = 3 then LV c8 else if i = 4 then LH b10 else LV i8)`,
-quantum_tac (matrix_procedure [] (gate_matrix "test1.txt" [] [] 0) 
+quantum_tac (matrix_procedure [] (gate_matrix "../../resources/test1.txt" [] [] 0) 
      (extract_port [] "(b0,0,c0,1,d0,1,e0,1,i0,0)" 0 0) 3) 5 0 0 []);;   
 
    
@@ -101,7 +101,7 @@ else if i = 3 then  LV (c0) else LH (d0)):bqs^N) =
 Cx (&1 / &79228162514264337593543950336) %
  tensor 4 (lambda i. if i = 1 then LV a10 else if i = 2
  then LH b15 else if i = 3 then LH c13 else LV d9)`,
-quantum_tac (matrix_procedure [] (gate_matrix "test3.txt" [] [] 0) 
+quantum_tac (matrix_procedure [] (gate_matrix "../../resources/test3.txt" [] [] 0) 
    (extract_port [] "(a0,0,b0,1,c0,1,d0,0)" 0 0) 3) 4 0 0 []);;
 
 
@@ -187,7 +187,7 @@ Cx (&1 / &5871356456934583069723701491973342568439206372270799676768227428830522
 tensor 9 (lambda i. if i = 1 then LH a215 else if i = 2 then LV b219 else if i = 3
 then LH a118 else if i = 4 then LV b118 else if i = 5 then LV b020 else if i = 6
 then LH a012 else if i = 7 then LH c10 else if i = 8 then LH d11 else LH e8) `,
-quantum_tac (matrix_procedure [] (gate_matrix "test2.txt" [] [] 0) 
+quantum_tac (matrix_procedure [] (gate_matrix "../../resources/test2.txt" [] [] 0) 
 (extract_port [] "(a0,0,a1,0,a2,0,b0,1,b1,1,b2,1,c0,0,d0,0,e0,0)" 0 0) 3) 9 0 0 []);;
         
 (****************************************************************************************)
@@ -276,7 +276,7 @@ tensor 10 (lambda i. if i = 1 then LH x110 else if i = 2 then LH x212
 else if i = 3 then LH x315 else if i = 4 then LV x418 else if i = 5
 then LH x521 else if i = 6 then LV x618 else if i = 7 then LH b11
 else if i = 8 then LV a18 else if i = 9 then LH c8 else LV d4)`,                                         
-quantum_tac (matrix_procedure [] (gate_matrix "test5.txt" [] [] 0) 
+quantum_tac (matrix_procedure [] (gate_matrix "../../resources/test5.txt" [] [] 0) 
 (extract_port [] "(x10,0,x20,0,x30,0,x40,1,x50,1,x60,1,a0,0,b0,0,c0,0,d0,0)" 0 0) 3) 10 0 0 []);;                 
 
 (****************************************************************************************)
@@ -311,7 +311,7 @@ Cx (&1 / &1152921504606846976) %
 tensor 6 (lambda i. if i = 1 then LV a3 else if i = 2 then LH o0
 else if i = 3 then LH o2 else if i = 4 then LH b6
 else if i = 5 then LV o1 else LH o3)`,
-quantum_tac (matrix_procedure [] (gate_matrix "test4.txt" [] [] 0) 
+quantum_tac (matrix_procedure [] (gate_matrix "../../resources/test4.txt" [] [] 0) 
 (extract_port [] "(a0,1,b0,0,e0,1,i0,0,i1,0,i2,0)" 0 0) 3) 6 0 0 []);;
 
 (****************************************************************************************)
@@ -338,7 +338,7 @@ CNOT2_GATE(c5,b4,c6,b5,ten,LH,LV,m_modes_pro) ==>
 tensor 3 ((lambda i. if i = 1 then LV (a0) else if i = 2 then  LH (b0) else LH (c0)):bqs^N) = 
 Cx (&1 / &1048576) %
 tensor 3 (lambda i. if i = 1 then LV a2 else if i = 2 then LV c6 else LV b5)`,
-quantum_tac (matrix_procedure [] (gate_matrix "test6.txt" [] [] 0) 
+quantum_tac (matrix_procedure [] (gate_matrix "../../resources/test6.txt" [] [] 0) 
 (extract_port [] "(a0,1,b0,0,c0,0)" 0 0) 3) 3 0 0 []);;
 
 (****************************************************************************************)
@@ -363,7 +363,7 @@ CNOT1_GATE(a2,b4,a3,b5,ten,LH,LV,m_modes_pro) ==>
 tensor 3 ((lambda i. if i = 1 then LV (a0) else if i = 2 then  LH (b0) else LH (c0)):bqs^N) = 
 Cx (&1 / &16777216) %
 tensor 3 (lambda i. if i = 1 then LH a3 else if i = 2 then LV b5 else LH c5)`,
-quantum_tac (matrix_procedure [] (gate_matrix "test7.txt" [] [] 0) 
+quantum_tac (matrix_procedure [] (gate_matrix "../../resources/test7.txt" [] [] 0) 
 (extract_port [] "(a0,1,b0,0,c0,0)" 0 0) 3) 3 0 0 []);;
 
 (****************************************************************************************)
@@ -397,7 +397,7 @@ else if i = 3 then LV f2 else if i = 4 then LV s3
 else if i = 5 then LH d13 else if i = 6 then LH f1
 else if i = 7 then LH s2 else if i = 8 then LV d02
 else if i = 9 then LV f0 else LV s1)`,
-quantum_tac (matrix_procedure [] ((gate_matrix "test11.txt" [] [("F_ADDER",4)] 0))  
+quantum_tac (matrix_procedure [] ((gate_matrix "../../resources/test11.txt" [] [("F_ADDER",4)] 0))  
 (extract_port [] "(a3,0,b3,0,d2,0,a2,1,b2,1,d1,0,a1,1,b1,0,c0,0,d0,0)" 0 0) 4) 10 0 0 [("F_ADDER",full_adder_tac)]);;
 
 (****************************************************************************************)
@@ -447,7 +447,7 @@ else if i = 3 then LV f2 else if i = 4 then LV s3
 else if i = 5 then LH d15 else if i = 6 then LH f1
 else if i = 7 then LH s2 else if i = 8 then LV d04
 else if i = 9 then LV f0 else LV s1)`,
-quantum_tac (matrix_procedure [] ((gate_matrix "test12.txt" [] [] 0)) 
+quantum_tac (matrix_procedure [] ((gate_matrix "../../resources/test12.txt" [] [] 0)) 
 (extract_port [] "(a3,0,b3,0,d2,0,a2,1,b2,1,d1,0,a1,1,b1,0,c0,0,d0,0)" 0 0) 4) 10 0 0 []);;
 
 (****************************************************************************************)
@@ -482,6 +482,6 @@ else if i = 4 then LH ca32 else if i = 5 then LH y31 else if i = 6 then LV x31 e
 else if i = 8 then LV y21 else if i = 9 then LV x21 else if i = 10 then LV ca12 else if i = 11 then LH y11
 else if i = 12 then LH x11 else if i = 13 then LH ca02 else if i = 14 then LV cin1 else
 if i = 15 then LH y01 else LH x01)`,
-quantum_tac (matrix_procedure [] (gate_matrix "test21.txt" [] [("CIRCUIT3",4);("CIRCUIT1",4)] 0) 
+quantum_tac (matrix_procedure [] (gate_matrix "../../resources/test21.txt" [] [("CIRCUIT3",4);("CIRCUIT1",4)] 0) 
 (extract_port [] "(ca4,1,y4,0,x4,0,ca3,1,y3,0,x3,1,ca2,1,y2,0,x2,0,ca1,1,y1,0,x1,0,ca0,1,cin,0,y0,0,x0,1)" 0 0) 4) 16 
 0 0 [("CIRCUIT3",circuit3_tac);("CIRCUIT1",circuit1_tac)]);;

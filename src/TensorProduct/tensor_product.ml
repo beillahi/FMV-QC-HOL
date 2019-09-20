@@ -12,7 +12,7 @@
 (*-------------REQUIRED LIBRARIES ---------------------*)
 
 
-needs "multi_mode.ml";;
+needs "../multi_mode.ml";;
 
 
 

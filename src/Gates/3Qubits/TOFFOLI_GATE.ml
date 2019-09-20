@@ -12,7 +12,7 @@
 (*-------------REQUIRED LIBRARIES ---------------------*)
 
 
-needs "TS_GATE.ml";;
+needs "../TS_GATE.ml";;
 
 
 
